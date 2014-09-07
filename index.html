@@ -1,0 +1,21 @@
+<html>
+<head>
+    <script type="text/javascript">
+    function getCoordinates(event){
+        pos_x = event.offsetX ? (event.offsetX) : event.pageX-document.getElementById("pointer_div").offsetLeft;
+        pos_y = event.offsetY ? (event.offsetY) : event.pageY-document.getElementById("pointer_div").offsetTop;
+        document.pointform.form_x.value = pos_x;
+        document.pointform.form_y.value = pos_y;
+        console.log("X-coordinate: " + pos_x, pos_y);
+    }
+    </script>
+</head>
+
+<body>
+    <form name="pointform" method="post">
+    <div id="pointer_div" onclick="getCoordinates(event)" style = "background-image:url('image.jpg');width:500px;height:333px;">
+    </div>
+    You pointed on x = <input type="text" name="form_x" size="4" /> - y = <input type="text" name="form_y" size="4" />
+    </form>
+</body>
+</html>

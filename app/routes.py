@@ -8,10 +8,11 @@ CORS(app, resources=r'/*', headers='Content-Type')
 def home():
     return render_template('index.html')
 
-@app.route('/getCoordinates', methods=['GET', 'POST'])
-def getCoordinates(data):
-    if request.method == 'POST':
-        print "Hello"
+@app.route('/api/coordinates')
+def getCoordinates():
+    print request.args.get('pos_x')
+    return "Hello"
+    
 
 if __name__ == '__main__':
     app.run(debug=True)

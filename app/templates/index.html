@@ -3,6 +3,7 @@
 
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
     <script src="{{ url_for('static', filename='js/jquery.js') }}"> </script>
+
     <script type="text/javascript">
     function getCoordinates(event){
         // Get position of mouse
@@ -18,10 +19,11 @@
         // Pass values to our form 
         document.pointform.form_x.value = coordinates.pos_x;
         document.pointform.form_y.value = coordinates.pos_y;
+
         $.ajax({
-            type: "POST",
-            url: "http://localhost:8000/getCoordinates",
-            data: JSON.stringify(coordinates),
+            type: "GET", 
+            url: "/api/coordinates",
+            data: coordinates,
             success: function(msg){
                 console.log("Got data");
             },
@@ -29,6 +31,8 @@
                 console.log("Failed to get data");
             }
         });
+
+
         
     }
     </script>

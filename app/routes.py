@@ -11,6 +11,7 @@ def home():
 @app.route('/api/coordinates')
 def getCoordinates():
     print request.args.get('pos_x')
+    print request.args.get('pos_y')
     return "Hello"
     
 

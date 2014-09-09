@@ -13,7 +13,7 @@ def home():
 def getCoordinates():
     print "Pos x: " + request.args.get('pos_x')
     print "Pos y: " + request.args.get('pos_y')
-    url = requests.get('http://placekitten.com/' + request.args.get('pos_x') + '/' + request.args.get('pos_y'))
+    url = 'http://placekitten.com/' + 'g/' +  request.args.get('pos_x') + '/' + request.args.get('pos_y')
     print url
 
     return "Hello"

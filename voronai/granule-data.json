@@ -1,4 +1,6 @@
-{ "data" : [
+{ 
+    "type": "images",
+    "data" : [
         {
             "LATITUDE": 312.48156666666665,
             "IMAGE": "1.png",

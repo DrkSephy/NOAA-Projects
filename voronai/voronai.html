@@ -227,6 +227,7 @@ function redraw() {
       .attr("class", function(d, i) { return "q" + (i % 9) + "-9"; })
       .attr("d", polygon)
       .attr("fake", function(d, i){return i;})
+      .on("mouseover", function(d) {console.log("Hello") })
 
   path.order();
 }

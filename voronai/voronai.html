@@ -198,13 +198,16 @@ var svg = d3.select("body").append("svg")
 var path = svg.append("g").selectAll("path");
 
 svg.selectAll("circle")
-    .data(vertices.slice(1))
+    .data(vertices.slice(0))
     .enter().append("circle")
-    .attr("transform", function(d) { return "translate(" + d + ")"; })
-    .attr("r", 1.5);
+    .attr("transform", function(d) {  return "translate(" + d + ")"; })
+    .attr("r", 1.5)
+    .attr("id", function(i) { return i[0] });
+
 
 console.log(svg.selectAll("circle"))
-console.log(svg.selectAll("circle")[0][1].__data__)
+// Get data of circle
+//console.log(svg.selectAll("circle")[0][1].__data__)
 
 redraw();
 
@@ -212,7 +215,7 @@ function redraw() {
 
   path = path
       .data(voronoi(vertices), polygon);
-  //path.exit().remove();
+  path.exit().remove();
 
   path.enter().append("path")
       .attr("class", function(d, i) { return "q" + (i % 9) + "-9"; })

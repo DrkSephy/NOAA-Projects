@@ -185,13 +185,15 @@ var vertices =  [
 ];
 
 
-var voronoi = d3.geom.voronoi()
-    .clipExtent([[0, 0], [width, height]]);
+var voronoi = d3.geom.voronoi();
+ 
+
+
 
 var svg = d3.select("body").append("svg")
     .attr("width", width)
     .attr("height", height)
-    .on("mousemove", function() { vertices[0] = d3.mouse(this); redraw(); });
+    .on("mousemove", function() { vertices[0] = d3.mouse(this); redraw(); })
 
 //console.log(svg)
 // svg.append("g") : Used to group svg shapes together
@@ -205,11 +207,15 @@ svg.selectAll("circle")
     .attr("id", function(i) { return i[0] });
 
 
-console.log(svg.selectAll("circle"))
+//console.log(svg.selectAll("circle"))
 // Get data of circle
 //console.log(svg.selectAll("circle")[0][1].__data__)
 
 redraw();
+
+function getPolygon(id){
+    return "Hello";
+}
 
 function redraw() {
 
@@ -220,7 +226,7 @@ function redraw() {
   path.enter().append("path")
       .attr("class", function(d, i) { return "q" + (i % 9) + "-9"; })
       .attr("d", polygon)
-      .attr("fake", 9);
+      .attr("fake", function(d, i){return i;})
 
   path.order();
 }

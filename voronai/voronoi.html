@@ -37,7 +37,7 @@
       right: 0;
       margin: 1em 1em 0 0;
       padding: 1em;
-      font-size: 1.5em;
+      font-size: 1.0em;
       background-color: #F2F2F2;
       border: 1px solid #222222;
     }
@@ -55,8 +55,8 @@
 </style>
 <body>
 <script src="http://d3js.org/d3.v3.min.js"></script>
-<script>
 
+<script>
 d3.json('granule-data.json', function(error, json) {
     var width = 878,
         height = 500;
@@ -91,18 +91,15 @@ d3.json('granule-data.json', function(error, json) {
       .attr('d', function(d) { return 'M' + d.join('L') + 'Z'; })
       .attr('id', function(d, i) { return i; })
       .on('mouseover', function(d){
-          // console.log(this.LATITUDE);
           text.style('display', 'block')
           .html("LATITUDE: " + d.point.LATITUDE + "<br/>" +  
                 "LONGITUDE: " + d.point.LONGITUDE + "<br/>" + 
                 "ID: " + d.point.ID + "<br/>" + 
                 "IMAGE: " + d.point.IMAGE );
-          console.log("Latitude: " + d.point.LATITUDE + " " + "Longitude: " + d.point.LONGITUDE);
       })
       .on('mouseout', function(d){
           text.style('display', 'block')
           .text("Out of bounds");
-          // console.log("moving");
       });
 });
 

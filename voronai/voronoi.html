@@ -81,9 +81,7 @@ d3.json('granule-data.json', function(error, json) {
       .enter().append('path')
       .attr('class', 'stop')
       .attr('d', function(d){
-        console.log(d);
         d.stopPath = this;
-        console.log(d);
       });
 
     featureGroup.selectAll('.voronoi-stops')
@@ -95,12 +93,15 @@ d3.json('granule-data.json', function(error, json) {
       .on('mouseover', function(d){
           // console.log(this.LATITUDE);
           text.style('display', 'block')
-          .text(this.id);
-          //console.log(d);
+          .html("LATITUDE: " + d.point.LATITUDE + "<br/>" +  
+                "LONGITUDE: " + d.point.LONGITUDE + "<br/>" + 
+                "ID: " + d.point.ID + "<br/>" + 
+                "IMAGE: " + d.point.IMAGE );
+          console.log("Latitude: " + d.point.LATITUDE + " " + "Longitude: " + d.point.LONGITUDE);
       })
       .on('mouseout', function(d){
           text.style('display', 'block')
-          .text(this.id);
+          .text("Out of bounds");
           // console.log("moving");
       });
 });

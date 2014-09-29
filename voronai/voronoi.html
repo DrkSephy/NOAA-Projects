@@ -75,23 +75,34 @@ d3.json('granule-data.json', function(error, json) {
         .y(function(d) { return d.LATITUDE; })
         .clipExtent([[0, 0], [width, height]]);
 
-      featureGroup.selectAll('.voronoi-stops')
-        .data(voronoiStops(json.data))
-        .enter().append('path')
-        .attr('class', function(d, i) { return i ? "q" + (i % 9) + "-9" : null; })
-        .attr('d', function(d) { return 'M' + d.join('L') + 'Z'; })
-        .attr('id', function(d, i) { return i; })
-        .on('mouseover', function(d){
-            console.log(this.LATITUDE);
-            text.style('display', 'block')
-            .text(this.id);
-            //console.log(d);
-        })
-        .on('mouseout', function(d){
-            text.style('display', 'block')
-            .text(this.id);
-            //console.log("moving");
-        });
+
+    featureGroup.selectAll('.stop')
+      .data(json.data)
+      .enter().append('path')
+      .attr('class', 'stop')
+      .attr('d', function(d){
+        console.log(d);
+        d.stopPath = this;
+        console.log(d);
+      });
+
+    featureGroup.selectAll('.voronoi-stops')
+      .data(voronoiStops(json.data))
+      .enter().append('path')
+      .attr('class', function(d, i) { return i ? "q" + (i % 9) + "-9" : null; })
+      .attr('d', function(d) { return 'M' + d.join('L') + 'Z'; })
+      .attr('id', function(d, i) { return i; })
+      .on('mouseover', function(d){
+          // console.log(this.LATITUDE);
+          text.style('display', 'block')
+          .text(this.id);
+          //console.log(d);
+      })
+      .on('mouseout', function(d){
+          text.style('display', 'block')
+          .text(this.id);
+          // console.log("moving");
+      });
 });
 
 

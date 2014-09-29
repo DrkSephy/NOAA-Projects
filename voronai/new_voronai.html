@@ -44,47 +44,32 @@
       var width = 878;
       var height = 500;
 
-      var svg = d3.select('body').append('svg')
-        .attr('width', width)
-        .attr('height', height);
+      var svg = d3.select("body")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height)
 
-      var projectionData = json;
-      var centroid = d3.geo.centroid(projectionData);
-      var projection = d3.geo.albersUsa().scale(1000);
-      var projectionPath = d3.geo.path().projection(projection)
-          .pointRadius(function(d) { console.log(d); return 0.002; });
+      var svgPoints = svg.selectAll('g')
+        .data(json)
+        .enter()
+        .append('g')
 
-      // Create group for features
-      var featureGroup = svg.append('g').attr('class', 'feature-group');
-      // Add data
-      featureGroup.selectAll('.stop')
-        .data(json.data)
-        .enter().append('path')
-        .attr('class', 'stop')
-        .attr('d', function(d){
-          d.stopPath = this;
-          return projectionPath(d); 
-          
-          //console.log(d);
-          //console.log(projectionPath(d))
-        });
+      svgPoints.append('circle')
+        .attr('transform', function(d) { console.log(d); return "translate(" + d.LONGITUDE + ",", + d.LATITUDE + ")"; })
+        .attr('r', 2);
 
-
-      // Make Voronoi map for hovering over stop
-      var text = d3.select('body').append('div').attr('class', 'text-tooltip');
-
-      var voronoiStops = d3.geom.voronoi()
-        .x(function(d) { console.log(d); return d.LONGITUDE; })
+      var voronoi = d3.geom.voronoi()
+        .x(function(d) { return d.LONGITUDE; })
         .y(function(d) { return d.LATITUDE; })
-        .clipExtent([[0, 0], [width, height]]);
 
-      featureGroup.selectAll('.voronoi-stops')
-        .data(voronoiStops(json.data))
-        .enter().append('path')
-          .attr('class', 'voronoi-stops')
-          .attr('d', function(d) { return 'M' + d.join('L') + 'Z'; })
+      voronoi(json).forEach(function(v) { v.point.cell = v; });
 
+      var buildPathFromPoint = function(point) {
+        return "M" + point.cell.join("L") + "Z";
+      }
 
+      svgPoints.append("path")
+        .attr("d", buildPathFromPoint);
 
     });
 

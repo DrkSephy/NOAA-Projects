@@ -199,12 +199,7 @@ var svg = d3.select("body").append("svg")
 // svg.append("g") : Used to group svg shapes together
 var path = svg.append("g").selectAll("path");
 
-svg.selectAll("circle")
-    .data(vertices.slice(0))
-    .enter().append("circle")
-    .attr("transform", function(d) {  return "translate(" + d + ")"; })
-    .attr("r", 1.5)
-    .attr("id", function(i) { return i[0] });
+
 
 
 //console.log(svg.selectAll("circle"))
@@ -227,7 +222,8 @@ function redraw() {
       .attr("class", function(d, i) { return "q" + (i % 9) + "-9"; })
       .attr("d", polygon)
       .attr("fake", function(d, i){return i;})
-      .on("mouseover", function(d) {console.log("Hello") })
+      .attr("id", function(i) {return i[2]})
+      .on('mouseover', function() {console.log(this.id); });
 
   path.order();
 }

@@ -61,10 +61,6 @@ d3.json('granule-data.json', function(error, json) {
     var width = 878,
         height = 500;
 
-    // .range: Number of polygons to build
-    // vertices: The borders of each polygon
-    
-
     var svg = d3.select("body")
         .append("svg")
         .attr("width", width)
@@ -86,7 +82,7 @@ d3.json('granule-data.json', function(error, json) {
         .attr('d', function(d) { return 'M' + d.join('L') + 'Z'; })
         .attr('id', function(d, i) { return i; })
         .on('mouseover', function(d){
-            console.log(this.id);
+            console.log(this.LATITUDE);
             text.style('display', 'block')
             .text(this.id);
             //console.log(d);
@@ -96,15 +92,7 @@ d3.json('granule-data.json', function(error, json) {
             .text(this.id);
             //console.log("moving");
         });
-          
-
-
-
-
-    
-
-
-    });
+});
 
 
 

@@ -99,7 +99,7 @@ d3.json('granule-data.json', function(error, json) {
       .attr('id', function(d, i) { return i; })
       .on('mouseover', function(d){
           text.style('display', 'block')
-          .html("<img src=img/" + d.point.IMAGE + ">");
+          .html('<img src=img/' + d.point.IMAGE + '>');
           /*
           div.transition()
           .duration(200)
@@ -113,12 +113,14 @@ d3.json('granule-data.json', function(error, json) {
       })
       .on('mouseout', function(d){
           text.style('display', 'block')
-          .text("Out of bounds");
+          .text('Out of bounds');
       })
       .on('mousedown', function(d){
-        text.style('display', 'block')
-        .text("Clicked polygon: " + d.point.ID);
-      })
+        console.log('<a href="' + d.point.IMAGE + '" target="_blank">');
+        div.html('<a href="' + d.point.IMAGE + '" target="_blank">')
+        .style("left", (d3.event.pageX) + "px")
+        .style("top", (d3.event.pageY - 28) + "px")
+    });
 });
 
 

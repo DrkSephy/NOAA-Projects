@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html xmlns:xlink="http://www.w3.org/1999/xlink">
 <meta charset="utf-8">
 <style>
 
@@ -80,15 +80,16 @@ d3.json('granule-data.json', function(error, json) {
         .y(function(d) { return d.LATITUDE; })
         .clipExtent([[0, 0], [width, height]]);
 
-
+    /*
     // Attach JSON data to each voronoi polygon
     featureGroup.selectAll('.stop')
       .data(json.data)
       .enter().append('path')
       .attr('class', 'stop')
       .attr('d', function(d){
-        d.stopPath = this;
+       // d.stopPath = this;
       });
+    */
 
     // Build polygons, append all data, add mouseover/mouseout functions
     featureGroup.selectAll('.voronoi-stops')

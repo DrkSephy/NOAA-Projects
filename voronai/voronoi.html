@@ -72,6 +72,7 @@ d3.json('granule-data.json', function(error, json) {
 
     // Create tooltip
     var text = d3.select('body').append('div').attr('class', 'text-tooltip');
+    var div = d3.select('body').append('div').attr('class', 'tooltip').style("opacity", 0);
 
     // Voronoi generator function
     var voronoiStops = d3.geom.voronoi()
@@ -102,8 +103,13 @@ d3.json('granule-data.json', function(error, json) {
                 "LONGITUDE: " + d.point.LONGITUDE + "<br/>" + 
                 "ID: " + d.point.ID + "<br/>" + 
                 "IMAGE: " + d.point.IMAGE );
-          var string = "<img src=" + d.point.IMAGE + "/>";
-          console.log(string);
+          div.transition()
+          .duration(200)
+          .style("opacity", .85);
+          var string = "<img src=img/" + d.point.IMAGE + ">";
+          div .html(string) //this will add the image on mouseover
+            .style("left", (d3.event.pageX + 10) + "px")     
+            .style("top", (d3.event.pageY + 50) + "px")
 
       })
       .on('mouseout', function(d){

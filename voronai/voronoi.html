@@ -61,21 +61,26 @@ d3.json('granule-data.json', function(error, json) {
     var width = 878,
         height = 500;
 
+    // Create SVG
     var svg = d3.select("body")
         .append("svg")
         .attr("width", width)
         .attr("height", height)
 
+    // Create a feature group to append data to
     var featureGroup = svg.append('g').attr('class', 'feature-group');
 
+    // Create tooltip
     var text = d3.select('body').append('div').attr('class', 'text-tooltip');
 
+    // Voronoi generator function
     var voronoiStops = d3.geom.voronoi()
         .x(function(d) { return d.LONGITUDE; })
         .y(function(d) { return d.LATITUDE; })
         .clipExtent([[0, 0], [width, height]]);
 
 
+    // Attach JSON data to each voronoi polygon
     featureGroup.selectAll('.stop')
       .data(json.data)
       .enter().append('path')
@@ -84,6 +89,7 @@ d3.json('granule-data.json', function(error, json) {
         d.stopPath = this;
       });
 
+    // Build polygons, append all data, add mouseover/mouseout functions
     featureGroup.selectAll('.voronoi-stops')
       .data(voronoiStops(json.data))
       .enter().append('path')

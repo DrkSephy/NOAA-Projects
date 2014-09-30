@@ -99,17 +99,16 @@ d3.json('granule-data.json', function(error, json) {
       .attr('id', function(d, i) { return i; })
       .on('mouseover', function(d){
           text.style('display', 'block')
-          .html("LATITUDE: " + d.point.LATITUDE + "<br/>" +  
-                "LONGITUDE: " + d.point.LONGITUDE + "<br/>" + 
-                "ID: " + d.point.ID + "<br/>" + 
-                "IMAGE: " + d.point.IMAGE );
+          .html("<img src=img/" + d.point.IMAGE + ">");
+          /*
           div.transition()
           .duration(200)
           .style("opacity", .85);
           var string = "<img src=img/" + d.point.IMAGE + ">";
-          div .html(string) //this will add the image on mouseover
-            .style("left", (d3.event.pageX + 10) + "px")     
-            .style("top", (d3.event.pageY + 50) + "px")
+          div.html(string) 
+            .style("right", (d3.event.pageX + 100) + "px")     
+            .style("top", (d3.event.pageY + 500) + "px")
+          */
 
       })
       .on('mouseout', function(d){

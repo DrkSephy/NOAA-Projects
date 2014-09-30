@@ -68,7 +68,8 @@ d3.json('granule-data.json', function(error, json) {
         .attr("height", height)
 
     // Create a feature group to append data to
-    var featureGroup = svg.append('g').attr('class', 'feature-group');
+    svg.append('g').attr('class', 'feature-group');
+
 
     // Create tooltip
     var text = d3.select('body').append('div').attr('class', 'text-tooltip');
@@ -92,7 +93,7 @@ d3.json('granule-data.json', function(error, json) {
     */
 
     // Build polygons, append all data, add mouseover/mouseout functions
-    featureGroup.selectAll('.voronoi-stops')
+    svg.selectAll('.voronoi-stops')
       .data(voronoiStops(json.data))
       .enter().append('path')
       .attr('class', function(d, i) { return i ? "q" + (i % 9) + "-9" : null; })
@@ -114,11 +115,8 @@ d3.json('granule-data.json', function(error, json) {
       })
       .on('mouseout', function(d){
           text.style('display', 'block')
-          .text('');
+          .text('Out of bounds');
       })
-      .on('mousedown', function(d){
-        console.log('<a href="' + d.point.IMAGE + '" target="_blank">');
-    });
 });
 
 

@@ -114,7 +114,11 @@ d3.json('granule-data.json', function(error, json) {
       .on('mouseout', function(d){
           text.style('display', 'block')
           .text("Out of bounds");
-      });
+      })
+      .on('mousedown', function(d){
+        text.style('display', 'block')
+        .text("Clicked polygon: " + d.point.ID);
+      })
 });
 
 

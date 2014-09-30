@@ -81,17 +81,6 @@ d3.json('granule-data.json', function(error, json) {
         .y(function(d) { return d.LATITUDE; })
         .clipExtent([[0, 0], [width, height]]);
 
-    /*
-    // Attach JSON data to each voronoi polygon
-    featureGroup.selectAll('.stop')
-      .data(json.data)
-      .enter().append('path')
-      .attr('class', 'stop')
-      .attr('d', function(d){
-       // d.stopPath = this;
-      });
-    */
-
     // Build polygons, append all data, add mouseover/mouseout functions
     svg.selectAll('.voronoi-stops')
       .data(voronoiStops(json.data))

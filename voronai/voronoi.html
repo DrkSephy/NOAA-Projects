@@ -102,6 +102,9 @@ d3.json('granule-data.json', function(error, json) {
                 "LONGITUDE: " + d.point.LONGITUDE + "<br/>" + 
                 "ID: " + d.point.ID + "<br/>" + 
                 "IMAGE: " + d.point.IMAGE );
+          var string = "<img src=" + d.point.IMAGE + "/>";
+          console.log(string);
+
       })
       .on('mouseout', function(d){
           text.style('display', 'block')

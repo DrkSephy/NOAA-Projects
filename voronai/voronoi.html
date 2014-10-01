@@ -1,5 +1,9 @@
 <!DOCTYPE html xmlns:xlink="http://www.w3.org/1999/xlink">
-<meta charset="utf-8">
+<head>
+  <meta charset="utf-8">
+  <title>Voronoi Diagram</title>
+  <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css" />
+</head>
 <style>
 
     path {
@@ -14,6 +18,15 @@
       fill: #000;
       pointer-events: none;
     }
+
+    html{ text-align:center }
+    body {
+        display: inline-block;
+        margin-top: 100px;
+      
+        text-align: center;
+    }
+
 
     .stop {
       fill: #C83D2D;
@@ -53,59 +66,62 @@
 .q8-9 { fill: rgb(77,146,33); }
 
 </style>
+
+
 <body>
-<script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
 
-<script>
-d3.json('granule-data.json', function(error, json) {
-    var width = 878,
-        height = 500;
+  <script>
+  d3.json('granule-data.json', function(error, json) {
+      var width = 878,
+          height = 500;
 
-    // Create SVG
-    var svg = d3.select("body")
-        .append("svg")
-        .attr("width", width)
-        .attr("height", height)
+      // Create SVG
+      var svg = d3.select("body")
+          .append("svg")
+          .attr("width", width)
+          .attr("height", height)
 
-    // Create a feature group to append data to
-    svg.append('g').attr('class', 'feature-group');
-
-
-    // Create tooltip
-    var text = d3.select('body').append('div').attr('class', 'text-tooltip');
-    var div = d3.select('body').append('div').attr('class', 'tooltip').style("opacity", 0);
-
-    // Voronoi generator function
-    var voronoiStops = d3.geom.voronoi()
-        .x(function(d) { return d.LONGITUDE; })
-        .y(function(d) { return d.LATITUDE; })
-        .clipExtent([[0, 0], [width, height]]);
-
-    // Load data
-    var node = svg.selectAll('.voronoi-stops')
-    .data(voronoiStops(json.data));
-
-    // Append all links as outer 
-    var nodeEnter = node.enter().append('svg:a')
-      .attr('class', 'node')
-      .attr('xlink:href', function(d) { return "granules/" + d.point.IMAGE; });
-
-    // Append all paths as children of <a>
-    nodeEnter.append('path')
-      .attr('class', function(d, i) { return i ? "q" + (i % 9) + "-9" : null; })
-      .attr('d', function(d) { return 'M' + d.join('L') + 'Z'; })
-      .attr('id', function(d, i) { return i; })
-      .on('mouseover', function(d){
-          text.style('display', 'block')
-          .html('<img src=img/' + d.point.IMAGE + '>');
-      })
-      .on('mouseout', function(d){
-          text.style('display', 'block')
-          .text('Out of bounds');
-      })  
-});
+      // Create a feature group to append data to
+      svg.append('g').attr('class', 'feature-group');
 
 
+      // Create tooltip
+      var text = d3.select('body').append('div').attr('class', 'text-tooltip');
+      var div = d3.select('body').append('div').attr('class', 'tooltip').style("opacity", 0);
+
+      // Voronoi generator function
+      var voronoiStops = d3.geom.voronoi()
+          .x(function(d) { return d.LONGITUDE; })
+          .y(function(d) { return d.LATITUDE; })
+          .clipExtent([[0, 0], [width, height]]);
+
+      // Load data
+      var node = svg.selectAll('.voronoi-stops')
+      .data(voronoiStops(json.data));
+
+      // Append all links as outer 
+      var nodeEnter = node.enter().append('svg:a')
+        .attr('class', 'node')
+        .attr('xlink:href', function(d) { return "granules/" + d.point.IMAGE; });
+
+      // Append all paths as children of <a>
+      nodeEnter.append('path')
+        .attr('class', function(d, i) { return i ? "q" + (i % 9) + "-9" : null; })
+        .attr('d', function(d) { return 'M' + d.join('L') + 'Z'; })
+        .attr('id', function(d, i) { return i; })
+        .on('mouseover', function(d){
+            text.style('display', 'block')
+            .html('<img src=img/' + d.point.IMAGE + '>');
+        })
+        .on('mouseout', function(d){
+            text.style('display', 'block')
+            .text('Out of bounds');
+        })  
+  });
 
 
-</script>
+
+
+  </script>
+</body>

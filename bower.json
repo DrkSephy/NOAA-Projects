@@ -1,7 +1,8 @@
 {
+  "name": "Voronoi",
   "dependencies": {
     "bootstrap": "~3.0.3",
     "jquery": "~1.11.0",
-    "d3": "~3.4.8",
+    "d3": "~3.4.8"
   }
 }

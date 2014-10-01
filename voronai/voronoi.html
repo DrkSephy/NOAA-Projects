@@ -81,13 +81,16 @@ d3.json('granule-data.json', function(error, json) {
         .y(function(d) { return d.LATITUDE; })
         .clipExtent([[0, 0], [width, height]]);
 
+    // Load data
     var node = svg.selectAll('.voronoi-stops')
     .data(voronoiStops(json.data));
 
+    // Append all links as outer 
     var nodeEnter = node.enter().append('svg:a')
       .attr('class', 'node')
-      .attr('xlink:href', function(d) { return "img/" + d.point.IMAGE; });
+      .attr('xlink:href', function(d) { return "granules/" + d.point.IMAGE; });
 
+    // Append all paths as children of <a>
     nodeEnter.append('path')
       .attr('class', function(d, i) { return i ? "q" + (i % 9) + "-9" : null; })
       .attr('d', function(d) { return 'M' + d.join('L') + 'Z'; })
@@ -100,29 +103,6 @@ d3.json('granule-data.json', function(error, json) {
           text.style('display', 'block')
           .text('Out of bounds');
       })  
-
-
-
-
-
-
-    /*
-    // Build polygons, append all data, add mouseover/mouseout functions
-    svg.selectAll('.voronoi-stops')
-      .data(voronoiStops(json.data))
-      .enter().append('path')
-      .attr('class', function(d, i) { return i ? "q" + (i % 9) + "-9" : null; })
-      .attr('d', function(d) { return 'M' + d.join('L') + 'Z'; })
-      .attr('id', function(d, i) { return i; })
-      .on('mouseover', function(d){
-          text.style('display', 'block')
-          .html('<img src=img/' + d.point.IMAGE + '>');
-      })
-      .on('mouseout', function(d){
-          text.style('display', 'block')
-          .text('Out of bounds');
-      })  
-    */
 });
 
 

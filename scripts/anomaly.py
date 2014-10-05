@@ -174,6 +174,6 @@ for f in orig_files:
     v[:,:] = anomaly.astype('f4')
     sst = ds.variables['sst_regression']
     sst[:, :] = v[:, :]
-    # print "[" + str(i) + "]" + " " + orig_path + f + " " + anomaly_path + anomaly_files[i] 
+    print "[" + str(i) + "]" + " " + orig_path + f + " " + anomaly_path + anomaly_files[i] 
     i += 1
 

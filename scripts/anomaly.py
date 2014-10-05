@@ -160,7 +160,7 @@ i = 0
 # Iterate over all the .nc files we want to change regression
 for f in orig_files:
     # Original Dataset
-    ds = netCDF4.Dataset(orig_path + f)
+    ds = netCDF4.Dataset(orig_path + f, 'r+', format="NETCD4")
     # Anomaly Dataset
     ds2 = netCDF4.Dataset(anomaly_path + anomaly_files[i])
     #Read anomaly

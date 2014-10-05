@@ -3,8 +3,8 @@ from os import listdir
 from os.path import isfile, join
 
 # Path to NC files containing all data
-orig_path = "/home/DrkSephy/tmp/"
-orig_files = [ f for f in listdir(path) if isfile(join(path, f)) ]
+orig_path = "/home/DrkSephy/tmp/nc/"
+orig_files = [ f for f in listdir(orig_path) if isfile(join(orig_path, f)) ]
 
 # List of all files containing only anomaly
 anomaly_path = "/home/DrkSephy/csdirs-spt/anomaly/"
@@ -155,7 +155,24 @@ anomaly_files =   ['output1.nc',
          'output144.nc'
         ]
 
-i = 1
+i = 0
+# Iterate over all the .nc files we want to change regression
 for f in orig_files:
-    for file in anomaly_files:
-        print "[" + str(i) + "]" + " " + f + " " + file
+    # Original Dataset
+    ds = netCDF4.Dataset(orig_path + f)
+    # Anomaly Dataset
+    ds2 = netCDF4.Dataset(anomaly_path + anomaly_files[i])
+    #Read anomaly
+    anomaly = np.array(ds2.variables['anomaly'])
+    # Get rows/columns
+    nr, nc = ds2.variables['anomaly'].shape
+    # Create dimensions to store anomaly
+    ds.createDimension('columns', nc)
+    ds.createDimension('rows', nr)
+    v = ds.createVariable('anomaly', 'f4', ('rows', 'columns'))
+    v[:,:] = anomaly.astype('f4')
+    sst = ds.variables['sst_regression']
+    sst[:, :] = v[:, :]
+    # print "[" + str(i) + "]" + " " + orig_path + f + " " + anomaly_path + anomaly_files[i] 
+    i += 1
+

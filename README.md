@@ -16,6 +16,8 @@ One of NOAA's web products is the [SST Quality Monitor](http://www.star.nesdis.n
 
  My task was to write scripts and provide JavaScript which would allow users to hover over regions of the globe and display the corresponding granule. To do so, I used [d3](http://d3js.org/) to build a [voronoi diagram](http://en.wikipedia.org/wiki/Voronoi_diagram). The input to these voronoi diagrams are the computed `latitude` and `longitude` centers of each granule for all regions of the Earth, which in turn builds a set of SVG polygons. Voronoi diagrams allow the user to determine which region they are currently in by computing the centers of all polygons, which in turn allowed me to display the corresponding granules on mousehover events. 
 
+ ![alt tag](https://github.com/DrkSephy/NOAA-Projects/blob/master/img/squam.gif)
+
 LICENSE
 -------
 

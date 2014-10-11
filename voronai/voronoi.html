@@ -14,7 +14,7 @@
     }
 
     circle {
-      fill: transparent;
+      fill: #000;
       pointer-events: none;
     }
 
@@ -97,7 +97,6 @@
 
           // Create tooltip
           var text = d3.select('body').append('div').attr('class', 'text-tooltip');
-          var div = d3.select('body').append('div').attr('class', 'tooltip').style("opacity", 0);
 
           // Voronoi generator function
           var voronoiStops = d3.geom.voronoi()
@@ -107,7 +106,7 @@
 
           // Load data
           var node = svg.selectAll('.voronoi-stops')
-          .data(voronoiStops(json.data));
+            .data(voronoiStops(json.data));
 
           // Append all links as outer 
           var nodeEnter = node.enter().append('svg:a')
@@ -116,7 +115,6 @@
 
           // Append all paths as children of <a>
           nodeEnter.append('path')
-            .attr('class', function(d, i) { return i ? "q" + (i % 9) + "-9" : null; })
             .attr('d', function(d) { return 'M' + d.join('L') + 'Z'; })
             .attr('id', function(d, i) { return i; })
             .on('mouseover', function(d){

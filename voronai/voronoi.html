@@ -61,7 +61,7 @@
   <!--
     <img src="image.png" style="width:878px; height:500px; margin-left: 0px; margin-top: 125px; position: absolute; z-index: 1;">
   -->
-  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="../bower_components/d3/d3.min.js"></script>
     <script>
       d3.json('granule-data.json', function(error, json) {
           var width = 735,
@@ -101,7 +101,10 @@
             .attr('id', function(d, i) { return i; })
             .on('mouseover', function(d){
                 text.style('display', 'block')
-                .html(d.point.ID);
+                .html("ID: " + d.point.ID + 
+                      "<br>" + "LATITUDE: " + d.point.LATITUDE + 
+                      "<br>" + "LONGITUDE: " + d.point.LONGITUDE + 
+                      "<br>" + "IMAGE: " + d.point.IMAGE);
                 // .html('<img src=img/' + d.point.IMAGE + '>');
             })
             .on('mouseout', function(d){

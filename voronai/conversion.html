@@ -155,11 +155,11 @@ var points =  [
 var scaledPoints = []
 var latitude_scale = d3.scale.linear();
 latitude_scale.domain([90, -90]);
-latitude_scale.range([0, 500]);
+latitude_scale.range([0, 372]);
 
 var longitude_scale = d3.scale.linear();
 longitude_scale.domain([-180, 180]);
-longitude_scale.range([0, 878])
+longitude_scale.range([0, 735])
 
 for(var i = 0; i < points.length; i++){
   scaledPoints.push([longitude_scale(points[i][1]), latitude_scale(points[i][0])]);

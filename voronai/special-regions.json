@@ -1,0 +1,34 @@
+{
+    "data" : [
+        {
+            "x": 428,
+            "y": 105, 
+            "link": "http://0.0.0.0:8000/voronai/dropdown.html?region=5"
+        },
+
+        {
+            "x": 165,
+            "y": 150,
+            "link": "http://0.0.0.0:8000/voronai/dropdown.html?region=1"
+
+        },
+
+        {
+            "x": 190,
+            "y": 150,
+            "link": "http://0.0.0.0:8000/voronai/dropdown.html?region=2"
+        },
+
+        {
+            "x": 205,
+            "y": 125,
+            "link": "http://0.0.0.0:8000/voronai/dropdown.html?region=3"
+        },
+
+        {
+            "x": 105,
+            "y": 125,
+            "link": "http://0.0.0.0:8000/voronai/dropdown.html?region=4"
+        }
+    ]
+}

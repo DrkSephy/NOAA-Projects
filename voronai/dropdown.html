@@ -4,12 +4,28 @@
     </head>
     <body>
         <select id="dropdown">
-         <option value="1">Item1</option>
+         <option value="1">Black Sea</option>
          <option value="2">Item2</option>
          <option value="3">Item3</option>
         </select>
     </body>
-    <script> 
-        $("#dropdown").val("3");
+
+    <script>
+        var vars = [], hash;
+        var q = document.URL.split('?')[1];
+        if(q != undefined){
+            q = q.split('&');
+            for(var i = 0; i < q.length; i++){
+                hash = q[i].split('=');
+                vars.push(hash[1]);
+                vars[hash[0]] = hash[1];
+            }
+        }
     </script>
+
+    <script> 
+        console.log(vars['a']);
+        $("#dropdown").val(vars['a']);
+    </script>
+
 </html>

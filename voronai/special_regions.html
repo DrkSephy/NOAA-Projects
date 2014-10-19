@@ -15,6 +15,13 @@
       z-index: 2;
     }
 
+    rect {
+      width: 35;
+      height: 25;
+      fill: white;
+      stroke: red;
+    }
+
 </style>
 <img src="image.png" style="width:878px; height:500px; margin-left: 253px; margin-top: 150px; position: absolute; z-index: 1;">
 <script src="../bower_components/d3/d3.min.js"></script>
@@ -29,15 +36,61 @@
         .attr('height', height)
 
     var nodeEnter = svg.append('svg:a')
-      .attr('xlink:href', 'http://0.0.0.0:8000/voronai/dropdown.html?region=1')
+      .attr('xlink:href', 'http://0.0.0.0:8000/voronai/dropdown.html?region=5')
 
+    // Black Sea
     nodeEnter.append('rect')
-      .attr('x', 422)
+      .attr('x', 428)
       .attr('y', 105)
-      .attr('width', 35)
+      .attr('width', 25)
       .attr('height', 25)
       .attr('fill', 'white')
       .attr('stroke', 'red');
+
+    var nodeEnter2 = svg.append('svg:a')
+      .attr('xlink:href', 'http://0.0.0.0:8000/voronai/dropdown.html?region=1')
+    // Gulf of Mexico
+    nodeEnter2.append('rect')
+      .attr('x', 165)
+      .attr('y', 150)
+      .attr('width', 25)
+      .attr('height', 25)
+      .attr('fill', 'white')
+      .attr('stroke', 'red');
+
+    var nodeEnter3 = svg.append('svg:a')
+      .attr('xlink:href', 'http://0.0.0.0:8000/voronai/dropdown.html?region=2')
+    // Southeast
+    nodeEnter3.append('rect')
+      .attr('x', 190)
+      .attr('y', 150)
+      .attr('width', 25)
+      .attr('height', 25)
+      .attr('fill', 'white')
+      .attr('stroke', 'red');
+
+    var nodeEnter4 = svg.append('svg:a')
+      .attr('xlink:href', 'http://0.0.0.0:8000/voronai/dropdown.html?region=3')
+    // Northeast
+    nodeEnter4.append('rect')
+      .attr('x', 205)
+      .attr('y', 125)
+      .attr('width', 25)
+      .attr('height', 25)
+      .attr('fill', 'white')
+      .attr('stroke', 'red');
+
+    var nodeEnter5 = svg.append('svg:a')
+      .attr('xlink:href', 'http://0.0.0.0:8000/voronai/dropdown.html?region=4')
+    // West Coast
+    nodeEnter5.append('rect')
+      .attr('x', 105)
+      .attr('y', 125)
+      .attr('width', 25)
+      .attr('height', 25)
+      .attr('fill', 'None')
+      .attr('stroke', 'red');
+
 
 
 </script>

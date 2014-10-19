@@ -26,13 +26,17 @@
         .attr('width', width)
         .attr('height', height)
 
-    svg.append('rect')
+    var nodeEnter = svg.append('svg:a')
+      .attr('xlink:href', 'http://www.star.nesdis.noaa.gov/sod/sst/cwimages/cwimages.html')
+
+    nodeEnter.append('rect')
       .attr('x', 422)
       .attr('y', 105)
       .attr('width', 35)
       .attr('height', 25)
       .attr('fill', 'white')
-      .attr('stroke', 'blue')
+      .attr('stroke', 'red');
+
 
 </script>
 </body>

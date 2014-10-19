@@ -15,7 +15,7 @@
       z-index: 2;
     }
 
-    rect {
+    .rect {
       width: 35;
       height: 25;
       fill: transparent;
@@ -27,74 +27,88 @@
 <script src="../bower_components/d3/d3.min.js"></script>
 <script>
 
-    var width = 735,
-        height = 372;
+  d3.json('special-regions.json', function(error, json) {
+      var width = 735,
+          height = 372;
 
-    var svg = d3.select('body')
-        .append('svg')
-        .attr('width', width)
-        .attr('height', height)
+      var svg = d3.select('body')
+          .append('svg')
+          .attr('width', width)
+          .attr('height', height)
 
 
 
+      svg.append('g').attr('class', 'feature-group');
 
-    var nodeEnter = svg.append('svg:a')
-      .attr('xlink:href', 'http://0.0.0.0:8000/voronai/dropdown.html?region=5')
+      var node = svg.selectAll('.rect')
+        .data(json.data)
 
-    // Black Sea
-    nodeEnter.append('rect')
-      .attr('x', 428)
-      .attr('y', 105)
-      .attr('width', 25)
-      .attr('height', 25)
-      .attr('fill', 'white')
-      .attr('stroke', 'black');
+      var nodeEnter = node.enter().append('svg:a')
+        .attr('class', 'node')
+        .attr('xlink:href', function(d) { return d.link; });
 
-    var nodeEnter2 = svg.append('svg:a')
-      .attr('xlink:href', 'http://0.0.0.0:8000/voronai/dropdown.html?region=1')
-    // Gulf of Mexico
-    nodeEnter2.append('rect')
-      .attr('x', 165)
-      .attr('y', 150)
-      .attr('width', 25)
-      .attr('height', 25)
-      .attr('fill', 'white')
-      .attr('stroke', 'red');
 
-    var nodeEnter3 = svg.append('svg:a')
-      .attr('xlink:href', 'http://0.0.0.0:8000/voronai/dropdown.html?region=2')
-    // Southeast
-    nodeEnter3.append('rect')
-      .attr('x', 190)
-      .attr('y', 150)
-      .attr('width', 25)
-      .attr('height', 25)
-      .attr('fill', 'white')
-      .attr('stroke', 'red');
+      /*
+      var nodeEnter = svg.append('svg:a')
+        .attr('xlink:href', 'http://0.0.0.0:8000/voronai/dropdown.html?region=5')
 
-    var nodeEnter4 = svg.append('svg:a')
-      .attr('xlink:href', 'http://0.0.0.0:8000/voronai/dropdown.html?region=3')
-    // Northeast
-    nodeEnter4.append('rect')
-      .attr('x', 205)
-      .attr('y', 125)
-      .attr('width', 25)
-      .attr('height', 25)
-      .attr('fill', 'white')
-      .attr('stroke', 'red');
+      // Black Sea
+      nodeEnter.append('rect')
+        .attr('x', 428)
+        .attr('y', 105)
+        .attr('width', 25)
+        .attr('height', 25)
+        .attr('fill', 'white')
+        .attr('stroke', 'black');
 
-    var nodeEnter5 = svg.append('svg:a')
-      .attr('xlink:href', 'http://0.0.0.0:8000/voronai/dropdown.html?region=4')
-    // West Coast
-    nodeEnter5.append('rect')
-      .attr('x', 105)
-      .attr('y', 125)
-      .attr('width', 25)
-      .attr('height', 25)
-      .attr('fill', 'red')
-      .attr('stroke', 'black');
+      var nodeEnter2 = svg.append('svg:a')
+        .attr('xlink:href', 'http://0.0.0.0:8000/voronai/dropdown.html?region=1')
+      // Gulf of Mexico
+      nodeEnter2.append('rect')
+        .attr('x', 165)
+        .attr('y', 150)
+        .attr('width', 25)
+        .attr('height', 25)
+        .attr('fill', 'white')
+        .attr('stroke', 'red');
+
+      var nodeEnter3 = svg.append('svg:a')
+        .attr('xlink:href', 'http://0.0.0.0:8000/voronai/dropdown.html?region=2')
+      // Southeast
+      nodeEnter3.append('rect')
+        .attr('x', 190)
+        .attr('y', 150)
+        .attr('width', 25)
+        .attr('height', 25)
+        .attr('fill', 'white')
+        .attr('stroke', 'red');
+
+      var nodeEnter4 = svg.append('svg:a')
+        .attr('xlink:href', 'http://0.0.0.0:8000/voronai/dropdown.html?region=3')
+      // Northeast
+      nodeEnter4.append('rect')
+        .attr('x', 205)
+        .attr('y', 125)
+        .attr('width', 25)
+        .attr('height', 25)
+        .attr('fill', 'white')
+        .attr('stroke', 'red');
+
+      var nodeEnter5 = svg.append('svg:a')
+        .attr('xlink:href', 'http://0.0.0.0:8000/voronai/dropdown.html?region=4')
+      // West Coast
+      nodeEnter5.append('rect')
+        .attr('x', 105)
+        .attr('y', 125)
+        .attr('width', 25)
+        .attr('height', 25)
+        .attr('fill', 'red')
+        .attr('stroke', 'black');
+      */
+  });
 
 
 </script>
+
 </body>
 </html>

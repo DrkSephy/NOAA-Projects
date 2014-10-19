@@ -18,7 +18,7 @@
     rect {
       width: 35;
       height: 25;
-      fill: white;
+      fill: transparent;
       stroke: red;
     }
 
@@ -35,6 +35,9 @@
         .attr('width', width)
         .attr('height', height)
 
+
+
+
     var nodeEnter = svg.append('svg:a')
       .attr('xlink:href', 'http://0.0.0.0:8000/voronai/dropdown.html?region=5')
 
@@ -45,7 +48,7 @@
       .attr('width', 25)
       .attr('height', 25)
       .attr('fill', 'white')
-      .attr('stroke', 'red');
+      .attr('stroke', 'black');
 
     var nodeEnter2 = svg.append('svg:a')
       .attr('xlink:href', 'http://0.0.0.0:8000/voronai/dropdown.html?region=1')
@@ -88,9 +91,8 @@
       .attr('y', 125)
       .attr('width', 25)
       .attr('height', 25)
-      .attr('fill', 'None')
-      .attr('stroke', 'red');
-
+      .attr('fill', 'red')
+      .attr('stroke', 'black');
 
 
 </script>

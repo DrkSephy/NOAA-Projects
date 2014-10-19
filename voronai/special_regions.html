@@ -15,8 +15,8 @@
       z-index: 2;
     }
 
-    .rect {
-      width: 35;
+    rect {
+      width: 25;
       height: 25;
       fill: transparent;
       stroke: red;
@@ -40,13 +40,19 @@
 
       svg.append('g').attr('class', 'feature-group');
 
-      var node = svg.selectAll('.rect')
+      var node = svg.selectAll('rect')
         .data(json.data)
 
       var nodeEnter = node.enter().append('svg:a')
         .attr('class', 'node')
         .attr('xlink:href', function(d) { return d.link; });
 
+
+      nodeEnter.append('rect')
+        .attr('x', function(d) { return d.x; })
+        .attr('y', function(d) { return d.y; })
+        .attr('width', 25)
+        .attr('height', 25);
 
       /*
       var nodeEnter = svg.append('svg:a')

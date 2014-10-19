@@ -11,6 +11,7 @@
     </body>
 
     <script>
+        // Extract query string parameters
         var vars = [], hash;
         var q = document.URL.split('?')[1];
         if(q != undefined){
@@ -24,8 +25,9 @@
     </script>
 
     <script> 
-        console.log(vars['a']);
-        $("#dropdown").val(vars['a']);
+        // Change value of dropdown menu based on query string
+        console.log(vars['region']);
+        $("#dropdown").val(vars['region']);
     </script>
 
 </html>

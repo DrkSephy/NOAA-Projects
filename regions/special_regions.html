@@ -33,8 +33,9 @@
 <script src="../bower_components/d3/d3.min.js"></script>
 <script>
   $("#special-region").click(function(){
-    console.log("hello")
-    $("rect").attr('visibility', 'hidden')
+    $('rect').attr('visibility', this.checked?'hidden':'visible');
+    //console.log("hello")
+    //$("rect").attr('visibility', 'hidden')
   });
 </script>
 <script>

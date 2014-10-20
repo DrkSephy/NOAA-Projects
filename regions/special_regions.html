@@ -4,7 +4,10 @@
 </head>
 <body>
 
-<style>
+
+<input type="checkbox" id="special-region" name="regions" >Show<br>
+
+ <style>
 
     svg {
       width: 735px;
@@ -18,13 +21,22 @@
     rect {
       width: 25;
       height: 25;
-      fill: blue;
-      stroke: red;
+      fill: gray;
+      stroke: magenta;
+      fill-opacity: 0.5;
     }
 
 </style>
+
+
 <img src="image.png" style="width:878px; height:500px; margin-left: 253px; margin-top: 150px; position: absolute; z-index: 1;">
 <script src="../bower_components/d3/d3.min.js"></script>
+<script>
+  $("#special-region").click(function(){
+    console.log("hello")
+    $("rect").attr('visibility', 'hidden')
+  });
+</script>
 <script>
 
   d3.json('special-regions.json', function(error, json) {

@@ -1,0 +1,672 @@
+<HTML><HEAD>
+<TITLE>ACSPO CLEAR SKY IMAGES</TITLE>
+<script type="text/javascript" src="images/scripts/popupinfo.js"></script>
+<SCRIPT SRC="images/scripts/squammenu.js" type="text/javascript"></SCRIPT>
+<LINK REL=StyleSheet HREF="images/css/squammenu.css" TYPE="text/css" MEDIA="screen, print">
+<LINK REL=StyleSheet HREF="images/css/squaminfo.css" TYPE="text/css" MEDIA="screen, print">
+<LINK REL=StyleSheet HREF="images/css/squammain.css" TYPE="text/css" MEDIA="screen, print">
+<LINK REL=StyleSheet HREF="images/css/footerinfo.css" TYPE="text/css" MEDIA="screen, print">
+<script language="javascript" type="text/javascript" src="images/scripts/earliest_date.js"></script>
+<script language="javascript" type="text/javascript" src="images/scripts/latest_date.js"></script>
+<script language="JavaScript" type="text/javascript" src="images/scripts/playdate.js"></script>
+
+<script language="javascript" type="text/javascript">
+var earliest_year;
+var earliest_month;
+var earliest_day;
+var latest_year;
+var latest_month;
+var latest_day;
+var year_dir;
+var satname;
+var imagetype;
+var dn;
+var date_filename;
+var resol;
+var resolU;
+var mmdd;
+var curr_time;
+var new_time;
+</script>
+
+<script type="text/JavaScript">
+
+<!--   Hide the javascript from being interpreted by HTML
+
+function rfshdate(){
+
+d = new Date(); curr_day = d.getDate(); curr_month = d.getMonth()+1; curr_year = d.getYear()+1900; 
+    curr_time = d.getTime();
+
+
+//refresh para string
+    var year = eval(document.dateinput.c_year.options[document.dateinput.c_year.selectedIndex].text);
+    var month = eval(document.dateinput.c_month.options[document.dateinput.c_month.selectedIndex].text);
+    var day = eval(document.dateinput.c_day.options[document.dateinput.c_day.selectedIndex].text);
+       //alert (year); alert(month); alert(day);
+
+//change year_dir and date_filename
+    year_dir = year;
+    day_act=day;
+    month_act=month;
+    if(day_act < 10)day_act="0"+day_act
+    if(month_act < 10)month_act="0"+month_act
+    date_actual = year+month_act+day_act
+    date_filename = year+"-"+month_act+"-"+day_act
+        mmdd = month_act+"-"+day_act;
+        mm = month_act; dd = day_act;
+
+// find selected time compared with time of new format
+
+       selected_date = new Date(year,month-1,day);
+       selected_time = selected_date.getTime();
+       newformat_date = new Date('august 1, 2010');
+       newformat_time =  newformat_date.getTime();
+       newsize2x_date = new Date('august 17, 2010');
+       newsize2x_time = newsize2x_date.getTime();
+
+       deltime = selected_time - newformat_time;  deldays = deltime/86400000;
+       deltime1 = selected_time - newsize2x_time;  deldays1 = deltime1/86400000;
+       //alert(selected_time); alert(newformat_time); 
+       //alert(deldays);
+}
+
+
+function show(id) {
+   var e = document.getElementById(id) ;
+   e.style.display = 'block'; }
+
+function hide(id) {
+   var e = document.getElementById(id) ;
+   e.style.display = 'none'; }
+
+function enlargeImage(){
+   image.height="720"; image.width="943";
+}
+function dropImage(){
+   image.height="532"; image.width="755";
+}
+
+
+function TIMESERIESDISP() { //v2.0
+
+radioreturnkey=document.imageFORM.dispimage.selectedIndex;
+
+radioreturnkey1=document.regionFORM.dispregion.selectedIndex;
+
+rfshdate();
+
+size=""; dropImage();
+
+if(document.form1.TYPERADIOGROUP[0].checked==true){resol="4km"; type="GHRR"}
+if(document.form1.TYPERADIOGROUP[1].checked==true){resol="1km"; type="FRAC"}
+if(document.form1.TYPERADIOGROUP[2].checked==true)
+{
+  resol="1km"; type="FRAC"; size="_2X"; enlargeImage();
+}
+
+if(document.form1.IMGRADIOGROUP[0].checked==true){displaytype="MAP"}
+if(document.form1.IMGRADIOGROUP[1].checked==true){displaytype="HISTOGRAM"}
+
+if(document.form1.SATRADIOGROUP[0].checked==true)satname="METOPA"
+if(document.form1.SATRADIOGROUP[1].checked==true)satname="NOAA19"
+if(document.form1.SATRADIOGROUP[2].checked==true)satname="NOAA18"
+if(document.form1.SATRADIOGROUP[3].checked==true)satname="NOAA17"
+if(document.form1.SATRADIOGROUP[4].checked==true)satname="NOAA16"
+
+if(radioreturnkey==0)imagetype="sst_regression"
+if(radioreturnkey==1)imagetype="sst_anomaly"
+if(radioreturnkey==2)imagetype="albedo_ch1"
+if(radioreturnkey==3)imagetype="albedo_ch2"
+if(radioreturnkey==4)imagetype="albedo_ch3a"
+if(radioreturnkey==5)imagetype="crtm-avhrr_ch3b"
+if(radioreturnkey==6)imagetype="crtm-avhrr_ch4"
+if(radioreturnkey==7)imagetype="crtm-avhrr_ch5"
+if(radioreturnkey==8)imagetype="acspo_mask"
+if(radioreturnkey==9)imagetype="aod_ch1"
+if(radioreturnkey==10)imagetype="aod_ch2"
+if(radioreturnkey==11)imagetype="aod_ch3a"
+
+if(radioreturnkey1==0)region="MR"
+if(radioreturnkey1==1)region="SR"
+if(radioreturnkey1==2)region="ER"
+if(radioreturnkey1==3)region="WN"
+if(radioreturnkey1==4)region="BS"
+
+//  For albedos or aod's (channels 1, 2 or 3a)
+
+if ( radioreturnkey==2 || radioreturnkey==3 || radioreturnkey==4 || 
+     radioreturnkey==9 || radioreturnkey==10 || radioreturnkey==11 ) 
+{ 
+    show ('DAY');                       // show the DAY radio button
+    document.form1.DAYNIGHTRADIOGROUP[1].checked=true;     // set the DAY radio button
+    hide ('NIGHT');   // hide NIGHT button
+    hide ('HISTOGRAM');     // hide the HISTOGRAM button
+}
+
+//  For sst_regression, sst_anomaly, or brightness temperatures channels 3b, 4, 5 
+
+if ( radioreturnkey==0 || radioreturnkey==1 || radioreturnkey==5 || radioreturnkey==6 || radioreturnkey==7 ) 
+{ 
+      show ('NIGHT');   // show NIGHT radio button
+      show ('DAY');  // show DAY radio button
+      show ('HISTOGRAM');      //  show the HISTOGRAM button
+}
+
+if(document.form1.DAYNIGHTRADIOGROUP[0].checked==true)dn="NIGHT"
+if(document.form1.DAYNIGHTRADIOGROUP[1].checked==true)dn="DAY"
+
+if(document.form1.MASKRADIOGROUP[0].checked==true)mask=""
+if(document.form1.MASKRADIOGROUP[1].checked==true)mask="_masked"
+if(document.form1.MASKRADIOGROUP[2].checked==true)mask="_glint"
+
+if(displaytype == "HISTOGRAM" )  // For HISTOGRAM images
+{      
+   //  For albedo's, aod's or cloud mask there are no histograms, only maps
+ 
+   if (imagetype == 'albedo_ch1' || imagetype == 'albedo_ch2' || imagetype == 'albedo_ch3a' ||
+       imagetype == 'aod_ch1' || imagetype == 'aod_ch2' || imagetype == 'aod_ch3a' ||
+       imagetype == 'acspo_mask')
+   { 
+      document.form1.IMGRADIOGROUP[0].checked=true;   // Set MAP button  
+      show ('ALLSKY');                       // show ALL SKY button
+      message = "NO HISTOGRAMS FOR "+imagetype+"; MAP ONLY"; alert (message);  // show ERROR message
+   }
+
+   // For histogram display, check CLEAR SKY button and hide ALL SKY and GLINT buttons
+
+   else
+   { 
+      imagetype = imagetype+"_hist";     
+      mask="";
+      document.form1.MASKRADIOGROUP[1].checked=true;  // set CLEAR SKY button
+      hide ('ALLSKY');           // hide ALL SKY button
+      hide ('GLINT');           // hide GLINT button
+   }
+
+   // For histogram hide color keys and FRAC_2X button
+      hide ('COLORKEY'); hide ('COLORKEYALBEDO'); hide ('FRAC_2X');
+
+   // If FRAC 2X was previously checked, check FRAC for histograms
+   if(document.form1.TYPERADIOGROUP[2].checked==true)
+   {
+      document.form1.TYPERADIOGROUP[1].checked=true
+      type="FRAC"; size="";
+   }
+
+}
+else   // For MAP images show all mask radio buttons except hide glint button
+       // for Night. Going from glint to night selection, reset mask to all sky.
+{    
+      show ('ALLSKY');
+      show ('CLEARSKY');
+      if (dn == 'NIGHT')
+      { hide ('GLINT'); 
+        if ( mask == "_glint" )
+        { document.form1.MASKRADIOGROUP[0].checked = true;
+          mask="";
+        }
+      }
+      else 
+      { show ('GLINT'); }      
+}
+
+// For cloud mask, hide HISTOGRAM and ALL/CLEAR SKY options
+
+if ( radioreturnkey==8 )
+{ 
+      show ('NIGHT');
+      show ('DAY');
+      hide ('HISTOGRAM');
+      hide ('ALLSKY'); hide ('CLEARSKY'); hide ('GLINT');
+      mask="";
+}
+
+//  For albedos show black/white color key rather than full color key for all sky
+//    images, not clear sky or glint
+
+if ( document.form1.MASKRADIOGROUP[0].checked==true && 
+   (radioreturnkey==2 || radioreturnkey==3 || radioreturnkey==4) )
+{     hide ('COLORKEY'); show ('COLORKEYALBEDO');}
+else
+{     show ('COLORKEY'); hide ('COLORKEYALBEDO'); }
+
+//  For NOAA satellite data show only GHRR button, not FRAC
+
+if (satname != "METOPA") 
+{  
+      type = "GHRR"; resol = "4km";
+      document.form1.TYPERADIOGROUP[0].checked=true ;
+      hide ('FRAC'); // hide FRAC button
+      hide ('FRAC_2X'); // hide FRAC enlargement button
+      show ('GHRR');  // show GHRR button
+}
+
+//  For MetOp data, show both FRAC and GHRR data types
+
+else 
+{
+      show ('FRAC'); // show FRAC button
+      show ('GHRR');  // show GHRR button
+      if (deltime1 > 0) 
+      {  show ('FRAC_2X'); }  
+      else 
+      {  hide ('FRAC_2X'); }
+      if(displaytype == "HISTOGRAM" ) {hide ('FRAC_2X');} 
+}
+
+//  For FRAC data, hide NOAA satellites 
+
+if ( type == "FRAC" || type == "FRAC_2X" )
+{
+   show ( 'SATGROUP0'); 
+   hide ( 'SATGROUP1'); 
+   hide ( 'SATGROUP2');
+   hide ( 'SATGROUP3');
+   hide ( 'SATGROUP4');
+}
+if ( type == "GHRR" )
+{
+   show ( 'SATGROUP0');
+   show ( 'SATGROUP1');  
+   show ( 'SATGROUP2');
+   show ( 'SATGROUP3');
+   show ( 'SATGROUP4');
+}
+
+if( resol == "1km" ) {resolU = "1KM"}
+if (resol == "4km" ) {resolU = "4KM"}
+
+if (deltime < 0) 
+{ hide ('COLORKEY'); hide ('COLORKEYALBEDO'); hide ('GLINT');   }
+ 
+filename="mapimages/"+region+"_"+dn+"_"+satname+"_"+type+"_"+mmdd+"_"+resolU+"_"+imagetype+mask+size+".png";
+
+//filename="MR_FRAC_700_.35mag_24.8-89.png";
+
+document.image.src=filename;
+
+//{document.image.src="mapimages/region+"_"+dn+"_"+satname+"_"+type+"_"+mmdd+"_"+resolU+"_"+imagetype+mask+".png";}
+
+//alert(filename);
+
+}
+//  End of Javascript  -->
+
+</script>
+<script type=text/javascript src=http://www.star.nesdis.noaa.gov/star/global/js/federated-analytics.js></script></head>
+
+<BODY topmargin="0" leftmargin="0" onload="initialize()">
+<div align="center">
+  <center>
+
+<tr>
+
+<font face="Arial" size="7">
+<H1><FONT SIZE="5"> ACSPO CLEAR SKY IMAGES </FONT></H1>
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="90%" id="AutoNumber4">
+<tr>
+<td width="100%" style="border-style: none; border-width: medium" colspan="2" align="center" bgcolor="#FFFFFF">
+<p align="center">
+</tr>
+
+<tr>
+<td width="68%" bgcolor="cyan" bordercolor="#EDEDED" style="border-left: 0px solid #EDEDED; border-right: 0px solid #EDEDED; 
+    border-top: 0px solid #EDEDED; border-bottom-color: #EDEDED">
+    <ul id="squammenu">
+     <li><a href="index.html">Home</a>|</li>
+     <li><a href="cwimages.html">Images</a>|</li>
+    </ul>
+</td>
+
+<tr>
+<td width="40%" bgcolor="#FFFFFF" align="left" style="padding-left: 12">
+&nbsp;</td>
+<td width="32%" bgcolor="#FFFFFF" align="right" style="padding-right: 12""><pagelocationinfo>
+Last modified: Jul-26-2010
+</pagelocationinfo></td>
+</tr>
+
+
+<tr>
+<td width="100%" colspan="2" bordercolor="#FFFFFF" style="border: 0px solid #FFFFFF; " bgcolor="#FFFFFF">
+<span style="LINE-HEIGHT: 200%; FONT-FAMILY: MS Sans Serif; ">
+<font face="Arial" size="3">
+<p align="right" style="line-height: 100%; margin-top: 0; margin-bottom: 0">&nbsp;</p>
+</font>
+</span>
+<p style="margin-top: 0; margin-bottom: 0">
+<table border="0" cellpadding="0" cellspacing="0" height="1" bgcolor="#FFFFFF" style="border-color:#C0C0C0; 
+          border-collapse: collapse" dir="ltr" align="left">
+<tbody>
+
+<tr>
+<td height="350" valign="top" width="207" style="border-style:none; border-width:medium; " align="center" dir="ltr">
+<table border="0" cellpadding="0" cellspacing="0" style="border:0px dotted #FFFFFF; border-collapse: collapse" 
+             bgcolor="#FFFFFF" dir="ltr" height="1">
+<tbody>
+<tr>
+<td >
+<tbody>
+<tr>  
+
+ <td height="156" valign="top" width="134" dir="ltr">&nbsp;<center dir="ltr">
+ <table border="0" cellspacing="0" width="189" style="border-collapse: collapse" cellpadding="0" align="left" dir="ltr" height="84">
+ <tbody>
+ <form id="imageFORM" name="imageFORM" method="post" action="" dir="ltr">
+
+ <tr>
+ <td align="center" bgcolor="#FFFFFF" height="56" width="411" valign="top" dir="ltr" style="border-style:none; border-width:medium; 
+       " bordercolorlight="#FFFFFF"><p style="margin-top: 0; margin-bottom: 0" dir="ltr" align="left">
+ <b><font size="2" face="Arial" color="#999999">Parameter</font></b></p>
+ <p style="margin-top: 0; margin-bottom: 0" dir="ltr" align="left">
+ <font face="Arial">
+ <select name="dispimage" id="dispimage" onchange="TIMESERIESDISP()">
+                          <option value="0" dir="ltr">sst_regression</option>
+                          <option value="1" dir="ltr" selected="selected">sst_anomaly</option>
+                    <option value="2" dir="ltr" >albedo_ch1</option>
+                          <option value="3" dir="ltr" >albedo_ch2</option>
+                          <option value="4" dir="ltr" >albedo_ch3a</option>
+                          <option value="5" dir="ltr" >crtm-avhrr_ch3b</option>
+                          <option value="6" dir="ltr" >crtm-avhrr_ch4</option>
+                          <option value="7" dir="ltr" >crtm-avhrr_ch5</option>
+                          <option value="8" dir="ltr" >acspo_mask</option>
+                          <option value="9" dir="ltr" >aod_ch1</option>
+                          <option value="10" dir="ltr" >aod_ch2</option>
+                          <option value="11" dir="ltr" >aod_ch3a</option>
+                          </select></font></td></tr>
+ </form>
+
+ <td height="50" valign="top" width="134" dir="ltr">&nbsp;<center dir="ltr">
+
+             <!--  REGION TABLE -->
+
+ <table border="0" cellspacing="0" width="189" style="border-collapse: collapse" cellpadding="0" 
+      align="left" dir="ltr" height="84">
+ 
+ <form id="regionFORM" name="regionFORM" method="post" action="" dir="ltr">
+ <tr>
+ <td align="center" bgcolor="WHITE" height="56" width="411" valign="top" dir="ltr" style="border-style:none; 
+       border-width:medium; " bordercolorlight="#FFFFFF"><p style="margin-top: 0; margin-bottom: 0" dir="ltr" 
+       align="left">
+ <b><font size="2" face="Arial" color="#999999">Region</font></b></p>
+ <p style="margin-top: 0; margin-bottom: 0" dir="ltr" align="left">
+ <font face="Arial">
+ <select name="dispregion" id="dispregion" onchange="TIMESERIESDISP()">
+                          <option value="0" dir="ltr" selected="selected">Gulf of Mexico</option>
+                          <option value="1" dir="ltr" >Southeast</option>
+                    <option value="2" dir="ltr" >Northeast</option>
+                          <option value="3" dir="ltr" >West Coast</option>
+                          <option value="4" dir="ltr" >Black Sea</option>
+
+ </select></font></td>
+ </tr>
+ </form>
+ </table>     <!--  END REGION TABLE --> 
+
+   <form id="form1" name="form1" method="post" action="" dir="ltr">
+   <tr>
+   <td align="center" bgcolor="#ffffff" height="167" valign="top" width="409" dir="ltr" style="border: medium none #FFFFFF; " bordercolorlight="#FFFFFF">
+   <div align="left" dir="ltr" style="width: 207; height: 103">
+   <p style="margin-top: 0; margin-bottom: 0">
+   <b><font face="Arial" style="font-size: 10pt" color="#999999">
+   </font></b></p>
+   </font>
+
+    <table bgcolor="#ffffff" height="20" width="205" style="border-collapse: collapse" cellpadding="0" cellspacing="0" dir="ltr">
+    <tbody>
+
+    <tr>
+    <td align="left" dir="ltr" height="1" width="93">
+        <label><span style="font-size: 10pt"><font face="Arial" size="2">ALL SKY</font></label></span> </td>
+    <td align="left" dir="ltr" height="1" width="93">
+        <label><span style="font-size: 10pt"><font face="Arial" size="2">CLEAR SKY</font></label></span></td>
+    <td align="left" dir="ltr" height="1" width="93">
+        <label><span style="font-size: 10pt"><font face="Arial" size="2">GLINT</font></label></span></td>
+    </tr>
+    
+    <tr>    
+    <td><p style="margin-top: 0; margin-bottom: 0">
+    <DIV ID="ALLSKY">
+    <input name="MASKRADIOGROUP" value="0" type="radio" checked onclick="TIMESERIESDISP()"/></td>
+    </DIV>
+
+    
+    <td><p style="margin-top: 0; margin-bottom: 0">
+    <DIV ID="CLEARSKY">
+    <input name="MASKRADIOGROUP" value="1" type="radio" onclick="TIMESERIESDISP()"/></td>
+    </DIV>
+
+    <td><p style="margin-top: 0; margin-bottom: 0">
+    <DIV ID="GLINT">
+    <input name="MASKRADIOGROUP" value="2" type="radio" onclick="TIMESERIESDISP()"/></td>
+    </DIV>
+
+    </tr>
+    </tbody>
+    </table>
+
+    <p style="margin-top: 0; margin-bottom: 0">&nbsp;</p>
+    <p style="margin-top: 0; margin-bottom: 0"><b><font face="Arial" style="font-size: 9pt" color="#999999">
+    Scene
+    </font></b></p></font>
+
+    <table bgcolor="#ffffff" height="20" width="133" style="border-collapse: collapse" cellpadding="0" cellspacing="0" dir="ltr">
+    <tbody>
+    <tr>  
+    <p style="margin-top: 0; margin-bottom: 0">
+
+    <td align="left" dir="ltr" height="1" width="66">
+    <DIV ID="NIGHT">
+    <label><span style="font-size: 10pt"><font face="Arial" size="2">
+    <input name="DAYNIGHTRADIOGROUP" value="0" type="radio" onclick="TIMESERIESDISP()"/>
+           NIGHT</label></font></span></td>   </DIV>
+
+    <td align="left" dir="ltr" height="1" width="67">
+    <DIV ID="DAY">
+    <label><span style="font-size: 10pt"><font face="Arial" size="2">
+    <input name="DAYNIGHTRADIOGROUP" value="1" type="radio" checked onclick="TIMESERIESDISP()"/>
+           DAY</label></font></span></td>     </DIV>
+    </tr>
+    </tbody>
+    </table>
+
+    <p style="margin-top: 0; margin-bottom: 0">&nbsp;</p>
+    <p style="margin-top: 0; margin-bottom: 0"><b><font face="Arial" style="font-size: 9pt" color="#999999">    
+    Data Type 
+    </font></b></p></font>
+
+    <table bgcolor="#ffffff" height="20" width="205" style="border-collapse: collapse" cellpadding="0" cellspacing="0" dir="ltr">
+    <tbody>
+
+    <tr>
+   
+    <p style="margin-top: 0; margin-bottom: 0">
+    <span style="font-size: 10pt"><font face="Arial">
+
+    <td align="left" dir="ltr" height="1" >
+    <DIV ID="GHRR">
+    <label>
+    <input name="TYPERADIOGROUP" value="0" type="radio" checked onclick="TIMESERIESDISP()"/>GHRR</td></label>
+    </DIV>
+    
+    <td align="left" dir="ltr" height="1" >
+    <DIV ID="FRAC">
+    <label>   
+    <input name="TYPERADIOGROUP" value="1" type="radio" onclick="TIMESERIESDISP()"/>FRAC</font></td></label>
+    </DIV>
+
+    <td align="left" dir="ltr" height="1" >
+    <DIV ID="FRAC_2X">
+    <label>   
+    <input name="TYPERADIOGROUP" value="2" type="radio" onclick="TIMESERIESDISP()"/>FRAC_2X</font></td></label>
+    </DIV>
+
+    </tr>
+
+    </span></font> 
+    </tbody>
+    </table>
+
+    <p style="margin-top: 0; margin-bottom: 0">&nbsp;</p>
+    <p style="margin-top: 0; margin-bottom: 0"><b><font face="Arial" style="font-size: 9pt" color="#999999">
+    Type of Display
+    </font></b></p></font>
+
+    <table bgcolor="#ffffff" height="20" width="205" style="border-collapse: collapse" cellpadding="0" cellspacing="0" dir="ltr">
+    <tbody>
+    <tr>
+   
+    <p style="margin-top: 0; margin-bottom: 0">
+    <span style="font-size: 10pt"><font face="Arial">
+
+    <td align="left" dir="ltr" height="1" width="93">
+    <DIV ID="MAP">
+    <label>
+    <input name="IMGRADIOGROUP" value="1" type="radio" checked onclick="TIMESERIESDISP()"/>MAP</label></td>
+    </DIV>
+    
+    <td align="left" dir="ltr" height="1" width="93">
+    <DIV ID="HISTOGRAM">
+    <label>
+    <input name="IMGRADIOGROUP" value="2" type="radio" onclick="TIMESERIESDISP()"/>HISTOGRAM</label></td>
+    </DIV>
+
+    </tr></font></span>
+    
+    </tbody>
+    </table>
+
+    <p style="margin-top: 0; margin-bottom: 0">&nbsp;</p>
+    <p style="margin-top: 0; margin-bottom: 0"><b>
+    <font face="Arial" size="2" color="#999999">Satellite</font></b></p>
+
+    <table bgcolor="#ffffff" height="74" width="190" style="border-collapse: collapse" cellpadding="0" cellspacing="0" dir="ltr">
+    <tbody>
+
+    <tr>
+    <td align="left" dir="ltr" height="20">
+    <DIV ID="SATGROUP0">
+    <label><input name="SATRADIOGROUP" value="0" type="radio" onclick="TIMESERIESDISP()" checked /><font size="2">MetOp-A</font></label></td>
+    </DIV>
+    </tr>
+
+    <tr>
+    <td align="left" dir="ltr" height="20">
+    <DIV ID="SATGROUP1">
+    <label><input name="SATRADIOGROUP" value="1" type="radio" onclick="TIMESERIESDISP()"  /><font size="2">NOAA-19</font></label></td></tr>   
+    </DIV>
+
+    <tr>
+    <td align="left" height="20" dir="ltr"> 
+    <DIV ID="SATGROUP2">   
+    <label><input name="SATRADIOGROUP" value="2" type="radio" onclick="TIMESERIESDISP()" /><font size="2">NOAA-18</font></label></td>
+    </tr>
+    </DIV>
+
+    <tr>
+    <td align="left" height="1" dir="ltr">
+    <DIV ID="SATGROUP3">
+    <label><input name="SATRADIOGROUP" value="3" type="radio" onclick="TIMESERIESDISP()"/><font size="2">NOAA-17</font></label></td>
+    </tr>
+    </DIV>
+
+    <tr>
+    <td align="left" dir="ltr" height="1">
+    <DIV ID="SATGROUP4">
+    <label><input name="SATRADIOGROUP" value="4" type="radio" onclick="TIMESERIESDISP()"/><font size="2">NOAA-16</font></label>
+    <p align="left" style="margin-top: 0; margin-bottom: 0" dir="ltr">&nbsp;
+    </td>
+    </DIV>
+    </tr>   
+                           
+   </tbody>
+   </table>
+   </DIV>
+
+  <p style="margin-top: 0; margin-bottom: 0" dir="ltr" align="left">
+  <font face="Arial" size="2"></font></td>
+
+  </tr>
+  </form>
+                    
+ </table></center>
+ </td>
+ </tr>
+ </tbody>
+ </table></td>
+
+<td align="center" valign="top" width="901" height="420" dir="ltr" style="border-style: none; border-width: medium">
+
+<DIV ID="IMAGE" style="width: 700; height: 350">
+<img alt="ACSPO Clear Sky Images" name="image" id="image"  
+     width="755" height="532" border="0" hspace="1" align="left" 
+     onerror="this.src='images/noresult.png'"/>
+</DIV> 
+
+</font></font></td>
+</table></td> 
+
+    </tr>
+  </tbody>
+</table>
+</center>
+</div>
+
+    <!--  COLOR KEYS  -->
+
+
+<DIV ID="COLORKEY">
+<table  border="0" cellpadding="10" cellspacing="0" collapse; border-width: 0" width="45%"  
+      align="center">
+<tr>
+<td bgcolor="#000000"><span style="color:white; font-size: 8pt">DATA MISSING</span></td>
+<td bgcolor="#808080"><span style="color:white; font-size: 8pt">DATA CLOUD MASKED</span></td>
+<td bgcolor="#9C2994"><span style="color:white; font-size: 8pt">DATA BELOW RANGE</span></td>
+<td bgcolor="#8B2500"><span style="color:white; font-size: 8pt">DATA ABOVE RANGE</span></td>
+</tr>
+</table>
+</DIV>
+
+<DIV ID="COLORKEYALBEDO">
+<table  border="0" cellpadding="10" cellspacing="0" collapse; border-width: 0" width="20%"  
+      align="center">
+<tr>
+<td bgcolor="#8B2500" style="color:white; align=center">DATA ABOVE RANGE </td>
+</tr>
+</table>
+</DIV>
+
+<br>
+<table border="0" cellpadding="0" cellspacing="0" collapse; border-width: 0" width="100%" align="center">
+<tr>
+<td align="right" width="55%">
+ <div id="acspo_playbar" align="right">
+    <FORM id="playform" name="playform" align="center">
+     <input type="button" name="rep_str" value="[" onclick="set_rep_str()" style="width:40px"  class="tags"/>
+     <input type="button" name="back" value="<" onclick="playback()" style="width:40px"  class="tags"/>
+     <input type="button" name="play" value=">>" onclick="playpause()" style="width:50px"  class="tags"/>
+     <input type="button" name="next" value=">" onclick="pressnext()" style="width:40px"  class="tags"/>
+     <input type="button" name="rep_end" value="]" onclick="set_rep_end()" style="width:40px"  class="tags"/>
+        <select name="playfps" onchange="change_fps()"  class="tags">
+          <option value="1">1 fps</option>
+          <option value="2">2 fps</option>
+          <option value="4" selected="selected">4 fps</option>
+        </select>
+    </FORM>
+ </div>
+</td>
+<td align="left" width="45%" style="padding-left:10px;>
+ <div id="acspo_datebar" align="left">
+   <FORM id=dateinput name=dateinput>
+     <SELECT onchange="change_year()" name=c_year id="c_year"></SELECT>
+     <SELECT onchange="change_month()" name=c_month id="c_month"></SELECT>
+     <SELECT onchange="change_day()" name=c_day id="c_day"></SELECT>
+   </FORM>
+ </div>
+</td>
+</tr>
+</table>
+
+</BODY></HTML>
+ 

@@ -1073,57 +1073,58 @@ URL <a target="_new" href="ftp://podaac-ftp.jpl.nasa.gov/allData/ghrsst/data/GDS
 
 
 </script>
+<!--
+  <script>
+    d3.json('granule-data.json', function(error, json) {
+      var width = 735,
+      height = 372;
 
-<script>
-  d3.json('granule-data.json', function(error, json) {
-    var width = 735,
-    height = 372;
+      // Create SVG
+      var svg = d3.select("body")
+      .append("svg")
+      .attr("width", width)
+      .attr("height", height)
 
-    // Create SVG
-    var svg = d3.select("body")
-    .append("svg")
-    .attr("width", width)
-    .attr("height", height)
+      // Create a feature group to append data to
+      svg.append('g').attr('class', 'feature-group');
 
-    // Create a feature group to append data to
-    svg.append('g').attr('class', 'feature-group');
-
-    // Create tooltip
-    var text = d3.select('body').append('div').attr('class', 'text-tooltip');
-    var div = d3.select('body').append('div').attr('class', 'tooltip').style("opacity", 0);
- 
-    // Voronoi generator function
-    var voronoiStops = d3.geom.voronoi()
-      .x(function(d) { return d.LONGITUDE; })
-      .y(function(d) { return d.LATITUDE; })
-      .clipExtent([[0, 0], [width, height]]);
+      // Create tooltip
+      var text = d3.select('body').append('div').attr('class', 'text-tooltip');
+      var div = d3.select('body').append('div').attr('class', 'tooltip').style("opacity", 0);
+   
+      // Voronoi generator function
+      var voronoiStops = d3.geom.voronoi()
+        .x(function(d) { return d.LONGITUDE; })
+        .y(function(d) { return d.LATITUDE; })
+        .clipExtent([[0, 0], [width, height]]);
 
 
-    // Load data
-    var node = svg.selectAll('.voronoi-stops')
-    .data(voronoiStops(json.data));
-  
+      // Load data
+      var node = svg.selectAll('.voronoi-stops')
+      .data(voronoiStops(json.data));
+    
 
-    // Append all links as outer
-    var nodeEnter = node.enter().append('svg:a')
-      .attr('class', 'node')
-      .attr('xlink:href', function(d) { return "anomaly/" + d.point.IMAGE; });
-  
-    // Append all paths as children of <a>
-    nodeEnter.append('path')
-      .attr('class', function(d, i) { return i ? "q" + (i % 9) + "-9" : null; })
-      .attr('d', function(d) { return 'M' + d.join('L') + 'Z'; })
-      .attr('id', function(d, i) { return i; })
-      .on('mouseover', function(d){
-        text.style('display', 'block')
-        .html('<img src=anomaly_img/' + d.point.IMAGE + '>');
-      })
-      .on('mouseout', function(d){
-        text.style('display', 'block')
-        .text('');
-      })
-    });
-</script>
+      // Append all links as outer
+      var nodeEnter = node.enter().append('svg:a')
+        .attr('class', 'node')
+        .attr('xlink:href', function(d) { return "anomaly/" + d.point.IMAGE; });
+    
+      // Append all paths as children of <a>
+      nodeEnter.append('path')
+        .attr('class', function(d, i) { return i ? "q" + (i % 9) + "-9" : null; })
+        .attr('d', function(d) { return 'M' + d.join('L') + 'Z'; })
+        .attr('id', function(d, i) { return i; })
+        .on('mouseover', function(d){
+          text.style('display', 'block')
+          .html('<img src=anomaly_img/' + d.point.IMAGE + '>');
+        })
+        .on('mouseout', function(d){
+          text.style('display', 'block')
+          .text('');
+        })
+      });
+  </script>
+-->
 
 <p id="headertitle" style="display:none" align="center">ACSPO SST statistics wrt Reynolds, MEAN, Night, outliers removed</p>
 

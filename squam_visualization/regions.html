@@ -1,33 +1,37 @@
 <HTML><HEAD>
 <TITLE>ACSPO CLEAR SKY IMAGES</TITLE>
-<script type="text/javascript" src="images/scripts/popupinfo.js"></script>
-<SCRIPT SRC="images/scripts/squammenu.js" type="text/javascript"></SCRIPT>
-<LINK REL=StyleSheet HREF="images/css/squammenu.css" TYPE="text/css" MEDIA="screen, print">
-<LINK REL=StyleSheet HREF="images/css/squaminfo.css" TYPE="text/css" MEDIA="screen, print">
-<LINK REL=StyleSheet HREF="images/css/squammain.css" TYPE="text/css" MEDIA="screen, print">
-<LINK REL=StyleSheet HREF="images/css/footerinfo.css" TYPE="text/css" MEDIA="screen, print">
-<script language="javascript" type="text/javascript" src="images/scripts/earliest_date.js"></script>
-<script language="javascript" type="text/javascript" src="images/scripts/latest_date.js"></script>
-<script language="JavaScript" type="text/javascript" src="images/scripts/playdate.js"></script>
 
-<script language="javascript" type="text/javascript">
-var earliest_year;
-var earliest_month;
-var earliest_day;
-var latest_year;
-var latest_month;
-var latest_day;
-var year_dir;
-var satname;
-var imagetype;
-var dn;
-var date_filename;
-var resol;
-var resolU;
-var mmdd;
-var curr_time;
-var new_time;
+<div style="margin-left: 71px; margin-top: 310px; position:absolute;">
+    <select id="dropdown">
+        <option value="1">Gulf of Mexico</option>
+        <option value="2">Southeast</option>
+        <option value="3">Northeast</option>
+        <option value="4">West Coast</option>
+        <option value="5">Black Sea</option>
+    </select>
+</div>
+
+<script src="../bower_components/jquery/dist/jquery.js"></script>
+<script>
+    // Extract query string parameters
+    var vars = [], hash;
+    var q = document.URL.split('?')[1];
+    if(q != undefined){
+        q = q.split('&');
+        for(var i = 0; i < q.length; i++){
+            hash = q[i].split('=');
+            vars.push(hash[1]);
+            vars[hash[0]] = hash[1];
+        }
+    }
 </script>
+
+<script> 
+    // Change value of dropdown menu based on query string
+    console.log(vars['region']);
+    $("#dropdown").val(vars['region']);
+</script>
+
 
 <script type="text/JavaScript">
 
@@ -392,14 +396,6 @@ Last modified: Jul-26-2010
  <b><font size="2" face="Arial" color="#999999">Region</font></b></p>
  <p style="margin-top: 0; margin-bottom: 0" dir="ltr" align="left">
  <font face="Arial">
- <select name="dispregion" id="dispregion" onchange="TIMESERIESDISP()">
-                          <option value="0" dir="ltr" selected="selected">Gulf of Mexico</option>
-                          <option value="1" dir="ltr" >Southeast</option>
-                    <option value="2" dir="ltr" >Northeast</option>
-                          <option value="3" dir="ltr" >West Coast</option>
-                          <option value="4" dir="ltr" >Black Sea</option>
-
- </select></font></td>
  </tr>
  </form>
  </table>     <!--  END REGION TABLE --> 

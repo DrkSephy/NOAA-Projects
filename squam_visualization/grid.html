@@ -1079,7 +1079,8 @@ URL <a target="_new" href="ftp://podaac-ftp.jpl.nasa.gov/allData/ghrsst/data/GDS
             .on('mouseout', function(d){
                 text.style('display', 'block')
                 .text('');
-            })  
+            }); 
+
       });
     </script>
 
@@ -1117,6 +1118,10 @@ URL <a target="_new" href="ftp://podaac-ftp.jpl.nasa.gov/allData/ghrsst/data/GDS
             text.style('display', 'block')
             .html('<img src=' + d.image + '>');
         })
+        .on('mouseout', function(d){
+          text.style('display', 'block')
+          .text('');
+        });
   });
 
 

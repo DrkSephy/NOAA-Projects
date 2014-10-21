@@ -16,6 +16,9 @@
   <input type="checkbox" id="anomaly" name="regions" >Show Anomaly<br>
 </div>
 
+<div style="margin-left: 71px; margin-top: 525px; position: absolute;">
+  <input type="checkbox" id="special-regions" name="regions" >Show Special Regions<br>
+</div>
 
  <style>
 
@@ -1055,6 +1058,12 @@ URL <a target="_new" href="ftp://podaac-ftp.jpl.nasa.gov/allData/ghrsst/data/GDS
   });
 </script>
 
+<script>
+  $("#special-regions").click(function(){
+    $('rect').attr('visibility', this.checked?'visible':'hidden');
+  });
+</script>
+
     <script>
       d3.json('granule-data.json', function(error, json) {
           var width = 735,
@@ -1094,6 +1103,7 @@ URL <a target="_new" href="ftp://podaac-ftp.jpl.nasa.gov/allData/ghrsst/data/GDS
             .attr('class', function(d, i) { return i ? "q" + (i % 9) + "-9" : null; })
             .attr('d', function(d) { return 'M' + d.join('L') + 'Z'; })
             .attr('id', function(d, i) { return i; })
+            .attr('visibility', 'hidden')
             .on('mouseover', function(d){
                 text.style('display', 'block')
                 .html('<img src=anomaly_img/' + d.point.IMAGE + '>');

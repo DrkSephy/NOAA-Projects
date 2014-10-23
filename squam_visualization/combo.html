@@ -1,0 +1,1302 @@
+<html>
+<head>
+<title>Monitoring and validation of high resolution satellite SST products</title>
+<meta name="Description" content="The NOAA NESDIS SST Quality Monitor (SQUAM) provides NRT SST diagnostics to the oceanographic, meteorological, climate and general scientific community.">
+<meta name="Keywords" content=" sea surface temperature, SST Quality Monitor, SQUAM, MUT, ACSPO, L4 SST, Reynolds, RTG, OSTIA, NAVO K10, GMPE, ODYSSEA, GOESPOES, CMC, G1SST, GAMSSA, NOAA-16, NOAA-17, NOAA-18, MetOp-A, NOAA-19, NPP VIIRS, IDPS VIIRS, MetOp-B, Prasanjit Dash">
+<meta name="Robots" content="all">
+<meta name="Distribution" content="GLOBAL">
+<meta name="Author" content="Prasanjit Dash, Research Scientist, DOC/NOAA/NESDIS CSU/CIRA">
+<meta name="Co-author" content="Alexander Ignatov, SST Team Lead, DOC/NOAA/NESDIS/STAR">
+<meta http-equiv="Pragma" content="no-cache">
+<meta name="Copyright" content="STAR/NESDIS/NOAA/US Department of Commerce">
+<link rel="StyleSheet" href="squam.css" type="text/css" media="screen, print">
+<link rel="StyleSheet" href="hrstyle.css" type="text/css" media="screen, print">
+
+<div style="margin-left: 71px; margin-top: 500px; position: absolute;">
+  <input type="checkbox" id="anomaly" name="regions" >Show Anomaly<br>
+</div>
+
+<div style="margin-left: 71px; margin-top: 525px; position: absolute;">
+  <input type="checkbox" id="special-regions" name="regions" >Show Special Regions<br>
+</div>
+
+ <style>
+
+    svg {
+      width: 735px;
+      height: 372px;
+      margin-left: 292px;
+      margin-top: 176px;
+      position: absolute;
+      z-index: 2;
+    }
+
+    rect {
+      width: 25;
+      height: 25;
+      fill: gray;
+      stroke: magenta;
+      fill-opacity: 0.5;
+    }
+
+</style>
+
+<style>
+    /* Change stroke to #000 to see outlines */
+    path {
+      stroke: #000;
+    }
+
+    path:first-child {
+      fill: transparent;
+    }
+
+    circle {
+      fill: transparent;
+      pointer-events: none;
+    }
+
+    svg {
+      width: 735px;
+      height: 372px;
+      top: 0;
+      margin-left: 366px;
+      margin-top: 200px;
+      position: absolute;
+      z-index: 1000;
+    }
+
+    #center {
+      width: 878px;
+      height: 500px;
+      margin-left: 250px;
+      margin-top: 125px;
+    }
+
+
+    .stop {
+      fill: #C83D2D;
+      stroke: #C83D2D;
+      stroke-width: 0.01px;
+    }
+
+    .stop.active {
+      stroke-width: 0.05px;
+    }
+
+    .voronoi-stops {
+      fill: transparent;
+      stroke-width: 0.001;
+      stroke: #676767;
+    }
+
+   .text-tooltip {
+      top: 0;
+      margin-top: 200px;
+      margin-right: 0px;
+      position: absolute;
+      right: 0;
+      padding: 1em;
+      font-size: 0.9em;
+      background-color: #F2F2F2;
+      border: 1px solid #222222;
+      z-index: 9999;
+    }
+
+.q0-9 { fill: rgb(197,27,125); }    
+.q1-9 { fill: rgb(222,119,174); }
+.q2-9 { fill: rgb(241,182,218); }
+.q3-9 { fill: rgb(253,224,239); }
+.q4-9 { fill: rgb(247,247,247); }
+.q5-9 { fill: rgb(230,245,208); }
+.q6-9 { fill: rgb(184,225,134); }
+.q7-9 { fill: rgb(127,188,65); }
+.q8-9 { fill: rgb(77,146,33); }
+
+</style>
+<script src="../bower_components/jquery/dist/jquery.js"></script>
+<script language="JavaScript" type="text/javascript" src="../images/scripts/jquery-1.4.1.js"></script>
+<script language="javascript" type="text/javascript" src="../images/scripts/earliest_hrdate_arc.js"></script>
+<script language="javascript" type="text/javascript" src="../images/scripts/latest_hrdate.js"></script>
+<script language="JavaScript" type="text/javascript" src="../images/scripts/createhrdatestring.js"></script>
+<script language="JavaScript" type="text/javascript" src="./hiresdisplay.js"></script>
+<script type="text/javascript" src="../images/scripts/dygraph-combined.js"></script>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script src="http://www.google-analytics.com/ga.js" type="text/javascript"></script>
+<!--[if IE]><script type="text/javascript" src="../images/scripts/excanvas.js"></script><![endif]-->
+<script type="text/javascript" src="http://www.star.nesdis.noaa.gov/star/global/js/federated-analytics.js"></script><style class="firebugResetStyles" type="text/css" charset="utf-8">/* See license.txt for terms of usage */
+/** reset styling **/
+.firebugResetStyles {
+    z-index: 2147483646 !important;
+    top: 0 !important;
+    left: 0 !important;
+    display: block !important;
+    border: 0 none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    outline: 0 !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    position: fixed !important;
+    transform: rotate(0deg) !important;
+    transform-origin: 50% 50% !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: transparent none !important;
+    pointer-events: none !important;
+    white-space: normal !important;
+}
+style.firebugResetStyles {
+    display: none !important;
+}
+
+.firebugBlockBackgroundColor {
+    background-color: transparent !important;
+}
+
+.firebugResetStyles:before, .firebugResetStyles:after {
+    content: "" !important;
+}
+/**actual styling to be modified by firebug theme**/
+.firebugCanvas {
+    display: none !important;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+.firebugLayoutBox {
+    width: auto !important;
+    position: static !important;
+}
+
+.firebugLayoutBoxOffset {
+    opacity: 0.8 !important;
+    position: fixed !important;
+}
+
+.firebugLayoutLine {
+    opacity: 0.4 !important;
+    background-color: #000000 !important;
+}
+
+.firebugLayoutLineLeft, .firebugLayoutLineRight {
+    width: 1px !important;
+    height: 100% !important;
+}
+
+.firebugLayoutLineTop, .firebugLayoutLineBottom {
+    width: 100% !important;
+    height: 1px !important;
+}
+
+.firebugLayoutLineTop {
+    margin-top: -1px !important;
+    border-top: 1px solid #999999 !important;
+}
+
+.firebugLayoutLineRight {
+    border-right: 1px solid #999999 !important;
+}
+
+.firebugLayoutLineBottom {
+    border-bottom: 1px solid #999999 !important;
+}
+
+.firebugLayoutLineLeft {
+    margin-left: -1px !important;
+    border-left: 1px solid #999999 !important;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+.firebugLayoutBoxParent {
+    border-top: 0 none !important;
+    border-right: 1px dashed #E00 !important;
+    border-bottom: 1px dashed #E00 !important;
+    border-left: 0 none !important;
+    position: fixed !important;
+    width: auto !important;
+}
+
+.firebugRuler{
+    position: absolute !important;
+}
+
+.firebugRulerH {
+    top: -15px !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 14px !important;
+    background: url("data:image/png,%89PNG%0D%0A%1A%0A%00%00%00%0DIHDR%00%00%13%88%00%00%00%0E%08%02%00%00%00L%25a%0A%00%00%00%04gAMA%00%00%D6%D8%D4OX2%00%00%00%19tEXtSoftware%00Adobe%20ImageReadyq%C9e%3C%00%00%04%F8IDATx%DA%EC%DD%D1n%E2%3A%00E%D1%80%F8%FF%EF%E2%AF2%95%D0D4%0E%C1%14%B0%8Fa-%E9%3E%CC%9C%87n%B9%81%A6W0%1C%A6i%9A%E7y%0As8%1CT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AATE9%FE%FCw%3E%9F%AF%2B%2F%BA%97%FDT%1D~K(%5C%9D%D5%EA%1B%5C%86%B5%A9%BDU%B5y%80%ED%AB*%03%FAV9%AB%E1%CEj%E7%82%EF%FB%18%BC%AEJ8%AB%FA'%D2%BEU9%D7U%ECc0%E1%A2r%5DynwVi%CFW%7F%BB%17%7Dy%EACU%CD%0E%F0%FA%3BX%FEbV%FEM%9B%2B%AD%BE%AA%E5%95v%AB%AA%E3E5%DCu%15rV9%07%B5%7F%B5w%FCm%BA%BE%AA%FBY%3D%14%F0%EE%C7%60%0EU%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5JU%88%D3%F5%1F%AE%DF%3B%1B%F2%3E%DAUCNa%F92%D02%AC%7Dm%F9%3A%D4%F2%8B6%AE*%BF%5C%C2Ym~9g5%D0Y%95%17%7C%C8c%B0%7C%18%26%9CU%CD%13i%F7%AA%90%B3Z%7D%95%B4%C7%60%E6E%B5%BC%05%B4%FBY%95U%9E%DB%FD%1C%FC%E0%9F%83%7F%BE%17%7DkjMU%E3%03%AC%7CWj%DF%83%9An%BCG%AE%F1%95%96yQ%0Dq%5Dy%00%3Et%B5'%FC6%5DS%95pV%95%01%81%FF'%07%00%00%00%00%00%00%00%00%00%F8x%C7%F0%BE%9COp%5D%C9%7C%AD%E7%E6%EBV%FB%1E%E0(%07%E5%AC%C6%3A%ABi%9C%8F%C6%0E9%AB%C0'%D2%8E%9F%F99%D0E%B5%99%14%F5%0D%CD%7F%24%C6%DEH%B8%E9rV%DFs%DB%D0%F7%00k%FE%1D%84%84%83J%B8%E3%BA%FB%EF%20%84%1C%D7%AD%B0%8E%D7U%C8Y%05%1E%D4t%EF%AD%95Q%BF8w%BF%E9%0A%BF%EB%03%00%00%00%00%00%00%00%00%00%B8vJ%8E%BB%F5%B1u%8Cx%80%E1o%5E%CA9%AB%CB%CB%8E%03%DF%1D%B7T%25%9C%D5(%EFJM8%AB%CC'%D2%B2*%A4s%E7c6%FB%3E%FA%A2%1E%80~%0E%3E%DA%10x%5D%95Uig%15u%15%ED%7C%14%B6%87%A1%3B%FCo8%A8%D8o%D3%ADO%01%EDx%83%1A~%1B%9FpP%A3%DC%C6'%9C%95gK%00%00%00%00%00%00%00%00%00%20%D9%C9%11%D0%C0%40%AF%3F%EE%EE%92%94%D6%16X%B5%BCMH%15%2F%BF%D4%A7%C87%F1%8E%F2%81%AE%AAvzr%DA2%ABV%17%7C%E63%83%E7I%DC%C6%0Bs%1B%EF6%1E%00%00%00%00%00%00%00%00%00%80cr%9CW%FF%7F%C6%01%0E%F1%CE%A5%84%B3%CA%BC%E0%CB%AA%84%CE%F9%BF)%EC%13%08WU%AE%AB%B1%AE%2BO%EC%8E%CBYe%FE%8CN%ABr%5Dy%60~%CFA%0D%F4%AE%D4%BE%C75%CA%EDVB%EA(%B7%F1%09g%E5%D9%12%00%00%00%00%00%00%00%00%00H%F6%EB%13S%E7y%5E%5E%FB%98%F0%22%D1%B2'%A7%F0%92%B1%BC%24z3%AC%7Dm%60%D5%92%B4%7CEUO%5E%F0%AA*%3BU%B9%AE%3E%A0j%94%07%A0%C7%A0%AB%FD%B5%3F%A0%F7%03T%3Dy%D7%F7%D6%D4%C0%AAU%D2%E6%DFt%3F%A8%CC%AA%F2%86%B9%D7%F5%1F%18%E6%01%F8%CC%D5%9E%F0%F3z%88%AA%90%EF%20%00%00%00%00%00%00%00%00%00%C0%A6%D3%EA%CFi%AFb%2C%7BB%0A%2B%C3%1A%D7%06V%D5%07%A8r%5D%3D%D9%A6%CAu%F5%25%CF%A2%99%97zNX%60%95%AB%5DUZ%D5%FBR%03%AB%1C%D4k%9F%3F%BB%5C%FF%81a%AE%AB'%7F%F3%EA%FE%F3z%94%AA%D8%DF%5B%01%00%00%00%00%00%00%00%00%00%8E%FB%F3%F2%B1%1B%8DWU%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*UiU%C7%BBe%E7%F3%B9%CB%AAJ%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5*%AAj%FD%C6%D4%5Eo%90%B5Z%ADV%AB%D5j%B5Z%ADV%AB%D5j%B5Z%ADV%AB%D5j%B5Z%ADV%AB%D5j%B5Z%ADV%AB%D5j%B5Z%ADV%AB%D5j%B5Z%ADV%AB%D5j%B5%86%AF%1B%9F%98%DA%EBm%BBV%AB%D5j%B5Z%ADV%AB%D5j%B5Z%ADV%AB%D5j%B5Z%ADV%AB%D5j%B5Z%ADV%AB%D5j%B5Z%ADV%AB%D5j%B5Z%ADV%AB%D5j%B5Z%AD%D6%E4%F58%01%00%00%00%00%00%00%00%00%00%00%00%00%00%40%85%7F%02%0C%008%C2%D0H%16j%8FX%00%00%00%00IEND%AEB%60%82") repeat-x !important;
+    border-top: 1px solid #BBBBBB !important;
+    border-right: 1px dashed #BBBBBB !important;
+    border-bottom: 1px solid #000000 !important;
+}
+
+.firebugRulerV {
+    top: 0 !important;
+    left: -15px !important;
+    width: 14px !important;
+    height: 100% !important;
+    background: url("data:image/png,%89PNG%0D%0A%1A%0A%00%00%00%0DIHDR%00%00%00%0E%00%00%13%88%08%02%00%00%00%0E%F5%CB%10%00%00%00%04gAMA%00%00%D6%D8%D4OX2%00%00%00%19tEXtSoftware%00Adobe%20ImageReadyq%C9e%3C%00%00%06~IDATx%DA%EC%DD%D1v%A20%14%40Qt%F1%FF%FF%E4%97%D9%07%3BT%19%92%DC%40(%90%EEy%9A5%CB%B6%E8%F6%9Ac%A4%CC0%84%FF%DC%9E%CF%E7%E3%F1%88%DE4%F8%5D%C7%9F%2F%BA%DD%5E%7FI%7D%F18%DDn%BA%C5%FB%DF%97%BFk%F2%10%FF%FD%B4%F2M%A7%FB%FD%FD%B3%22%07p%8F%3F%AE%E3%F4S%8A%8F%40%EEq%9D%BE8D%F0%0EY%A1Uq%B7%EA%1F%81%88V%E8X%3F%B4%CEy%B7h%D1%A2E%EBohU%FC%D9%AF2fO%8BBeD%BE%F7X%0C%97%A4%D6b7%2Ck%A5%12%E3%9B%60v%B7r%C7%1AI%8C%BD%2B%23r%00c0%B2v%9B%AD%CA%26%0C%1Ek%05A%FD%93%D0%2B%A1u%8B%16-%95q%5Ce%DCSO%8E%E4M%23%8B%F7%C2%FE%40%BB%BD%8C%FC%8A%B5V%EBu%40%F9%3B%A72%FA%AE%8C%D4%01%CC%B5%DA%13%9CB%AB%E2I%18%24%B0n%A9%0CZ*Ce%9C%A22%8E%D8NJ%1E%EB%FF%8F%AE%CAP%19*%C3%BAEKe%AC%D1%AAX%8C*%DEH%8F%C5W%A1e%AD%D4%B7%5C%5B%19%C5%DB%0D%EF%9F%19%1D%7B%5E%86%BD%0C%95%A12%AC%5B*%83%96%CAP%19%F62T%86%CAP%19*%83%96%CA%B8Xe%BC%FE)T%19%A1%17xg%7F%DA%CBP%19*%C3%BA%A52T%86%CAP%19%F62T%86%CA%B0n%A9%0CZ%1DV%C6%3D%F3%FCH%DE%B4%B8~%7F%5CZc%F1%D6%1F%AF%84%F9%0F6%E6%EBVt9%0E~%BEr%AF%23%B0%97%A12T%86%CAP%19%B4T%86%CA%B8Re%D8%CBP%19*%C3%BA%A52huX%19%AE%CA%E5%BC%0C%7B%19*CeX%B7h%A9%0C%95%E1%BC%0C%7B%19*CeX%B7T%06%AD%CB%5E%95%2B%BF.%8F%C5%97%D5%E4%7B%EE%82%D6%FB%CF-%9C%FD%B9%CF%3By%7B%19%F62T%86%CA%B0n%D1R%19*%A3%D3%CA%B0%97%A12T%86uKe%D0%EA%B02*%3F1%99%5DB%2B%A4%B5%F8%3A%7C%BA%2B%8Co%7D%5C%EDe%A8%0C%95a%DDR%19%B4T%C66%82fA%B2%ED%DA%9FC%FC%17GZ%06%C9%E1%B3%E5%2C%1A%9FoiB%EB%96%CA%A0%D5qe4%7B%7D%FD%85%F7%5B%ED_%E0s%07%F0k%951%ECr%0D%B5C%D7-g%D1%A8%0C%EB%96%CA%A0%A52T%C6)*%C3%5E%86%CAP%19%D6-%95A%EB*%95q%F8%BB%E3%F9%AB%F6%E21%ACZ%B7%22%B7%9B%3F%02%85%CB%A2%5B%B7%BA%5E%B7%9C%97%E1%BC%0C%EB%16-%95%A12z%AC%0C%BFc%A22T%86uKe%D0%EA%B02V%DD%AD%8A%2B%8CWhe%5E%AF%CF%F5%3B%26%CE%CBh%5C%19%CE%CB%B0%F3%A4%095%A1%CAP%19*Ce%A8%0C%3BO*Ce%A8%0C%95%A12%3A%AD%8C%0A%82%7B%F0v%1F%2FD%A9%5B%9F%EE%EA%26%AF%03%CA%DF9%7B%19*Ce%A8%0C%95%A12T%86%CA%B8Ze%D8%CBP%19*Ce%A8%0C%95%D1ae%EC%F7%89I%E1%B4%D7M%D7P%8BjU%5C%BB%3E%F2%20%D8%CBP%19*Ce%A8%0C%95%A12T%C6%D5*%C3%5E%86%CAP%19*Ce%B4O%07%7B%F0W%7Bw%1C%7C%1A%8C%B3%3B%D1%EE%AA%5C%D6-%EBV%83%80%5E%D0%CA%10%5CU%2BD%E07YU%86%CAP%19*%E3%9A%95%91%D9%A0%C8%AD%5B%EDv%9E%82%FFKOee%E4%8FUe%A8%0C%95%A12T%C6%1F%A9%8C%C8%3D%5B%A5%15%FD%14%22r%E7B%9F%17l%F8%BF%ED%EAf%2B%7F%CF%ECe%D8%CBP%19*Ce%A8%0C%95%E1%93~%7B%19%F62T%86%CAP%19*Ce%A8%0C%E7%13%DA%CBP%19*Ce%A8%0CZf%8B%16-Z%B4h%D1R%19f%8B%16-Z%B4h%D1R%19%B4%CC%16-Z%B4h%D1R%19%B4%CC%16-Z%B4h%D1%A2%A52%CC%16-Z%B4h%D1%A2%A52h%99-Z%B4h%D1%A2%A52h%99-Z%B4h%D1%A2EKe%98-Z%B4h%D1%A2EKe%D02%5B%B4h%D1%A2EKe%D02%5B%B4h%D1%A2E%8B%96%CA0%5B%B4h%D1%A2E%8B%96%CA%A0e%B6h%D1%A2E%8B%96%CA%A0e%B6h%D1%A2E%8B%16-%95a%B6h%D1%A2E%8B%16-%95A%CBl%D1%A2E%8B%16-%95A%CBl%D1%A2E%8B%16-Z*%C3l%D1%A2E%8B%16-Z*%83%96%D9%A2E%8B%16-Z*%83%96%D9%A2E%8B%16-Z%B4T%86%D9%A2E%8B%16-Z%B4T%06-%B3E%8B%16-Z%B4T%06-%B3E%8B%16-Z%B4h%A9%0C%B3E%8B%16-Z%B4h%A9%0CZf%8B%16-Z%B4h%A9%0CZf%8B%16-Z%B4h%D1R%19f%8B%16-Z%B4h%D1R%19%B4%CC%16-Z%B4h%D1R%19%B4%CC%16-Z%B4h%D1%A2%A52%CC%16-Z%B4h%D1%A2%A52h%99-Z%B4h%D1%A2%A52h%99-Z%B4h%D1%A2EKe%98-Z%B4h%D1%A2EKe%D02%5B%B4h%D1%A2EKe%D02%5B%B4h%D1%A2E%8B%96%CA0%5B%B4h%D1%A2E%8B%96%CA%A0e%B6h%D1%A2E%8B%96%CA%A0e%B6h%D1%A2E%8B%16-%95a%B6h%D1%A2E%8B%16-%95A%CBl%D1%A2E%8B%16-%95A%CBl%D1%A2E%8B%16-Z*%C3l%D1%A2E%8B%16-Z*%83%96%D9%A2E%8B%16-Z*%83%96%D9%A2E%8B%16-Z%B4T%86%D9%A2E%8B%16-Z%B4T%06-%B3E%8B%16-Z%B4T%06-%B3E%8B%16-Z%B4h%A9%0C%B3E%8B%16-Z%B4h%A9%0CZf%8B%16-Z%B4h%A9%0CZf%8B%16-Z%B4h%D1R%19f%8B%16-Z%B4h%D1R%19%B4%CC%16-Z%B4h%D1R%19%B4%CC%16-Z%B4h%D1%A2%A52%CC%16-Z%B4h%D1%A2%A52h%99-Z%B4h%D1%A2%A52h%99-Z%B4h%D1%A2EKe%98-Z%B4h%D1%A2EKe%D02%5B%B4h%D1%A2EKe%D02%5B%B4h%D1%A2E%8B%96%CA0%5B%B4h%D1%A2E%8B%96%CA%A0e%B6h%D1%A2E%8B%96%CA%A0e%B6h%D1%A2E%8B%16-%95a%B6h%D1%A2E%8B%16-%95A%CBl%D1%A2E%8B%16-%95A%CBl%D1%A2E%8B%16-Z*%C3l%D1%A2E%8B%16-Z*%83%96%D9%A2E%8B%16-Z*%83%96%D9%A2E%8B%16-Z%B4T%86%D9%A2E%8B%16-Z%B4T%06-%B3E%8B%16-Z%B4%AE%A4%F5%25%C0%00%DE%BF%5C'%0F%DA%B8q%00%00%00%00IEND%AEB%60%82") repeat-y !important;
+    border-left: 1px solid #BBBBBB !important;
+    border-right: 1px solid #000000 !important;
+    border-bottom: 1px dashed #BBBBBB !important;
+}
+
+.overflowRulerX > .firebugRulerV {
+    left: 0 !important;
+}
+
+.overflowRulerY > .firebugRulerH {
+    top: 0 !important;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+.fbProxyElement {
+    position: fixed !important;
+    pointer-events: auto !important;
+}
+</style></head>
+
+<body onload="initialize()">
+<div align="center">
+
+<table class="banner"><tbody><tr width="100%"><td align="left" width="70%"><img src="leftbanner_hires.png" alt="SST Quality Monitor (SQUAM) for SST Products" border="0"></td><td align="right" width="30%"><img src="rightbanner.png" alt="National Oceanic &amp; Atmospehric Administration" border="0"></td></tr></tbody></table>
+<!-- Menu and Page Update Info; contains 2 rows, must be placed inside the Table as is below -->
+<table class="menu">
+<tbody><tr>
+<td bordercolor="#669999" style="border-left: 0px solid #669999; border-right: 0px solid #669999; border-top: 0px solid #669999; border-bottom-color: #669999" bgcolor="#669999" width="30%">
+<ul id="squammenu">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="#" class="active">Level 2 +</a>
+          <ul>
+            <li><a href="#">AVHRR GAC +</a>
+              <ul>
+                <li><a href="../MUT/index.html">MUT</a></li>
+                <li><a href="../NAVO/index.html">NAVO</a></li>
+                <li><a href="../ACSPOGAC/index.html">ACSPO</a></li>
+              </ul>
+            </li>
+        <li><a href="#" class="active" name="link0" id="id0" onclick="DISPLAYMENU(0)">High Resolution</a></li>
+          </ul>
+        </li>
+        <li><a href="#">Level 3 +</a>
+          <ul>
+            <li><a href="../PF/index.html">PathFinder</a></li>
+          </ul>
+        </li>
+        <li><a href="../L4/index.html">Level 4</a></li>
+</ul>
+</td>
+<td bordercolor="#669999" style="border-left: 0px solid #669999; border-right: 0px solid #669999; border-top: 0px solid #669999; border-bottom-color: #669999" bgcolor="#669999" width="50%">
+<ul id="squammenu">
+     <li class="menupath">L2 <img src="../images/whitepointer.gif" border="0" height="8" width="14">High Res <img src="../images/whitepointer.gif" border="0" height="8" width="14"></li>
+     <li><a class="active" href="#" name="link1" id="id1" onclick="DISPLAYMENU(1)">Maps</a></li>
+     <li><a href="#" name="link2" id="id2" onclick="DISPLAYMENU(2)">Histograms</a></li>
+     <li><a href="#" name="link3" id="id3" onclick="DISPLAYMENU(3)">Timeseries</a></li>
+     <li><a href="#" name="link5" id="id5" onclick="DISPLAYMENU(5)">Dependencies</a></li>
+     <li><a href="#" name="link6" id="id6" onclick="DISPLAYMENU(6)">Hovmöller</a></li>
+</ul>
+</td>
+<td bordercolor="#669999" style="border-left: 0px solid #669999; border-right: 0px solid #669999; border-top: 0px solid #669999; border-bottom: 0px solid #669999" bgcolor="#669999" align="right" width="20%">
+    <ul id="squaminfo">
+        <li><a href="#">About +</a>
+          <ul>
+           <li><a href="../squam_acknowledge.htm">Acknowledgments</a></li>
+           <li><a href="../references.htm">References</a></li>
+           <li><a href="../squam_version.htm">Versions</a></li>
+           <li><a href="../people.htm">People</a></li>
+           <li><a href="../squam_links.htm">Links</a></li>
+          </ul>
+        </li>
+    </ul>
+</td>
+</tr>
+
+<tr>
+<td style="padding-left: 12" bgcolor="#FFFFFF" align="left"></td>
+<td bgcolor="#FFFFFF" align="left"></td>
+
+<td class="pagelocationinfo">
+<div id="lastedit" style="display: none;" ;="">
+Last edited: Oct-01-2014
+</div>
+<div id="lastupdate" style="display: block;" ;="">
+Last updated: Oct-01-2014
+</div>
+</td>
+
+</tr>
+</tbody></table>
+<!-- End of Menu and page update info -->
+
+<!-- Table for main content of the page -->
+<table style="border-collapse: collapse" table="" white-space="no-wrap" bgcolor="#FFFFFF" border="0" cellpadding="0" cellspacing="0" align="center" width="90%">
+<tbody>
+<tr>
+<td bordercolor="#FFFFFF" style="border:0px solid #FFFFFF;" bgcolor="#FFFFFF" height="auto" width="auto">
+
+
+<!------  INFO TABLE FOR HOME --------->
+<div id="infotable" style="display: none;" ;="">
+<!-- Font size control table -->
+<table class="landingpage_info_table">
+<tbody> 
+<tr valign="top">
+<td bgcolor="#FFFFFF" align="right" width="100%">
+<nobr><p style="color:#527A7A; text-align:right;">Modify font-size inside table:&nbsp;&nbsp;&nbsp;<a href="#" class="increaseFont">A+</a>&nbsp;&nbsp;&nbsp;<a href="#" class="decreaseFont">A-</a>&nbsp;&nbsp;&nbsp;<a href="#" class="resetFont">A</a></p></nobr>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- End of Font size control table -->
+
+<!-- SST Product Table -->
+<table class="landingpage_info_table" style="border:1px solid #669999; border-bottom:1px">
+<tbody> 
+
+<!-- Row for Level header -->
+<tr valign="top">
+<td bgcolor="#FA8A80" align="center" width="auto"><h1 style="color: rgb(255, 255, 255);">Satellite SST</h1></td>
+<td bgcolor="#6699CC" align="center" width="auto"><h1 style="color: rgb(255, 255, 255);">Nadir FOV</h1></td> 
+<td bgcolor="#FF668C" align="center" width="auto"><h1 style="color: rgb(255, 255, 255);">Production period</h1></td>
+<td bgcolor="#339966" align="center" width="auto"><h1 style="color: rgb(255, 255, 255);">Quality flags</h1></td>
+<td bgcolor="#AF8CD9" align="center" width="auto"><h1 style="color: rgb(255, 255, 255);">Further info</h1></td> 
+</tr>
+<!-- End of row for Level header -->
+
+<!--------------------------------------->
+<!-- Row for MetOp-B AVHRR FRAC header -->
+<tr valign="top"><td bgcolor="#ffffff" valign="top" width="auto"><h2>MetOp-B AVHRR FRAC</h2></td></tr>
+<!-- End of MetOp-B AVHRR FRAC header -->
+<!-------------------------------------->
+
+<!-- Row for ACSPO -->
+<tr valign="top">
+<!-- Product names -->
+<td bgcolor="#f8f2ec" valign="top" width="auto"><p>ACSPO</p></td>
+
+<!-- Resolutions Info -->
+<td bgcolor="#ecf2f8" valign="top" width="auto"><p>~1km</p></td>
+
+<!-- Coverage Info -->
+<td "="" bgcolor="#FFE9F0" valign="top" width="auto"><p>18-Oct 2012 on<br></p></td>
+
+<!-- Flag Info -->
+<td bgcolor="#ecf2f8" valign="top" width="auto"><p>
+<img src="../images/bluepointer.gif" height="8" width="14">Cloudy pixels removed based on mask
+</p></td>
+
+<!-- URL Info -->
+<td "="" bgcolor="#F4F0FB" valign="top" width="auto">
+<nobr>
+<p>
+<a target="_new" href="ftp://www.star.nesdis.noaa.gov/pub/sod/sst/SQUAMInput_PDash/ACSPO_M1_FRAC_example/">Sample</a> <a target="_new" href="mailto:John.Sapper@noaa.gov,Alex.Ignatov@noaa.gov?subject=Request for ACSPO MetOp-B AVHRR FRAC Data">Data</a> <a href="mailto:alex.ignatov@noaa.gov">Contact</a> <a target="_new" href="http://www.star.nesdis.noaa.gov/sod/sst/squam/ACSPOGAC/index.html">Product Description</a>
+</p>
+</nobr>
+</td>
+</tr>
+<!-- End of Row MetOp-B AVHRR FRAC -->
+
+
+<!-------------------------------->
+<!-- Row for AVHRR FRAC header -->
+<tr valign="top"><td bgcolor="#ffffff" valign="top" width="auto"><h2>MetOp-A AVHRR FRAC</h2></td></tr>
+<!-- End of row for AVHRR FRAC header -->
+<!-------------------------------->
+
+<!-- Row for O&SI SAF -->
+<tr valign="top">
+<!-- Product names -->
+<td bgcolor="#f8f2ec" valign="top" width="auto"><p>O&amp;SI SAF</p></td>
+<!-- Resolutions Info -->
+<td bgcolor="#ecf2f8" valign="top" width="auto"><p>~1km</p></td>
+<!-- Coverage Info -->
+<td "="" bgcolor="#FFE9F0" valign="top" width="auto"><p>Dec-2008 on<br></p></td>
+<!-- Flag Info -->
+<td bgcolor="#ecf2f8" valign="top" width="auto"><p>
+<img src="../images/bluepointer.gif" height="8" width="14"> QF = 3 (suspect), 4(acceptable), 5(excellent)
+</p></td>
+
+<!-- URL Info -->
+<td "="" bgcolor="#F4F0FB" valign="top" width="auto">
+<nobr><p>
+<a target="_new" href="http://www.osi-saf.org/">URL</a> <a target="_new" href="ftp://eftp.ifremer.fr/cersat-rt/project/osi-saf/data/sst/l2p/avhrr_metop_a/">FTP</a> <a href="mailto:pierre.leborgne@meteo.fr">EMail</a> <a target="_new" href="http://www.osi-saf.org/biblio/docs/ss1_pum_leo_sst_2_1.pdf">Product Manual</a>
+</p>
+</nobr>
+</td>
+</tr>
+<!-- End of Row for O&SI SAF -->
+
+
+<!-- Row for ACSPO -->
+<tr valign="top">
+<!-- Product names -->
+<td bgcolor="#f8f2ec" valign="top" width="auto"><p>ACSPO</p></td>
+
+<!-- Resolutions Info -->
+<td bgcolor="#ecf2f8" valign="top" width="auto"><p>~1km</p></td>
+
+<!-- Coverage Info -->
+<td "="" bgcolor="#FFE9F0" valign="top" width="auto"><p>Apr-2010 on<br></p></td>
+
+<!-- Flag Info -->
+<td bgcolor="#ecf2f8" valign="top" width="auto"><p>
+<img src="../images/bluepointer.gif" height="8" width="14">Cloudy pixels removed based on mask
+</p></td>
+
+<!-- URL Info -->
+<td "="" bgcolor="#F4F0FB" valign="top" width="auto">
+<nobr>
+<p>
+<a target="_new" href="ftp://www.star.nesdis.noaa.gov/pub/sod/sst/SQUAMInput_PDash/ACSPO_M2_FRAC_example/">Sample</a> <a target="_new" href="mailto:John.Sapper@noaa.gov,Alex.Ignatov@noaa.gov?subject=Request for ACSPO MetOp-A AVHRR FRAC Data">Data</a> <a href="mailto:alex.ignatov@noaa.gov">Contact</a> <a target="_new" href="http://www.star.nesdis.noaa.gov/sod/sst/squam/ACSPOGAC/index.html">Product Description</a>
+</p>
+</nobr>
+</td>
+</tr>
+<!-- End of Row for O&SI SAF -->
+
+<!-------------------------------->
+<!-- Row for MODIS header -->
+<tr valign="top"><td bgcolor="#ffffff" valign="top" width="auto"><h2>MODIS (Terra, Aqua)</h2></td></tr>
+<!-- End of row for MODIS header -->
+<!-------------------------------->
+
+<!-- Row for MODIS -->
+<tr valign="top">
+<!-- Product names -->
+<td bgcolor="#f8f2ec" valign="top" width="auto">
+<p>ACSPO</p>
+<p>NASA MOD28 (coming)</p>
+</td>
+
+<!-- Resolutions Info -->
+<td bgcolor="#ecf2f8" valign="top" width="auto">
+<p>~1km</p>
+<p>~1km</p>
+</td>
+
+<!-- Coverage Info -->
+<td "="" bgcolor="#FFE9F0" valign="top" width="auto">
+<p>22-Jan-2012 on</p>
+<p></p>
+</td>
+
+<!-- Flag Info -->
+<td bgcolor="#ecf2f8" valign="top" width="auto">
+<p>
+<img src="../images/bluepointer.gif" height="8" width="14">xx<br>
+<img src="../images/bluepointer.gif" height="8" width="14">xx
+</p>
+</td>
+
+<!-- URL Info -->
+<td "="" bgcolor="#F4F0FB" valign="top" width="auto">
+<nobr>
+<p><a target="_new" href="http://modis.gsfc.nasa.gov/data/dataprod/dataproducts.php?MOD_NUMBER=28">URL</a></p>
+<p><a target="_new" href="http://modis.gsfc.nasa.gov/data/dataprod/pdf/MOD_28.pdf">Product Description</a></p>
+</nobr>
+</td>
+</tr>
+<!-- End of Row for MODIS -->
+
+<!-------------------------------->
+<!-- Row for VIIRS header -->
+<tr valign="top"><td bgcolor="#ffffff" valign="top" width="auto"><h2>NPOESS VIIRS</h2></td></tr>
+<!-- End of row for VIIRS header -->
+<!-------------------------------->
+
+<!-- Row for VIIRS -->
+<tr valign="top">
+<!-- Product names -->
+<td bgcolor="#f8f2ec" valign="top" width="auto">
+<p>ACSPO</p>
+<p>IDPS</p>
+<p>NAVO (exploring, TBD)</p>
+</td>
+
+<!-- Resolutions Info -->
+<td bgcolor="#ecf2f8" valign="top" width="auto">
+<p>~0.75km</p>
+<p>~0.75km</p>
+<p>sub-sampled?</p>
+</td>
+
+<!-- Coverage Info -->
+<td "="" bgcolor="#FFE9F0" valign="top" width="auto">
+<p>23-Jan-2012 on</p>
+<p>23-Apr-2012 on</p>
+<p>21-May-2013 on</p>
+</td>
+
+<!-- Flag Info -->
+<td bgcolor="#ecf2f8" valign="top" width="auto">
+<p>
+<img src="../images/bluepointer.gif" height="8" width="14">Classify ocean pixels identified by ACSPO mask<br>
+<img src="../images/bluepointer.gif" height="8" width="14">Cloud mask: confidently clear (SST quality flag unused)<br>
+<img src="../images/bluepointer.gif" height="8" width="14"> QF = 3 (suspect), 4(acceptable), 5(excellent)
+</p>
+</td>
+
+<!-- URL Info -->
+<td "="" bgcolor="#F4F0FB" valign="top" width="auto">
+<nobr>
+<p>
+URL <a target="_new" href="ftp://podaac-ftp.jpl.nasa.gov/allData/ghrsst/data/GDS2/L2P/VIIRS_NPP/OSPO/">FTP</a> <a href="mailto:alex.ignatov@noaa.gov,john.sapper@noaa.gov">EMail</a> Product Manual
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+<a target="_new" href="http://podaac.jpl.nasa.gov/dataset/VIIRS_NPP-NAVO-L2P-v1.0">URL</a> <a target="_new" href="ftp://podaac-ftp.jpl.nasa.gov/allData/ghrsst/data/GDS2/L2P/VIIRS_NPP/NAVO/">FTP</a> EMail Product Manual
+</p>
+</nobr>
+</td>
+</tr>
+<!-- End of Row for VIIRS -->
+
+<!-------------------------------->
+<!-- Row for UPA ARC header -->
+<tr valign="top"><td bgcolor="#ffffff" valign="top" width="auto"><h2>ARC L2P (ongoing)</h2></td></tr>
+<!-- End of row for UPA ARC header -->
+<!-------------------------------->
+<!-- Row for ARC -->
+<tr valign="top">
+<!-- Product names -->
+<td bgcolor="#f8f2ec" valign="top" width="auto">
+<p>A-ATSR (coming)</p>
+<p>ATSR-2 (coming)</p>
+<p>ATSR-1 (coming)</p>
+</td>
+
+<!-- Resolutions Info -->
+<td bgcolor="#ecf2f8" valign="top" width="auto">
+<p>resampled<br>~1km</p>
+</td>
+
+<!-- Coverage Info -->
+<td "="" bgcolor="#FFE9F0" valign="top" width="auto">
+<p>20-May-2002 to 8-Apr-2012</p>
+<p>1-Jun-1995 to 22-Jun-2003</p>
+<p>1-Aug-1991 to 17-Dec-1997</p>
+</td>
+
+<!-- Flag Info -->
+<td bgcolor="#ecf2f8" valign="top" width="auto">
+<p>
+<img src="../images/bluepointer.gif" height="8" width="14"> QF = 3 (suspect), 4(acceptable), 5(excellent)
+</p>
+</td>
+
+<!-- URL Info -->
+<td "="" bgcolor="#F4F0FB" valign="top" width="auto">
+<nobr>
+<p>
+<a target="_new" href="https://earth.esa.int/web/guest/news/-/asset_publisher/G2mU/content/envisat-and-ers-a-atsr-improved-dataset-available?redirect=https:/%E2%BF%AArth.esa.int/web/guest/news?p_p_id%F0%BD%84%81_INSTANCE_G2mU&amp;p_p_lifecycle%CF%90&amp;p_p_state=normal&amp;p_p_mode=view&amp;p_p_col_id%CF%9Column-1&amp;p_p_col_pos%CF%91&amp;p_p_col_count%CF%92&amp;_101_INSTANCE_G2mU_advancedSearch%E3%B7%BAlse&amp;_101_INSTANCE_G2mU_keywords=&amp;_101_INSTANCE_G2mU_delta%E3%B4%90&amp;_101_INSTANCE_G2mU_cur%CF%93&amp;_101_INSTANCE_G2mU_andOperator=true">ESA URL</a>
+&nbsp;&nbsp;Related publications:&nbsp;
+<a target="_new" href="http://onlinelibrary.wiley.com/doi/10.1029/2012JC008400/pdf">1</a>
+<a target="_new" href="http://www.sciencedirect.com/science/article/pii/S0034425711002112">2</a>
+<a target="_new" href="http://www.sciencedirect.com/science/article/pii/S0034425711002124">3</a>
+<a target="_new" href="http://www.sciencedirect.com/science/article/pii/S0034425711002082">4</a>
+</p>
+<p><a target="_new" href="https://earth.esa.int/documents/10174/481651/AATSR_L2P_Reprocessing_User_Note_v1-0">User note</a>&nbsp;&nbsp;<a target="_new" href="https://earth.esa.int/documents/10174/56700/L2P_Product_Description">Product description</a>&nbsp;<a href="mailto:c.j.merchant@reading.ac.uk">Contact</a></p>
+</nobr>
+</td>
+</tr>
+<!-- End of Row for UPA ARC -->
+
+
+</tbody>
+</table>
+<!-- End of SST Products Table -->
+
+<!-- Reference SST Table -->
+<table class="landingpage_info_table" style="border:1px solid #669999; border-bottom:1px">
+<tbody> 
+
+<!-- Row for Level header -->
+<tr valign="top">
+<td style="border:1px solid #cccccc;" bgcolor="#f2f2f2" align="center" width="auto"><h1 style="color: rgb(70, 70, 70);">Reference SST</h1></td>
+<td style="border:1px solid #cccccc;" bgcolor="#f2f2f2" align="center" width="auto"><h1 style="color: rgb(70, 70, 70);">Resolution</h1></td> 
+<td style="border:1px solid #cccccc;" bgcolor="#f2f2f2" align="center" width="auto"><h1 style="color: rgb(70, 70, 70);">Coverage</h1></td>
+<td style="border:1px solid #cccccc;" bgcolor="#f2f2f2" align="center" width="auto"><h1 style="color: rgb(70, 70, 70);">Input</h1></td>
+<td style="border:1px solid #cccccc;" bgcolor="#f2f2f2" align="center" width="auto"><h1 style="color: rgb(70, 70, 70);">Ice bit</h1></td>
+<td style="border:1px solid #cccccc;" bgcolor="#f2f2f2" align="center" width="auto"><h1 style="color: rgb(70, 70, 70);">Further info</h1></td> 
+</tr>
+<!-- End of row for Level header -->
+
+<!-- Row for L4 fields referenced in SQUAM -->
+<tr valign="top">
+<!-- Product names -->
+<td valign="top" width="auto">
+<h2 style="color:#000000">L4 (daily)</h2>
+<p>DOI_AV (Reynolds)</p>
+<p>RTG_HR</p>
+<p>OSTIA</p>
+<p>CMC v2(new ~Mar2014)</p>
+</td>
+
+<!-- Resolutions Info -->
+<td valign="top" width="auto">
+<h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+<p>0.25º Daily</p>
+<p>1/12º Daily</p>
+<p>0.05º Daily</p>
+<p>0.20º Daily</p>
+</td>
+
+<!-- Coverage Info -->
+<td valign="top" width="auto">
+<h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+<p>Sep-1981 on</p>
+<p>Feb-2007 on</p>
+<p>Apr-2006 on</p>
+<p>Sep-1991 on</p><p>(RAN till 2012, then opr)</p>
+</td>
+
+<!-- Input Info -->
+<td valign="top" width="auto">
+<nobr>
+<table width="100%">
+<tbody> 
+<tr valign="top">
+<td align="center" width="48%">
+<h2>Infrared</h2>
+<p>AVHRR (PF till `05, then NAVO)</p>
+<p>AVHRR physical retrievals</p>
+<p>AVHRR,AATSR,SEVIRI</p>
+<p>AVHRR,AATSR</p>
+</td>
+
+<td align="center" width="24%">
+<h2>Microwave</h2>
+<p><br></p>
+<p><br></p>
+<p>TMI,AMSR-E</p>
+<p>AMSR-E</p>
+</td>
+
+<td align="center" width="7%">
+<h2>Insitu</h2>
+<p>✓</p>
+<p>✓</p>
+<p>✓</p>
+<p>✓</p>
+</td>
+
+<td align="center" width="21%">
+<h2>Other</h2>
+<p>ice info</p>
+<p>NCEP ice</p>
+<p>SSM/I ice</p>
+<p>CMC ice</p>
+</td>
+</tr>
+</tbody>
+</table>
+</nobr>
+</td>
+
+<!-- Ice Mask Bit Info -->
+<td valign="top" width="auto">
+<nobr>
+<h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+<p>✓</p>
+<p>✗</p>
+<p>✓</p>
+<p>✓</p>
+</nobr>
+</td>
+
+<!-- URL Info -->
+<td valign="top" width="auto">
+<nobr>
+<h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+<p><a target="_new" href="http://www.ncdc.noaa.gov/oa/climate/research/sst/oi-daily.php">URL</a> &nbsp;&nbsp; <a target="_new" href="ftp://eclipse.ncdc.noaa.gov/pub">FTP</a> &nbsp;&nbsp; <a href="mailto:Richard.W.Reynolds@noaa.gov,viva.banzon@noaa.gov">EMail</a></p>
+<p><a target="_new" href="http://polar.ncep.noaa.gov/sst/">URL</a> &nbsp;&nbsp; <a target="_new" href="ftp://polar.ncep.noaa.gov/pub/history/sst/ophi">FTP</a> &nbsp;&nbsp; <a href="mailto:Robert.Grumbine@noaa.gov,Bert.Katz@noaa.gov">EMail</a></p>
+<p><a target="_new" href="http://ghrsst-pp.metoffice.com/pages/latest_analysis/ostia.html">URL</a> &nbsp;&nbsp; <a target="_new" href="ftp://podaac-ftp.jpl.nasa.gov/allData/ghrsst/data/L4/GLOB/UKMO/OSTIA">FTP</a> &nbsp;&nbsp; <a href="mailto:matthew.martin@metoffice.gov.uk">EMail</a></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target="_new" href="ftp://podaac.jpl.nasa.gov/OceanTemperature/ghrsst/data/GDS2/L4/GLOB/CMC/CMC0.2deg/v2/">FTP</a> &nbsp;&nbsp; <a href="mailto:Bruce.Brasnett@ec.gc.ca">EMail</a></p>
+</nobr>
+</td>
+</tr>
+<!-- End of row for L4 products included in L2-SQUAM -->
+
+<!-- Row for insitu product included in SQUAM -->
+<tr valign="top">
+<!-- Product names -->
+<td valign="top" width="auto">
+<h2 style="color:#000000">Insitu</h2>
+<p>Insitu SST Quality Monitor<br></p>
+</td>
+
+<!-- Resolutions Info -->
+<td valign="top" width="auto">
+<h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+<p>point, 1min<br></p>
+</td>
+
+<!-- Coverage Info -->
+<td valign="top" width="auto">
+<h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+<p>Jan-1991 on<br></p>
+</td>
+
+<!-- Input Info -->
+<td valign="top" width="auto">
+<h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+<p>Ships, Drifters, Coastal &amp; Tropical Moorings<br></p>
+</td>
+
+<!-- Ice-Mask Bit Info -->
+<td valign="top" width="auto">
+<h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+<p>&nbsp;&nbsp;-na-&nbsp;&nbsp;<br></p>
+</td>
+
+<!-- URL Info -->
+<td valign="top" width="auto">
+<h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+<p><a target="_new" href="http://www.star.nesdis.noaa.gov/sod/sst/iquam/">URL</a> &nbsp;&nbsp; <a target="_new" href="ftp://www.star.nesdis.noaa.gov/pub/sod/sst/iquam/">FTP</a> &nbsp;&nbsp; <a href="mailto:alex.ignatov@noaa.gov">EMail</a><br></p>
+</td>
+</tr>
+<!-- End of row for insitu products included in SQUAM -->
+
+</tbody>
+</table>
+<!-- End of Reference SST Table -->
+
+<!-- Match-up info -->
+<table class="landingpage_info_table" style="border:1px solid #669999; border-bottom:1px">
+<tbody> 
+<tr valign="top">
+<!-- <td width="100%" align="center" bgcolor="#F9F9F9"> -->
+<td bgcolor="#FFFFFF" align="center" width="100%">
+<h2 style="color: rgb(70, 70, 70);text-align: left;">&nbsp;&nbsp;Match-up procedure</h2>
+ <p style="color:#000000; font-size:11px; line-height: 1.2em">
+    <img src="../images/blackpointer.gif" height="8" width="14">L4-- Space: Bilinear interpolation; Time: Same day<br>
+    <img src="../images/blackpointer.gif" height="8" width="14">Insitu-- iQUAM data with highest quality flag; Space: 20km; Time: 4hr<br>
+<!--    <img width="14" height="8" src="../images/redpointer.gif">SQUAM analyses stratified by day(SZA <= 90) & night(SZA > 90)   -->
+ </p>
+</td>
+</tr>
+</tbody>
+</table>
+
+<!-- Organizations info -->
+<table class="landingpage_info_table" style="border:1px solid #669999; ">
+<tbody> 
+<!-- Row for Logo header -->
+<tr valign="top">
+  <td width="16%"><h2 style="color:#006666;text-align: left;">Agency  &amp;  SST PI</h2></td>
+  <td width="16%"></td>
+  <td width="16%"></td>
+  <td width="16%"></td>
+  <td width="16%"></td>
+  <td style="border-left:1px solid #cccccc;" width="20%"><h2 style="color:#CE7E7F;text-align: left;">Mission</h2></td>
+</tr>
+<!-- End of row for Logo header -->
+
+<!-- Row for Logo header -->
+<tr valign="top">
+  <td style="border:1px solid #cccccc; background-color:#E5FFFF" align="center" width="16%"><img src="../images/resizednoaalogo.png" height="50" width="50">
+    <br><a href="mailto:alex.ignatov@noaa.gov">A. Ignatov</a>&nbsp;&nbsp;<a href="mailto:john.sapper@noaa.gov">J. Sapper</a>
+  </td>
+  <td style="border:1px solid #cccccc; background-color:#E5FFFF" align="center" width="16%"><img src="../images/resizedosisaflogo.png" height="51" width="51">
+    <br><a href="mailto:pierre.leborgne@meteo.fr">P. LeBorgne</a> <a href="mailto:herve.roquet@wanadoo.fr,herve.roquet@meteo.fr">H. Roquet</a>
+  </td> 
+  <td style="border:1px solid #cccccc; background-color:#E5FFFF" align="center" width="16%"><img src="../images/resizednavoceanologo.png" height="50" width="50">
+    <br><a href="mailto:doug.may@navy.mil">D. May</a>&nbsp;&nbsp;<a href="mailto:bruce.mckenzie@navy.mil">B. McKenzie</a>
+  </td>
+  <td style="border:1px solid #cccccc; background-color:#E5FFFF" align="center" width="16%"><img src="../images/resizedrsmaslogo.jpg" height="53" width="53">
+    <br><a href="mailto:pminnett@rsmas.miami.edu">P. Minnett</a>&nbsp;&nbsp;<a href="mailto:bob@rrsl.rsmas.miami.edu">R. Evans</a>
+  </td>
+
+  <td style="border:1px solid #cccccc; background-color:#E5FFFF" align="center" width="16%"><img src="../images/resizedunivofreading.jpg" height="35" width="80"><br>
+    <br><a href="mailto:c.j.merchant@reading.ac.uk">C. J. Merchant</a>
+  </td>
+
+  <td style="border:1px solid #cccccc; background-color:#f8f2ec" align="center" width="20%"><img src="../images/resizedjpsslogo.jpg" height="50" width="53">
+    <br><a target="_new" href="http://www.nesdis.noaa.gov/jpss/">Joint Polar Satellite System</a>
+  </td>
+<!--
+  <td width="20%" align="center" style="border:1px solid #99FCFF; background-color:#EFFFF9"><img width="50" height="50" src='../images/resizedsquamlogo.jpg'>
+    <br><a href="mailto:prasanjit.dash@noaa.gov">P. Dash</a>&nbsp;&nbsp;<a href="mailto:alex.ignatov@noaa.gov">A. Ignatov</a>&nbsp;&nbsp;<a href="mailto:yury.kihai@noaa.gov">Y. Kihai</a>
+  </td>
+-->
+</tr>
+<!-- End of row for Logo header -->
+</tbody>
+</table>
+<!-- end of organizations' info -->
+
+<!-- Links: NPOESS/JPSS -->
+<!--
+<table class="landingpage_info_table" style="border:1px solid #669999;">
+<tbody> 
+<tr valign="top">
+  <td width="270px" align="left" style="border:0px solid #cccccc;">
+    <h2 style="color:#3333FF;">Related links for NPP</h2>
+      <img width="14" height="8" src="../images/bluepointer.gif"><a target=_new href="http://www.nesdis.noaa.gov/npp_launch.html">NPOESS launch status: NOAA prepares for NPP</a><br>
+      <img width="14" height="8" src="../images/bluepointer.gif"><a target=_new href="http://www.nesdis.noaa.gov/jpss/">Joint Polar Satellite System (JPSS)</a>
+  </td>
+  <td align="left" style="border:0px solid #cccccc;">
+    <h2 style="color:#3333FF;">Companion monitoring tool</h2>
+      <img width="14" height="8" src="../images/redpointer.gif"><a target=_new href="http://www.star.nesdis.noaa.gov/sod/sst/micros/">Monitoring of IR clear-sky radiance over Oceans for SST (MICROS)</a>
+  </td>
+</tr>
+</tbody>
+</table>
+-->
+<!-- end of Links info -->
+
+
+<table class="landingpage_info_table" style="border:0px solid #cccccc">
+<tbody><tr valign="top">
+<td bgcolor="#FFFFFF" align="right" width="100%">
+<p style="color:#3D5C5C; font-size:11px; line-height:0.8em; text-align: right;">Recommended browsers: those supporting HTML5 e.g., Mozilla Firefox, Opera, Apple Safari, IE v10.0 on</p>
+</td>
+</tr>
+</tbody></table>
+<!-- End of extra info -->
+</div>
+<!------  END OF INFO TABLE FOR HOME -->
+
+<!------  CENTRAL TABLE -->
+<div id="centraltable" style="display: block;" ;="">
+<table style="border-color:#C0C0C0; border-collapse: collapse" dir="ltr" bgcolor="#FFFFFF" border="0" cellpadding="0" cellspacing="0" align="left" height="1">
+<tbody>
+<tr>
+
+
+<td style="border-style:none; border-width:medium; " dir="ltr" align="left" height="350" valign="top" width="200"><br>
+<div>
+<form id="imageFORM" name="imageFORM" method="post" action="" dir="ltr">
+<h2>Reference SST</h2>
+<p style="margin-top: 0; margin-bottom: 0" dir="ltr" align="left">
+<select name="dispimage" id="dispimage" onchange="TIMESERIESDISP()">
+  <option value="0" class="category" disabled="">--- Level-4 ---</option>
+  <option value="1" dir="ltr">Reynolds (AVHRR)</option>
+  <!-- <option value="2" dir="ltr">RTG Hig Res</option> -->
+  <option value="3" dir="ltr" selected="">OSTIA Opr</option>
+  <option value="4" dir="ltr">CMC Opr</option>
+  <option value="5" class="category" disabled="">--- Insitu ---</option>
+  <option value="6" dir="ltr">Ships</option>
+  <option value="7" dir="ltr">Drifters</option>
+  <option value="8" dir="ltr">Coastal moorings</option>
+  <option value="9" dir="ltr">Tropical moorings</option>
+</select>
+</p>
+</form>
+</div>
+
+<form id="form1" name="form1" method="post" action="" dir="ltr">
+
+<div id="productrb" style="display:block">
+<p style="margin-top: 0; margin-bottom: 0" dir="ltr" align="left">
+</p><h2>Product</h2>
+<input name="SATRADIOGROUP" id="100" checked="checked" onclick="TIMESERIESDISP()" type="radio">
+<label for="100">ACSPO NPP</label><br>
+<input name="SATRADIOGROUP" id="101" onclick="TIMESERIESDISP()" type="radio">
+<label for="101">IDPS NPP</label><br>
+<input name="SATRADIOGROUP" id="102" disabled="" onclick="TIMESERIESDISP()" type="radio">
+<label for="102" style="color:#998877">NAVO NPP (WiP, TBD)</label><br>
+<input name="SATRADIOGROUP" id="103" onclick="TIMESERIESDISP()" type="radio">
+<label for="103">MetOp-A (O&amp;SI SAF)</label><br>
+<input name="SATRADIOGROUP" id="104" onclick="TIMESERIESDISP()" type="radio">
+<label for="104">MetOp-A (ACSPO)</label><br>
+<input name="SATRADIOGROUP" id="105" onclick="TIMESERIESDISP()" type="radio">
+<label for="105">MetOp-B (ACSPO)</label><br>
+<input name="SATRADIOGROUP" id="106" onclick="TIMESERIESDISP()" type="radio">
+<label for="106">Terra MODIS (ACSPO)</label><br>
+<input name="SATRADIOGROUP" id="107" onclick="TIMESERIESDISP()" type="radio">
+<label for="107">Aqua MODIS (ACSPO)</label><br>
+<input name="SATRADIOGROUP" id="108" disabled="" onclick="TIMESERIESDISP()" type="radio">
+<label for="108" style="color:#998877">ARC AATSR (WiP)</label><br>
+<input name="SATRADIOGROUP" id="109" disabled="" onclick="TIMESERIESDISP()" type="radio">
+<label for="109" style="color:#998877">ARC ATSR2 (WiP)</label><br>
+<input name="SATRADIOGROUP" id="110" disabled="" onclick="TIMESERIESDISP()" type="radio">
+<label for="110" style="color:#998877">ARC ATSR1 (WiP)</label>
+</div>
+
+<div id="scenerb" style="display:block">
+<p style="margin-top: 0; margin-bottom: 0" dir="ltr" align="left">
+</p><h2>Scene</h2>
+<input name="DAYNIGHTRADIOGROUP" id="200" checked="checked" onclick="TIMESERIESDISP()" type="radio">
+<label for="200">Night</label>
+<input name="DAYNIGHTRADIOGROUP" id="201" onclick="TIMESERIESDISP()" type="radio">
+<label for="201">Day</label>
+<br>
+</div>
+
+<div id="outliersrb" style="display:block">
+<p style="margin-top: 0; margin-bottom: 0" dir="ltr" align="left">
+</p><h2>Handling Outliers</h2>
+<input name="OUTLIERRADIOGROUP" id="300" onclick="TIMESERIESDISP()" type="radio">
+<label for="300">Retained</label>
+<input name="OUTLIERRADIOGROUP" id="301" checked="checked" onclick="TIMESERIESDISP()" type="radio">
+<label for="301">Removed</label>
+<br>
+</div>
+
+<div id="statisticsrb" style="display: none;">
+<p style="margin-top: 0; margin-bottom: 0" dir="ltr" align="left">
+</p><h2>Statistics</h2>
+<input name="STATRADIOGROUP" id="400" onclick="TIMESERIESDISP()" type="radio">
+<label for="400"># of match-ups</label><br>
+<input name="STATRADIOGROUP" id="401" onclick="TIMESERIESDISP()" type="radio">
+<label for="401">Minimum</label><br>
+<input name="STATRADIOGROUP" id="402" onclick="TIMESERIESDISP()" type="radio">
+<label for="402">Maximum</label><br>
+<input name="STATRADIOGROUP" id="403" onclick="TIMESERIESDISP()" type="radio">
+<label for="403">Mean</label><br>
+<input name="STATRADIOGROUP" id="404" checked="" onclick="TIMESERIESDISP()" type="radio">
+<label for="404">Median</label><br>
+<input name="STATRADIOGROUP" id="405" onclick="TIMESERIESDISP()" type="radio">
+<label for="405">Standard deviation</label><br>
+<input name="STATRADIOGROUP" id="406" onclick="TIMESERIESDISP()" type="radio">
+<label for="406">Robust Std Dev (RSD)</label><br>
+<input name="STATRADIOGROUP" id="407" onclick="TIMESERIESDISP()" type="radio">
+<label for="407">Skewness</label><br>
+<input name="STATRADIOGROUP" id="408" onclick="TIMESERIESDISP()" type="radio">
+<label for="408">Kurtosis</label><br>
+<input name="STATRADIOGROUP" id="409" onclick="TIMESERIESDISP()" type="radio">
+<label for="409">Removed low outlier (%)</label><br>
+<input name="STATRADIOGROUP" id="410" onclick="TIMESERIESDISP()" type="radio">
+<label for="410">Removed high outlier (%)</label>
+</div>
+
+<div id="trendsrb" style="display: none;">
+<p style="margin-top: 0; margin-bottom: 0" dir="ltr" align="left">
+</p><h2>X-axis variable</h2>
+<input name="TRENDRADIOGROUP" id="500" onclick="TIMESERIESDISP()" type="radio">
+<label for="500">Satellite zenith</label><br>
+<input name="TRENDRADIOGROUP" id="501" checked="checked" onclick="TIMESERIESDISP()" type="radio">
+<label for="501">Latitude</label><br>
+<input name="TRENDRADIOGROUP" id="502" onclick="TIMESERIESDISP()" type="radio">
+<label for="502">Longitude</label><br>
+<input name="TRENDRADIOGROUP" id="503" onclick="TIMESERIESDISP()" type="radio">
+<label for="503">Solar Zenith angle</label><br>
+<input name="TRENDRADIOGROUP" id="504" onclick="TIMESERIESDISP()" type="radio">
+<label for="504">SST (satellite)</label><br>
+<input name="TRENDRADIOGROUP" id="505" onclick="TIMESERIESDISP()" type="radio">
+<label for="505">SST - Air temperature</label><br>
+<input name="TRENDRADIOGROUP" id="506" onclick="TIMESERIESDISP()" type="radio">
+<label for="506">Wind Speed</label><br>
+<input name="TRENDRADIOGROUP" id="507" onclick="TIMESERIESDISP()" type="radio">
+<label for="507">Total precipitable water</label><br>
+<input name="TRENDRADIOGROUP" id="508" onclick="TIMESERIESDISP()" type="radio">
+<label for="508">Scattering angle</label><br>
+<input name="TRENDRADIOGROUP" id="509" onclick="TIMESERIESDISP()" type="radio">
+<label for="509">Glint angle</label><br>
+<input name="TRENDRADIOGROUP" id="510" onclick="TIMESERIESDISP()" type="radio">
+<label for="510"># of Obs in grid</label>
+</div>
+
+<div id="trendstyperb" style="display: none;">
+<p style="margin-top: 0; margin-bottom: 0" dir="ltr" align="left">
+</p><h2>Y-axis variable</h2>
+<input name="TRENDTYPERADIOGROUP" id="550" checked="checked" onclick="TIMESERIESDISP()" type="radio">
+<label for="550">Mean</label><br>
+<input name="TRENDTYPERADIOGROUP" id="551" onclick="TIMESERIESDISP()" type="radio">
+<label for="551">Std Dev</label><br>
+<input name="TRENDTYPERADIOGROUP" id="552" onclick="TIMESERIESDISP()" type="radio">
+<label for="552">Frequency dsitribution</label>
+</div>
+
+<div id="hovmrb" style="display: none;">
+<p style="margin-top: 0; margin-bottom: 0" dir="ltr" align="left">
+</p><h2>Hovmöller space variable</h2>
+<input name="HOVSTATRADIOGROUP" id="600" onclick="TIMESERIESDISP()" type="radio">
+<label for="600"># of observations</label><br>
+<input name="HOVSTATRADIOGROUP" id="601" checked="checked" onclick="TIMESERIESDISP()" type="radio">
+<label for="601">Mean</label><br>
+<input name="HOVSTATRADIOGROUP" id="602" onclick="TIMESERIESDISP()" type="radio">
+<label for="602">Median</label><br>
+<input name="HOVSTATRADIOGROUP" id="603" onclick="TIMESERIESDISP()" type="radio">
+<label for="603">Standard Deviation (Std Dev)</label><br>
+<input name="HOVSTATRADIOGROUP" id="604" onclick="TIMESERIESDISP()" type="radio">
+<label for="604">Robust Std Dev (RSD)</label><br>
+</div>
+
+<div id="hovmyaxisrb" style="display: none;">
+<p style="margin-top: 0; margin-bottom: 0" dir="ltr" align="left">
+</p><h2>Y-axis range</h2>
+<input name="HOVYAXISRADIOGROUP" id="650" onclick="TIMESERIESDISP()" type="radio">
+<label for="650">Different</label>
+<input name="HOVYAXISRADIOGROUP" id="651" checked="checked" onclick="TIMESERIESDISP()" type="radio">
+<label for="651">Equal</label><br>
+</div>
+
+<div id="aggregationtimerb" style="display: none;">
+<p style="margin-top: 0; margin-bottom: 0" dir="ltr" align="left">
+</p><h2>Aggregation time</h2>
+<input name="AGGREGATIONTIMERADIOGROUP" id="700" checked="checked" onclick="TIMESERIESDISP()" type="radio">
+<label for="700">Daily</label>
+<input name="AGGREGATIONTIMERADIOGROUP" id="701" onclick="TIMESERIESDISP()" type="radio">
+<label for="701">Monthly</label>
+</div>
+
+<div id="sstproductslist2toggle" style="display: none; font-size: 0.8em; font-weight: bold;">
+<p style="margin-top: 0; margin-bottom: 0" dir="ltr" align="left">
+</p><h2>Display toggle for:</h2>
+  <input id="0" onclick="visibilitytoggle(this)" checked="" type="checkbox">
+  <label id="Sat_1st" for="0"><font color="#00AF00">ACSPO NPP</font></label><br>
+  <input id="1" onclick="visibilitytoggle(this)" checked="" type="checkbox">
+  <label id="Sat_2nd" for="1"><font color="#FF0000">ACSPO MetOpA</font></label><br>
+  <input id="2" onclick="visibilitytoggle(this)" checked="" type="checkbox">
+  <label id="Sat_3rd" for="2"><font color="#0000FF">OSI SAF MetopA</font></label><br>
+  <input id="3" onclick="visibilitytoggle(this)" checked="" type="checkbox">
+  <label id="Sat_4th" for="3"><font color="#668CFF">ACSPO TERA</font></label><br>
+  <input id="4" onclick="visibilitytoggle(this)" checked="" type="checkbox">
+  <label id="Sat_5th" for="4"><font color="#9655C8">ACSPO AQUA</font></label><br>
+  <input id="5" onclick="visibilitytoggle(this)" checked="" type="checkbox">
+  <label id="Sat_6th" for="5"><font color="#006161">IDPS NPP</font></label><br>
+  <input id="6" onclick="visibilitytoggle(this)" checked="" type="checkbox">
+  <label id="Sat_7th" for="6"><font color="#00C0C0">ACSPO MetOpB</font></label><br>
+  <input id="7" disabled="" onclick="visibilitytoggle(this)" unchecked="" type="checkbox">
+  <label id="Sat_8th" for="7">&nbsp;<font color="#9B9C4F">NAVO NPP</font> (WiP)</label><br>
+  <input id="8" disabled="" onclick="visibilitytoggle(this)" unchecked="" type="checkbox">
+  <label id="Sat_9th" for="8">&nbsp;<font color="#FF8000">ARC AATSR</font> (WiP)</label><br>
+  <input id="9" disabled="" onclick="visibilitytoggle(this)" unchecked="" type="checkbox">
+  <label id="Sat_10th" for="9">&nbsp;<font color="#996600">ARC ATSR2</font> (WiP)</label><br>
+  <input id="10" disabled="" onclick="visibilitytoggle(this)" unchecked="" type="checkbox">
+  <label id="Sat_11th" for="10">&nbsp;<font color="#FF99E6">ARC ATSR1</font> (WiP)</label><br>
+<br><font style="font-size:0.9em; font-weight:normal">
+<input name="SelectAllL4" value="DeselectAllSSTOption" id="9999" onclick="CHECKALL()" type="checkbox">
+<label align="right" id="AllSSTTxt">Deselect all</label>
+</font>
+
+<br>
+<h2><a id="downloadascii" target="_new" href="statdata_ascii/L4_minus_IQ_DR_MEAN.txt">Download data for<br> current display</a>
+</h2>
+
+<br>
+</div>
+
+</form>
+
+</td>
+
+<td dir="ltr" align="center" height="1" valign="top" width="1"><br>
+<!-- the image container -->
+<table style="border-color:#C0C0C0; border-collapse: collapse" dir="ltr" bgcolor="#FFFFFF" border="0" cellpadding="0" cellspacing="0" align="center" height="1">
+<tbody>
+<tr>
+<td>
+<script>
+  $("#anomaly").click(function(){
+    $('path').attr('visibility', this.checked?'visible':'hidden');
+
+  });
+</script>
+
+<script>
+  $("#special-regions").click(function(){
+    $('rect').attr('visibility', this.checked?'visible':'hidden');
+  });
+</script>
+<img src="image.png" style="width:878px; height:500px; margin-left: 50px; margin-top: 0px; position: absolute; z-index: 1;">
+<script src="d3.min.js"></script>
+    <script>
+      d3.json('granule-data.json', function(error, json) {
+          var width = 735,
+              height = 372;
+
+          // Create SVG
+          var svg = d3.select("body")
+              .append("svg")
+              .attr("width", width)
+              .attr("height", height)
+
+          // Create a feature group to append data to
+          svg.append('g').attr('class', 'feature-group');
+
+
+          // Create tooltip
+          var text = d3.select('body').append('div').attr('class', 'text-tooltip');
+          var div = d3.select('body').append('div').attr('class', 'tooltip').style("opacity", 0);
+
+          // Voronoi generator function
+          var voronoiStops = d3.geom.voronoi()
+              .x(function(d) { return d.LONGITUDE; })
+              .y(function(d) { return d.LATITUDE; })
+              .clipExtent([[0, 0], [width, height]]);
+
+          // Load data
+          var node = svg.selectAll('.voronoi-stops')
+          .data(voronoiStops(json.data));
+
+          // Append all links as outer 
+          var nodeEnter = node.enter().append('svg:a')
+            .attr('class', 'node')
+            .attr('xlink:href', function(d) { return "anomaly/" + d.point.IMAGE; });
+
+          // Append all paths as children of <a>
+          nodeEnter.append('path')
+            .attr('class', function(d, i) { return i ? "q" + (i % 9) + "-9" : null; })
+            .attr('d', function(d) { return 'M' + d.join('L') + 'Z'; })
+            .attr('id', function(d, i) { return i; })
+            .attr('visibility', 'hidden')
+            .on('mouseover', function(d){
+                text.style('display', 'block')
+                .html('<img src=anomaly_img/' + d.point.IMAGE + '>');
+            })
+            .on('mouseout', function(d){
+                text.style('display', 'block')
+                .text('');
+            })  
+      });
+    </script>
+
+<script>
+
+  d3.json('special-regions.json', function(error, json) {
+      var width = 735,
+          height = 372;
+
+      var svg = d3.select('body')
+          .append('svg')
+          .attr('width', width)
+          .attr('height', height)
+
+      var text = d3.select('body').append('div').attr('class', 'text-tooltip');
+      
+      svg.append('g').attr('class', 'feature-group');
+
+      var node = svg.selectAll('rect')
+                    .data(json.data)
+
+      var nodeEnter = node.enter().append('svg:a')
+        .attr('class', 'node')
+        .attr('xlink:href', function(d) { return d.link; });
+
+
+      nodeEnter.append('rect')
+        .attr('x', function(d) { return d.x; })
+        .attr('y', function(d) { return d.y; })
+        .attr('width', 25)
+        .attr('height', 25)
+        .attr('visibility', 'hidden')
+        .style('pointer-events', 'none')
+        .on('mouseover', function(d){
+            text.style('display', 'block')
+            .html('<img src=' + d.image + '>');
+        })
+        .on('mouseout', function(d){
+          text.style('display', 'block')
+          .text('');
+        });
+  });
+
+
+</script>
+
+<p id="headertitle" style="display:none" align="center">ACSPO SST statistics wrt Reynolds, MEAN, Night, outliers removed</p>
+
+<div id="interactive_container" style="min-height:570px; display:none;">
+<div id="interactive_plot_wrap2" style="width:700px; height:350px; display:none;">
+<div id="interactive_plot_wrap1" style="width:700px; height:350px; display:none;">
+<div id="interactive_plot" style="width:700px; height:350px; display:none;"><div style="width: 0px; height: 0px; position: relative;"><canvas height="0" width="0" style="position: absolute; width: 0px; height: 0px;"></canvas><canvas height="0" width="0" style="position: absolute; width: 0px; height: 0px;"></canvas><input size="2" style="display: block; position: absolute; z-index: 10; top: -45px; left: 57px;" type="text"><div style="position: absolute; font-size: 14px; z-index: 10; width: 250px; top: 0px; left: -256px; background: none repeat scroll 0% 0% white; line-height: normal; text-align: left; overflow: hidden;" class="dygraph-legend"></div></div></div>
+</div>
+
+  <form id="form2" name="form2" method="post" action="" dir="ltr"><br><b>Axes ranges:</b>
+  <input name="AxisRangeCheckBox" value="AxisRangeOption" checked="" onclick="TIMESERIESDISP()" type="checkbox">
+  Preset Axes ranges [helps in intercomparison; otherwise a heuristic is used to determine ranges]<br><br>
+  </form>
+  <ul style="list-style-image: url(../images/subtle_square.gif)">
+   <li><b>Show values:</b>&nbsp;&nbsp;move mouse over the plot</li>
+   <li><b>Zoom in:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;click left mouse button inside the plot for start time, drag until end time, and release</li>
+   <li><b>Zoom out:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double-click on the plot</li>
+   <li><b>Smooth:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;specifiy in bottom-left corner box and hit enter (click outside plot in Opera,IE)</li>
+   <li><b>Pan:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while zoomed in, hold down Shift key and drag to pan</li>
+  </ul>
+
+       <br><b>S/W used &amp; Browser compatibitliy:</b> Library: <a href="http://danvk.org/dygraphs/" target="blank" title=" opensource JS library; link to non-governmental site">DYGraph visualization</a>. 
+       All modern browsers like FF, Safari, Opera etc. supporting HTML5 'canvas' tag. For IE, 'excanvas' is used but it appears slow and IE is not recommended here.
+
+</div>
+</div>
+
+<script type="text/javascript">
+statchart = new Dygraph(
+ document.getElementById('interactive_plot'),'./statdata_ascii/outlier_removed/hr_sst_minus_IQ_DR_0_MEDIAN.txt',
+ {
+   colors: ['rgb(0,175,0)','rgb(255,0,0)','rgb(0,0,255)','rgb(102,140,255)','rgb(150,85,200)','rgb(0,97,97)','rgb(0,192,192)','rgb(155,156,79)','rgb(255,128,0)','rgb(153,102,0)','rgb(255,153,230)'],
+   showRoller: true,
+   labelsKMB: true,
+   highlightCircleSize: 4,
+   strokeWidth: 2,
+   valueRange: [-1.0, 1.0],
+   dateWindow: [631152000000, 1388534400000],
+   labelsSeparateLines: true,
+   labelsDiv: document.getElementById("labels"),
+   visibility: [true,true]
+ }
+ );
+ function visibilitytoggle(el){statchart.setVisibility(el.id, el.checked);}
+</script>
+
+
+</td>
+
+
+<td valign="top"><div id="labels" style="display:block"></div></td>
+
+</tr>
+</tbody>
+</table>
+<!-- end of the image container -->
+
+</td>
+
+</tr>
+</tbody>
+</table>
+</div>
+<!------  END OF CENTRAL TABLE -->
+
+</td>
+
+</tr>
+</tbody>
+</table>
+
+<!-- End of table for main content of the page -->
+
+      <div id="playbar" style="display: block;">
+      <form id="playform" name="playform" align="center">
+        <input name="rep_str" value="[" onclick="set_rep_str()" style="width:40px" class="tags" type="button">
+        <input name="back" value="<" onclick="playback()" style="width:40px" class="tags" type="button">
+        <input name="play" value=">>" onclick="playpause()" style="width:50px" class="tags" type="button">
+        <input name="next" value=">" onclick="pressnext()" style="width:40px" class="tags" type="button">
+        <input name="rep_end" value="]" onclick="set_rep_end()" style="width:40px" class="tags" type="button">
+        <select name="playfps" onchange="change_fps()" class="tags">
+          <option value="1" selected="selected">1 fps</option>
+          <option value="2">2 fps</option>
+          <option value="4">4 fps</option>
+        </select>
+      </form>
+      </div>
+
+      <div id="datebar" style="display: block;">
+      <form id="dateinput" name="dateinput">
+        <select onchange="change_year()" name="c_year" id="c_year"><option value="1991">1991</option><option value="1992">1992</option><option value="1993">1993</option><option value="1994">1994</option><option value="1995">1995</option><option value="1996">1996</option><option value="1997">1997</option><option value="1998">1998</option><option value="1999">1999</option><option value="2000">2000</option><option value="2001">2001</option><option value="2002">2002</option><option value="2003">2003</option><option value="2004">2004</option><option value="2005">2005</option><option value="2006">2006</option><option value="2007">2007</option><option value="2008">2008</option><option value="2009">2009</option><option value="2010">2010</option><option value="2011">2011</option><option value="2012">2012</option><option value="2013">2013</option><option value="2014">2014</option></select>
+        <select onchange="change_month()" name="c_month" id="c_month"><option value="01">01</option><option value="02">02</option><option value="03">03</option><option value="04">04</option><option value="05">05</option><option value="06">06</option><option value="07">07</option><option value="08">08</option><option value="09">09</option></select>
+        <select style="visibility: visible;" onchange="change_day()" name="c_day" id="c_day"><option value="01">01</option><option value="02">02</option><option value="03">03</option><option value="04">04</option><option value="05">05</option><option value="06">06</option><option value="07">07</option><option value="08">08</option><option value="09">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option><option value="26">26</option></select>
+      </form>
+      </div>
+
+<div id="alternatemodule_static" style="display:none" ;=""><a href="#" onclick="DISPLAYMENU(4)">Interactive plot</a></div>
+<div id="alternatemodule_iactive" style="display:none" ;=""><a href="#" onclick="DISPLAYMENU(3)">Static plot</a></div>
+
+</div>
+
+
+
+
+
+</body>
+</html>

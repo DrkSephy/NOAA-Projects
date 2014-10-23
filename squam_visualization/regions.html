@@ -1,8 +1,13 @@
 <HTML><HEAD>
 <TITLE>ACSPO CLEAR SKY IMAGES</TITLE>
-<script type="text/javascript" src="images/scripts/popupinfo.js"></script>
-<SCRIPT SRC="images/scripts/squammenu.js" type="text/javascript"></SCRIPT>
 
+
+<style>
+    img {
+      height: 425px;
+      width: 755px;
+    }
+</style>
 
 <div style="margin-left: 71px; margin-top: 310px; position:absolute;">
     <select id="dropdown">
@@ -13,7 +18,7 @@
         <option value="5">Black Sea</option>
     </select>
 </div>
-
+<img style="margin-left: 325px; margin-top: 175px; position: absolute;" src="gulfofmexico.png" />
 <script src="../bower_components/jquery/dist/jquery.js"></script>
 <script>
     // Extract query string parameters
@@ -31,8 +36,24 @@
 
 <script> 
     // Change value of dropdown menu based on query string
-    console.log(vars['region']);
     $("#dropdown").val(vars['region']);
+    
+    var imageList = [
+      "gulfofmexico2.png",
+      "southeast2.png",
+      "northeast2.png",
+      "westcoast2.png",
+      "blacksea2.png",
+    ];
+    console.log(vars['region']);
+    $('img').attr('src', imageList[vars['region'] - 1]);
+
+    $('#dropdown').change(function () {
+        var val = parseInt($('#dropdown').val());
+        console.log(val);
+        $('img').attr("src",imageList[val - 1]);
+    });
+
 </script>
 
 <script language="javascript" type="text/javascript">
@@ -321,7 +342,7 @@ document.image.src=filename;
 </script>
 <script type=text/javascript src=http://www.star.nesdis.noaa.gov/star/global/js/federated-analytics.js></script></head>
 
-<BODY topmargin="0" leftmargin="0" onload="initialize()">
+<BODY topmargin="0" leftmargin="0">
 <div align="center">
   <center>
 
@@ -417,14 +438,6 @@ Last modified: Jul-26-2010
  <b><font size="2" face="Arial" color="#999999">Region</font></b></p>
  <p style="margin-top: 0; margin-bottom: 0" dir="ltr" align="left">
  <font face="Arial">
- <select name="dispregion" id="dispregion" onchange="TIMESERIESDISP()">
-                          <option value="0" dir="ltr" selected="selected">Gulf of Mexico</option>
-                          <option value="1" dir="ltr" >Southeast</option>
-                    <option value="2" dir="ltr" >Northeast</option>
-                          <option value="3" dir="ltr" >West Coast</option>
-                          <option value="4" dir="ltr" >Black Sea</option>
-
- </select></font></td>
  </tr>
  </form>
  </table>     <!--  END REGION TABLE --> 
@@ -623,11 +636,6 @@ Last modified: Jul-26-2010
 
 <td align="center" valign="top" width="901" height="420" dir="ltr" style="border-style: none; border-width: medium">
 
-<DIV ID="IMAGE" style="width: 700; height: 350">
-<img alt="ACSPO Clear Sky Images" name="image" id="image"  
-     width="755" height="532" border="0" hspace="1" align="left" 
-     onerror="this.src='images/noresult.png'"/>
-</DIV> 
 
 </font></font></td>
 </table></td> 

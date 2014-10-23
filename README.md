@@ -4,6 +4,13 @@ NOAA-Projects
 This repository contains source code of various projects I work on as a Graduate researcher at the City College of New York inside of 
 [G.L.A.S.S LAB](https://bitbucket.org/glasslab/profile/members). My tasks involve creating web applications for [NOAA-CREST](http://crest.ccny.cuny.edu/) and subsequently [NOAA](http://www.noaa.gov/).
 
+Project Directory
+-----------------
+
+* `special_regions/grid.html`: NOAA Squam page with special regions demo. Clicking on any of the bounding boxes redicts to `special_regions/regions.html`, which is the NOAA Special Regions page.
+
+* `squam_visualization/grid.html`: NOAA Squam page with voronoi diagram demo. Hovering over each region displays the granule showing the anomaly of sea surface temperature, and clicking any region redirects to a full image of the granule corresponding to the selected region. 
+
 Completed Works
 ---------------
 

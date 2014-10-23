@@ -1,0 +1,55 @@
+
+#squaminfo {
+    list-style: outside none none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    z-index: 0;
+}
+#squaminfo ul {
+    clear: left;
+    cursor: default;
+    float: left;
+    font-size: 100%;
+    list-style-type: none;
+    margin: auto;
+    padding: 0;
+    position: relative;
+    text-align: right;
+    width: 50em;
+}
+#squaminfo li {
+    color: #000000;
+    display: inline;
+    float: right;
+    font: 9pt Arial;
+    list-style: outside none none;
+    margin: 0;
+    padding: 0;
+    text-decoration: underline;
+}
+#squaminfo li a {
+    background: none repeat scroll 0 0 #f2f2f2;
+    color: #000000;
+    display: inline-block;
+    font: 9pt Arial;
+    margin: 0;
+    padding: 2px 3px;
+    text-align: right;
+    text-decoration: underline;
+    width: auto;
+}
+#squaminfo li a:link {
+    background: none repeat scroll 0 0 #f2f2f2;
+    color: #0000ff;
+    font-weight: normal;
+    text-decoration: underline;
+}
+#squaminfo li a:visited {
+    color: #0000ff;
+    font: 9pt Arial;
+}
+#squaminfo li a:hover {
+    background: none repeat scroll 0 0 #ffffff;
+    color: #000000;
+}

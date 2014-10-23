@@ -1,0 +1,534 @@
+
+* {
+    margin: 0;
+}
+ul#squammenu {
+    padding: 0;
+}
+ul#squammenu ul {
+    display: none;
+    left: 0;
+    list-style: none outside none;
+    margin: 0;
+    position: absolute;
+    top: 100%;
+    width: 100px;
+}
+ul#squammenu ul ul, ul#squammenu ul ul ul {
+    left: 100%;
+    padding: 0;
+    top: 0;
+}
+ul#squammenu li {
+    display: inline;
+    float: left;
+    position: relative;
+}
+ul#squammenu ul li {
+    display: block;
+    width: 100%;
+}
+ul#squammenu a {
+    background: none repeat scroll 0 0 #669999;
+    border-right: 1px solid #fff;
+    border-top: 0 solid #fff;
+    color: #fff;
+    display: block;
+    float: left;
+    font-family: verdana,arial,helvetica,sans-serif,PrimaSans BT;
+    font-size: 0.8em;
+    font-weight: bold;
+    height: 1%;
+    line-height: 12px;
+    padding: 4px;
+    text-decoration: none;
+}
+ul#squammenu a:hover, ul#squammenu li:hover a, ul#squammenu li.iehover a {
+    background: none repeat scroll 0 0 #cee4e4;
+    color: #0000cc;
+}
+ul#squammenu li:hover li a, ul#squammenu li.iehover li a {
+    background: none repeat scroll 0 0 #cee4e4;
+    float: none;
+}
+ul#squammenu li:hover li a:hover, ul#squammenu li:hover li:hover a, ul#squammenu li.iehover li a:hover, ul#squammenu li.iehover li.iehover a {
+    background: none repeat scroll 0 0 #9cc9c9;
+}
+ul#squammenu li:hover li:hover li a, ul#squammenu li.iehover li.iehover li a {
+    background: none repeat scroll 0 0 #9cc9c9;
+}
+ul#squammenu li:hover li:hover li a:hover, ul#squammenu li:hover li:hover li:hover a, ul#squammenu li.iehover li.iehover li a:hover, ul#squammenu li.iehover li.iehover li.iehover a {
+    background: none repeat scroll 0 0 #6baeae;
+}
+ul#squammenu li:hover li:hover li:hover li a, ul#squammenu li.iehover li.iehover li.iehover li a {
+    background: none repeat scroll 0 0 #6baeae;
+}
+ul#squammenu li:hover li:hover li:hover li a:hover, ul#squammenu li.iehover li.iehover li.iehover li a:hover {
+    background: none repeat scroll 0 0 #333;
+}
+ul#squammenu li:hover ul ul, ul#squammenu li:hover ul ul ul, ul#squammenu li.iehover ul ul, ul#squammenu li.iehover ul ul ul {
+    display: none;
+}
+ul#squammenu li:hover ul, ul#squammenu ul li:hover ul, ul#squammenu ul ul li:hover ul, ul#squammenu li.iehover ul, ul#squammenu ul li.iehover ul, ul#squammenu ul ul li.iehover ul {
+    display: block;
+    padding: 0;
+}
+#squammenu li ul a:active {
+    color: #000000;
+}
+#squammenu li a:active {
+    color: #000000;
+}
+#squammenu li a.active, #squammenu li a.active:active, #squammenu li a.active:focus {
+    background: none repeat scroll 0 0 #99cccc;
+    color: #000000;
+}
+#squammenu li li a.active {
+    background: none repeat scroll 0 0 #99cccc !important;
+    border-bottom: medium none !important;
+    color: #000000 !important;
+    font-weight: bold !important;
+}
+#squammenu li ul a:active {
+    color: #000000;
+    font-weight: bold !important;
+}
+#squammenu li a:active {
+    font-weight: bold !important;
+    outline: medium none;
+}
+.banner {
+    background-image: url("../gradationbg.png");
+    background-position: 0 0;
+    background-repeat: repeat-x;
+    border-collapse: collapse;
+    border-color: #669999;
+    border-style: none;
+    height: 97px;
+    margin: 0;
+    min-width: 1000px;
+    padding: 0;
+    position: relative;
+    vertical-align: bottom;
+    width: 90%;
+}
+.banner TR {
+    border-style: none;
+    height: 97px;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+.banner TD {
+    border-style: none;
+    height: 97px;
+    margin: 0;
+    padding: 0;
+}
+.menu {
+    background-image: url("../transparent.png");
+    background-position: 0 0;
+    background-repeat: repeat-x;
+    border-collapse: collapse;
+    border-color: #669999;
+    border-style: none;
+    margin: 0;
+    min-width: 1000px;
+    padding: 0;
+    position: relative;
+    vertical-align: top;
+    width: 90%;
+}
+.menu TR {
+    border-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+.menu TD {
+    border-style: none;
+    margin: 0;
+    padding: 0;
+}
+option.category {
+    background-color: #ffffff;
+    color: blue;
+    font-size: 0.9em;
+    font-weight: normal;
+    text-decoration: none;
+}
+.menupath {
+    background: none repeat scroll 0 0 #669999;
+    border-right: 1px solid #fff;
+    border-top: 0 solid #fff;
+    color: #fff;
+    display: block;
+    float: left;
+    font-family: verdana,arial,helvetica,sans-serif,PrimaSans BT;
+    font-size: 0.84em;
+    font-weight: bold;
+    height: 1%;
+    line-height: 12px;
+    padding: 4px;
+    text-decoration: none;
+    width: 140px;
+}
+.aboutpath {
+    background: none repeat scroll 0 0 #669999;
+    border-right: 0 solid #fff;
+    border-top: 0 solid #fff;
+    color: #fff;
+    display: block;
+    float: left;
+    font-family: verdana,arial,helvetica,sans-serif,PrimaSans BT;
+    font-size: 0.84em;
+    font-weight: bold;
+    height: 1%;
+    line-height: 12px;
+    padding: 4px;
+    text-decoration: none;
+    width: 320px;
+}
+.top_pagetable {
+    border: 0 none #669999;
+    border-collapse: collapse;
+    width: 90%;
+}
+.top_pagetable TR {
+    border-color: -moz-use-text-color;
+    border-left: 0 none;
+    border-right: 0 none;
+    border-style: none;
+    border-width: 0;
+}
+.top_pagetable TD {
+    border-color: -moz-use-text-color;
+    border-left: 0 none;
+    border-right: 0 none;
+    border-style: none;
+    border-width: 0;
+}
+ul#squaminfo ul {
+    display: none;
+    left: 0;
+    list-style: none outside none;
+    margin: 0;
+    position: absolute;
+    top: 100%;
+    width: 120px;
+}
+ul#squaminfo ul ul, ul#squaminfo ul ul ul {
+    left: 100%;
+    padding: 0;
+    top: 0;
+}
+ul#squaminfo li {
+    display: inline;
+    float: right;
+    position: relative;
+}
+ul#squaminfo ul li {
+    display: block;
+    width: 100%;
+}
+ul#squaminfo a {
+    background: none repeat scroll 0 0 #669999;
+    border-right: 0 solid #fff;
+    border-top: 0 solid #fff;
+    color: #ffffff;
+    display: block;
+    float: left;
+    font-family: verdana,arial,helvetica,sans-serif,PrimaSans BT,Verdana,sans-serif;
+    font-size: 0.8em;
+    font-weight: bold;
+    line-height: 12px;
+    padding: 4px;
+    text-decoration: none;
+    width: 120px;
+}
+ul#squaminfo a:hover, ul#squaminfo li:hover a, ul#squaminfo li.iehover a {
+    background: none repeat scroll 0 0 #cee4e4;
+    color: #fff;
+}
+ul#squaminfo li:hover li a, ul#squaminfo li.iehover li a {
+    background: none repeat scroll 0 0 #669999;
+    float: none;
+}
+ul#squaminfo li:hover li a:hover, ul#squaminfo li:hover li:hover a, ul#squaminfo li.iehover li a:hover, ul#squaminfo li.iehover li.iehover a {
+    background: none repeat scroll 0 0 #cee4e4;
+    color: #0000cc;
+}
+ul#squaminfo li:hover ul ul, ul#squaminfo li:hover ul ul ul, ul#squaminfo li.iehover ul ul, ul#squaminfo li.iehover ul ul ul {
+    display: none;
+}
+ul#squaminfo li:hover ul, ul#squaminfo ul li:hover ul, ul#squaminfo ul ul li:hover ul, ul#squaminfo li.iehover ul, ul#squaminfo ul li.iehover ul, ul#squaminfo ul ul li.iehover ul {
+    display: block;
+    padding: 0;
+}
+#squaminfo li ul a:active {
+    color: #000000;
+}
+#squaminfo li a:active {
+    color: #000000;
+}
+#squaminfo li a.active, #squaminfo li a.active:active, #squaminfo li a.active:focus {
+    background: none repeat scroll 0 0 #669999;
+    color: #0000cc;
+}
+#squaminfo li li a.active {
+    background: none repeat scroll 0 0 #cee4e4 !important;
+    border-bottom: medium none !important;
+    color: #000000 !important;
+}
+#squaminfo li ul a:active {
+    color: #000000;
+}
+#squaminfo li a:active {
+    outline: medium none;
+}
+TH, TR {
+    font-family: arial;
+    font-weight: bold;
+    text-align: justify;
+    text-transform: none;
+}
+TD, P {
+    font-family: arial;
+    font-size: 10pt;
+    font-style: normal;
+    font-weight: normal;
+}
+BODY {
+    background-image: url("../bg.png");
+    background-position: 0 0;
+    background-repeat: repeat-x;
+    font-family: arial;
+    font-weight: normal;
+    position: relative;
+    text-decoration: none;
+}
+h1 {
+    font-size: 1.2em;
+    font-weight: bold;
+    line-height: 1.5em;
+    margin: 0;
+    text-align: justify;
+    text-decoration: none;
+}
+h2 {
+    color: #3d5c5c;
+    font-family: verdana,helvetica,arial;
+    font-size: 1em;
+    font-weight: bold;
+    line-height: 1em;
+    margin: 10px 0 4px;
+    text-align: justify;
+    text-decoration: none;
+}
+h3 {
+    color: #3d5c5c;
+    font-family: verdana,helvetica,arial;
+    font-size: 1em;
+    font-style: italic;
+    font-weight: bold;
+    line-height: 1.1em;
+    margin: 10px 0 4px;
+    text-align: justify;
+    text-decoration: none;
+}
+a, a:link {
+    color: blue;
+    text-decoration: none;
+}
+a:hover {
+    background-color: white;
+    color: #669999;
+}
+.div_container a {
+    background-color: #007aa5;
+    color: #fff;
+    padding: 10px;
+    text-decoration: none;
+}
+.div_container a:hover {
+    background: none repeat scroll 0 0 #ffffff;
+    color: #007aa5;
+    text-decoration: underline;
+}
+.div_info {
+    background-color: #ffffff;
+    border: 1px solid #dcdcdc;
+    color: #ff0000;
+    font-size: 12px;
+    font-weight: bold;
+    height: 15px;
+    line-height: 1em;
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+    width: 800px;
+}
+.pagelocationinfo {
+    background-color: #ffffff;
+    font-family: verdana,arial,sans-serif;
+    font-size: 0.7em;
+    font-weight: normal;
+    padding-right: 0;
+    text-align: right;
+    text-decoration: none;
+}
+#footer {
+    height: 20px;
+    margin-top: 30px;
+    position: absolute;
+    right: 5%;
+}
+#footerinfo {
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    z-index: 0;
+}
+#footerinfo ul {
+    background-color: transparent;
+    clear: left;
+    cursor: default;
+    float: left;
+    font-size: 100%;
+    list-style-type: none;
+    margin: auto;
+    padding: 0;
+    position: relative;
+    text-align: right;
+    width: 50em;
+}
+#footerinfo li {
+    color: #000000;
+    display: inline;
+    float: right;
+    font: 9pt Arial;
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+}
+#footerinfo li a {
+    background: none repeat scroll 0 0 transparent;
+    color: #000000;
+    display: inline-block;
+    font: 8pt Arial;
+    margin: 0;
+    padding: 2px 4px;
+    text-align: right;
+    text-decoration: underline;
+    width: auto;
+}
+#footerinfo li a:link {
+    background: none repeat scroll 0 0 transparent;
+    color: #0000ff;
+    font-weight: normal;
+    text-decoration: underline;
+}
+#footerinfo li a:visited {
+    color: #0000ff;
+    font: 8pt Arial;
+}
+#footerinfo li a:hover {
+    background: none repeat scroll 0 0 #ffffff;
+    color: #000000;
+}
+#playbar {
+    height: 27px;
+    left: 430px;
+    position: absolute;
+    top: 650px;
+    width: 288px;
+    z-index: 3;
+}
+#datebar {
+    height: 27px;
+    left: 710px;
+    position: absolute;
+    top: 651px;
+    width: 185px;
+    z-index: 4;
+}
+#alternatemodule_static {
+    font: 600 10pt Arial;
+    left: 880px;
+    position: absolute;
+    top: 550px;
+}
+#alternatemodule_iactive {
+    font: 600 10pt Arial;
+    left: 880px;
+    position: absolute;
+    top: 550px;
+}
+#ddalternatemodule_static {
+    font: 600 10pt Arial;
+    left: 880px;
+    position: absolute;
+    top: 550px;
+}
+#ddalternatemodule_iactive {
+    font: 600 10pt Arial;
+    left: 880px;
+    position: absolute;
+    top: 550px;
+}
+#productslist2toggle {
+    font: 8pt Arial;
+    left: 350px;
+    max-width: 500px;
+    position: absolute;
+    top: 570px;
+}
+.landingpage_info_table {
+    background-color: #ffffff;
+    float: left;
+    min-width: 900px;
+    padding: 0;
+    text-decoration: none;
+    vertical-align: top;
+}
+.landingpage_info_table h1 {
+    font-family: verdana,helvetica,arial;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 100%;
+    padding: 1px 1px 6px;
+    text-align: center;
+    text-decoration: none;
+}
+.landingpage_info_table h2 {
+    color: black;
+    font-family: verdana,helvetica,arial,sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 120%;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    text-decoration: none;
+}
+.landingpage_info_table p {
+    color: #000;
+    font-family: arial,sans-serif;
+    font-size: 11px;
+    font-weight: normal;
+    line-height: 1.25em;
+    padding: 1px 1px 2px 2px;
+    text-align: left;
+    text-decoration: none;
+}
+.landingpage_info_table a {
+    color: #0000ff;
+    font-family: arial,sans-serif;
+    font-size: 10px;
+    font-weight: normal;
+    line-height: 1.25em;
+    padding: 1px 1px 2px 2px;
+    text-align: left;
+    text-decoration: none;
+}

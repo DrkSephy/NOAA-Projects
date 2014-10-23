@@ -1,0 +1,39 @@
+{
+    "data" : [
+        {
+            "x": 428,
+            "y": 85, 
+            "link": "http://0.0.0.0:8000/squam_visualization/regions.html?region=5",
+            "image": "blacksea.png"
+        },
+
+        {
+            "x": 165,
+            "y": 125,
+            "link": "http://0.0.0.0:8000/squam_visualization/regions.html?region=1",
+            "image": "gulfofmexico.png"
+
+        },
+
+        {
+            "x": 190,
+            "y": 125,
+            "link": "http://0.0.0.0:8000/squam_visualization/regions.html?region=2",
+            "image": "southeast.png"
+        },
+
+        {
+            "x": 205,
+            "y": 100,
+            "link": "http://0.0.0.0:8000/squam_visualization/regions.html?region=3",
+            "image": "northeast.png"
+        },
+
+        {
+            "x": 105,
+            "y": 100,
+            "link": "http://0.0.0.0:8000/squam_visualization/regions.html?region=4",
+            "image": "westcoast.png"
+        }
+    ]
+}

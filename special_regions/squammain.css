@@ -1,0 +1,69 @@
+
+TH, TR {
+    color: black;
+    font-family: arial;
+    font-weight: bold;
+    text-align: justify;
+    text-transform: none;
+}
+TD, P {
+    color: black;
+    font-family: arial;
+    font-size: 10pt;
+    font-style: normal;
+    font-weight: normal;
+}
+BODY {
+    color: black;
+    font-family: arial;
+    font-weight: normal;
+    text-decoration: none;
+}
+h1 {
+    font-family: arial;
+    font-size: 10pt;
+    font-weight: bold;
+}
+h2 {
+    font-family: arial;
+    font-size: 10pt;
+}
+html {
+    font-family: arial;
+    font-size: 10pt;
+}
+pagelocationinfo {
+    font-family: arial;
+    font-size: 8pt;
+    text-decoration: none;
+}
+a, a:link {
+    color: blue;
+    font-family: Arial;
+    font-size: 10pt;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+}
+a:hover {
+    background-color: white;
+    color: black;
+    font-family: Arial;
+    font-size: 10pt;
+}
+#playbar {
+    height: 27px;
+    left: 10px;
+    position: absolute;
+    top: 10px;
+    width: 400px;
+    z-index: 3;
+}
+#datebar {
+    height: 27px;
+    left: 312px;
+    position: absolute;
+    top: 10px;
+    width: 300px;
+    z-index: 4;
+}

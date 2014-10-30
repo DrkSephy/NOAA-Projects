@@ -1,7 +1,16 @@
+from os import listdir
+from os.path import isfile, join
 from pyhdf.SD import SD, SDC
 
-def process(file):
-    dataset = SD(file, SDC.READ)
+# path = "/home/DrkSephy/terra/"
+path = "/home/DrkSephy/aqua/"
+onlyfiles = [ f for f in listdir(path) if isfile(join(path, f)) ]
+computedData = [ ]
+
+# Begin computation loops
+for f in onlyfiles:
+    dataset = SD(path + f, SDC.READ)
+    # Get longitude
     lo = dataset.select('Longitude')
     nr, nc = lo[:,:].shape
     long = lo[:,:]
@@ -11,8 +20,6 @@ def process(file):
     numr, numc = la[:,:].shape
     lat = la[:,:]
     latitude = lat[numr//2, numc//2]
-    print {'Longitude': longitude, 'Latitude': latitude, 'Satellite': 'Aqua'}
+    computedData.append({'Latitude': latitude, 'Longitude': longitude, 'Satellite': 'Terra'})
 
-process('MYD021KM.A2014295.2355.005.2014296204732.hdf')
-
-
+print computedData

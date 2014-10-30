@@ -1,18 +1,25 @@
+from os import listdir
+from os.path import isfile, join
 from pyhdf.SD import SD, SDC
 
-f = SD('MOD021KM.A2014295.2340.005.2014296093338.hdf', SDC.READ)
-# print all datasets
-f.datasets()
-# Get a handle to specific datasets
-lo = f.select('Longitude')
-# print out datasets
-lo[:,:]
-# Get number of rows/columns
-nr, nc = lo[:,:].shape
-long = lo[:,:]
-longitude = long[nr//2, nc//2]
+path = "/home/DrkSephy/terra"
+onlyfiles = [ f for f in listdir(path) if isfile(join(path, f)) ]
+computedData = [ ]
 
-la = f.select('Latitude')
-numr, numc = la[:,:].shape
-lat = la[:,:]
-latitude = lat[numr//2, numc//2]
+# Begin computation loops
+for f in onlyfiles:
+    dataset = SD(path + f, SDC.READ)
+    # Get longitude
+    lo = f.select('Longitude')
+    nr, nc = lo[:,:].shape
+    long = lo[:,:]
+    longitude = long[nr//2, nc//2]
+
+    # Get latitude
+    la = f.select('Latitude')
+    numr, numc = la[:,:].shape
+    lat = la[:,:]
+    latitude = lat[numr//2, numc//2]
+    computedData.append({'Latitude': latitude, 'Longitude': longitude})
+
+print computedData

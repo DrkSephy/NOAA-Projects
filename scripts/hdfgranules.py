@@ -2,8 +2,8 @@ from os import listdir
 from os.path import isfile, join
 from pyhdf.SD import SD, SDC
 
-# path = "/home/DrkSephy/terra/"
-path = "/home/DrkSephy/aqua/"
+path = "/home/DrkSephy/terra/"
+# path = "/home/DrkSephy/aqua/"
 onlyfiles = [ f for f in listdir(path) if isfile(join(path, f)) ]
 computedData = [ ]
 
@@ -20,6 +20,6 @@ for f in onlyfiles:
     numr, numc = la[:,:].shape
     lat = la[:,:]
     latitude = lat[numr//2, numc//2]
-    computedData.append({'Latitude': latitude, 'Longitude': longitude, 'Satellite': 'Aqua'})
+    computedData.append({'Latitude': latitude, 'Longitude': longitude, 'Satellite': 'Terra'})
 
 print computedData

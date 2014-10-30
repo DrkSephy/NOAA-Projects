@@ -1,0 +1,85 @@
+[{
+    'Latitude': 70.673637,
+    'Satellite': 'Aqua',
+    'Longitude': 166.61987
+}, {
+    'Latitude': 74.233597,
+    'Satellite': 'Aqua',
+    'Longitude': 135.21875
+}, {
+    'Latitude': 61.282249,
+    'Satellite': 'Aqua',
+    'Longitude': 126.83466
+}, {
+    'Latitude': 77.504402,
+    'Satellite': 'Aqua',
+    'Longitude': 100.41132
+}, {
+    'Latitude': 65.122597,
+    'Satellite': 'Aqua',
+    'Longitude': 98.995346
+}, {
+    'Latitude': 80.193344,
+    'Satellite': 'Aqua',
+    'Longitude': 59.664474
+}, {
+    'Latitude': 68.885818,
+    'Satellite': 'Aqua',
+    'Longitude': 70.211372
+}, {
+    'Latitude': 72.525261,
+    'Satellite': 'Aqua',
+    'Longitude': 39.906628
+}, {
+    'Latitude': 75.956802,
+    'Satellite': 'Aqua',
+    'Longitude': 7.0113978
+}, {
+    'Latitude': 63.252697,
+    'Satellite': 'Aqua',
+    'Longitude': 1.7248409
+}, {
+    'Latitude': 78.979607,
+    'Satellite': 'Aqua',
+    'Longitude': -30.453815
+}, {
+    'Latitude': 67.061852,
+    'Satellite': 'Aqua',
+    'Longitude': -26.554831
+}, {
+    'Latitude': 53.57626,
+    'Satellite': 'Aqua',
+    'Longitude': -41.696636
+}, {
+    'Latitude': 70.778488,
+    'Satellite': 'Aqua',
+    'Longitude': -56.036701
+}, {
+    'Latitude': 74.332329,
+    'Satellite': 'Aqua',
+    'Longitude': -87.503654
+}, {
+    'Latitude': 61.393242,
+    'Satellite': 'Aqua',
+    'Longitude': -95.735092
+}, {
+    'Latitude': 77.592842,
+    'Satellite': 'Aqua',
+    'Longitude': -122.43761
+}, {
+    'Latitude': 65.230667,
+    'Satellite': 'Aqua',
+    'Longitude': -123.59437
+}, {
+    'Latitude': 80.256775,
+    'Satellite': 'Aqua',
+    'Longitude': -163.39375
+}, {
+    'Latitude': 68.950722,
+    'Satellite': 'Aqua',
+    'Longitude': -152.36955
+}, {
+    'Latitude': 72.592911,
+    'Satellite': 'Aqua',
+    'Longitude': 177.27808
+}]

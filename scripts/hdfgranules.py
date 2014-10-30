@@ -7,3 +7,7 @@ f.datasets()
 ff = f.select('Longitude')
 # print out datasets
 ff[:,:]
+# Get number of rows/columns
+nr, nc = ff[:,:].shape
+long = ff[:,:]
+longitude = long[nr//2, nc//2]

@@ -20,6 +20,6 @@ for f in onlyfiles:
     numr, numc = la[:,:].shape
     lat = la[:,:]
     latitude = lat[numr//2, numc//2]
-    computedData.append({'Latitude': latitude, 'Longitude': longitude, 'Satellite': 'Terra'})
+    computedData.append({'Latitude': latitude, 'Longitude': longitude, 'Satellite': 'Terra', 'File': f})
 
 print computedData

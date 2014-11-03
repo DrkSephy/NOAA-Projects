@@ -1,93 +1,116 @@
 [{
-    'Latitude': 70.657257,
-    'Satellite': 'Aqua',
-    'Longitude': 166.64339
+    "Latitude": 70.657257,
+    "Satellite": "Aqua",
+    "File": "MYD02HKM.A2014295.0050.005.2014295171106.hdf",
+    "Longitude": 166.64339
 }, {
-    'Latitude': 74.218132,
-    'Satellite': 'Aqua',
-    'Longitude': 135.25365
+    "Latitude": 74.218132,
+    "Satellite": "Aqua",
+    "File": "MYD02HKM.A2014295.0230.005.2014295170537.hdf",
+    "Longitude": 135.25365
 }, {
-    'Latitude': 61.26495,
-    'Satellite': 'Aqua',
-    'Longitude': 126.84582
+    "Latitude": 61.26495,
+    "Satellite": "Aqua",
+    "File": "MYD02HKM.A2014295.0405.005.2014295170451.hdf",
+    "Longitude": 126.84582
 }, {
-    'Latitude': 77.490715,
-    'Satellite': 'Aqua',
-    'Longitude': 100.46637
+    "Latitude": 77.490715,
+    "Satellite": "Aqua",
+    "File": "MYD02HKM.A2014295.0410.005.2014295170316.hdf",
+    "Longitude": 100.46637
 }, {
-    'Latitude': 65.105553,
-    'Satellite': 'Aqua',
-    'Longitude': 99.009888
+    "Latitude": 65.105553,
+    "Satellite": "Aqua",
+    "File": "MYD02HKM.A2014295.0545.005.2014295171309.hdf",
+    "Longitude": 99.009888
 }, {
-    'Latitude': 80.183319,
-    'Satellite': 'Aqua',
-    'Longitude': 59.753281
+    "Latitude": 80.183319,
+    "Satellite": "Aqua",
+    "File": "MYD02HKM.A2014295.0550.005.2014295171224.hdf",
+    "Longitude": 59.753281
 }, {
-    'Latitude': 68.869156,
-    'Satellite': 'Aqua',
-    'Longitude': 70.231224
+    "Latitude": 68.869156,
+    "Satellite": "Aqua",
+    "File": "MYD02HKM.A2014295.0725.005.2014295171752.hdf",
+    "Longitude": 70.231224
 }, {
-    'Latitude': 72.50927,
-    'Satellite': 'Aqua',
-    'Longitude': 39.935207
+    "Latitude": 72.50927,
+    "Satellite": "Aqua",
+    "File": "MYD02HKM.A2014295.0905.005.2014295192559.hdf",
+    "Longitude": 39.935207
 }, {
-    'Latitude': 75.942085,
-    'Satellite': 'Aqua',
-    'Longitude': 7.0551629
+    "Latitude": 75.942085,
+    "Satellite": "Aqua",
+    "File": "MYD02HKM.A2014295.1045.005.2014296171458.hdf",
+    "Longitude": 7.0551629
 }, {
-    'Latitude': 63.235504,
-    'Satellite': 'Aqua',
-    'Longitude': 1.7375566
+    "Latitude": 63.235504,
+    "Satellite": "Aqua",
+    "File": "MYD02HKM.A2014295.1220.005.2014296171935.hdf",
+    "Longitude": 1.7375566
 }, {
-    'Latitude': 78.967491,
-    'Satellite': 'Aqua',
-    'Longitude': -30.383476
+    "Latitude": 78.967491,
+    "Satellite": "Aqua",
+    "File": "MYD02HKM.A2014295.1225.005.2014296171813.hdf",
+    "Longitude": -30.383476
 }, {
-    'Latitude': 67.044975,
-    'Satellite': 'Aqua',
-    'Longitude': -26.53787
+    "Latitude": 67.044975,
+    "Satellite": "Aqua",
+    "File": "MYD02HKM.A2014295.1400.005.2014296172913.hdf",
+    "Longitude": -26.53787
 }, {
-    'Latitude': 53.558689,
-    'Satellite': 'Aqua',
-    'Longitude': -41.689335
+    "Latitude": 53.558689,
+    "Satellite": "Aqua",
+    "File": "MYD02HKM.A2014295.1535.005.2014296203941.hdf",
+    "Longitude": -41.689335
 }, {
-    'Latitude': 70.762131,
-    'Satellite': 'Aqua',
-    'Longitude': -56.012936
+    "Latitude": 70.762131,
+    "Satellite": "Aqua",
+    "File": "MYD02HKM.A2014295.1540.005.2014296203944.hdf",
+    "Longitude": -56.012936
 }, {
-    'Latitude': 57.484955,
-    'Satellite': 'Aqua',
-    'Longitude': -68.492874
+    "Latitude": 57.484955,
+    "Satellite": "Aqua",
+    "File": "MYD02HKM.A2014295.1715.005.2014296204109.hdf",
+    "Longitude": -68.492874
 }, {
-    'Latitude': 74.316902,
-    'Satellite': 'Aqua',
-    'Longitude': -87.468323
+    "Latitude": 74.316902,
+    "Satellite": "Aqua",
+    "File": "MYD02HKM.A2014295.1720.005.2014296204120.hdf",
+    "Longitude": -87.468323
 }, {
-    'Latitude': 61.375938,
-    'Satellite': 'Aqua',
-    'Longitude': -95.723854
+    "Latitude": 61.375938,
+    "Satellite": "Aqua",
+    "File": "MYD02HKM.A2014295.1855.005.2014296204609.hdf",
+    "Longitude": -95.723854
 }, {
-    'Latitude': 77.579224,
-    'Satellite': 'Aqua',
-    'Longitude': -122.38181
+    "Latitude": 77.579224,
+    "Satellite": "Aqua",
+    "File": "MYD02HKM.A2014295.1900.005.2014296204254.hdf",
+    "Longitude": -122.38181
 }, {
-    'Latitude': 65.213623,
-    'Satellite': 'Aqua',
-    'Longitude': -123.5797
+    "Latitude": 65.213623,
+    "Satellite": "Aqua",
+    "File": "MYD02HKM.A2014295.2035.005.2014296204432.hdf",
+    "Longitude": -123.5797
 }, {
-    'Latitude': 80.246895,
-    'Satellite': 'Aqua',
-    'Longitude': -163.30382
+    "Latitude": 80.246895,
+    "Satellite": "Aqua",
+    "File": "MYD02HKM.A2014295.2040.005.2014296204402.hdf",
+    "Longitude": -163.30382
 }, {
-    'Latitude': 68.934082,
-    'Satellite': 'Aqua',
-    'Longitude': -152.34961
+    "Latitude": 68.934082,
+    "Satellite": "Aqua",
+    "File": "MYD02HKM.A2014295.2215.005.2014296204758.hdf",
+    "Longitude": -152.34961
 }, {
-    'Latitude': 55.494942,
-    'Satellite': 'Aqua',
-    'Longitude': -166.27487
+    "Latitude": 55.494942,
+    "Satellite": "Aqua",
+    "File": "MYD02HKM.A2014295.2350.005.2014296205004.hdf",
+    "Longitude": -166.27487
 }, {
-    'Latitude': 72.57695,
-    'Satellite': 'Aqua',
-    'Longitude': 177.30687
+    "Latitude": 72.57695,
+    "Satellite": "Aqua",
+    "File": "MYD02HKM.A2014295.2355.005.2014296204732.hdf",
+    "Longitude": 177.30687
 }]

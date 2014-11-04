@@ -159,16 +159,17 @@ latitude_scale.range([0, 372]);
 
 var longitude_scale = d3.scale.linear();
 longitude_scale.domain([-180, 180]);
-longitude_scale.range([0, 735])
+//longitude_scale.range([0, 735])
 
-console.log(latitude_scale(50))
+//console.log(latitude_scale(50))
 //console.log(longitude_scale(43))
-/*
+
      for(var i = 0; i < points.length; i++){
-       scaledPoints.push([longitude_scale(points[i][1]), latitude_scale(points[i][0])]);
+          console.log(longitude_scale(points[i][1]));
+          scaledPoints.push([longitude_scale(points[i][1]), latitude_scale(points[i][0])]);
      }
-     console.log(scaledPoints)
-*/
+     //console.log(scaledPoints)
+
 </script>
 
 </html>

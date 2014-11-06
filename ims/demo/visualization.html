@@ -19,8 +19,8 @@
     }
 
     svg {
-      width: 735px;
-      height: 372px;
+      width: 512px;
+      height: 512px;
       margin-left: 292px;
       margin-top: 176px;
       position: absolute;
@@ -53,7 +53,7 @@
   <script src="../../bower_components/d3/d3.min.js"></script>
     <script>
       d3.json('rapid-fire.json', function(error, json) {
-        //console.log(json)
+        console.log(json)
         var width  = 512,
             height = 512;
 
@@ -64,7 +64,33 @@
                     .attr('height', height)
 
         // Create a feature group to append data to 
+        svg.append('g').attr('class', 'feature-group');
 
+        // Create tooltip
+        var text = d3.select('body').append('div').attr('class', 'text-tooltip');
+
+        // Voronoi generator
+        var voronoi = d3.geom.voronoi()
+            .x(function(d) { return d.Latitude })
+            .y(function(d) { return d.Longitude })
+            .clipExtent([ [0,0], [512, 512] ]);
+
+
+        var node = svg.selectAll('.voronoi-stops')
+                      .data(voronoi(json.data))
+
+        // Append all links as outer 
+        var nodeEnter = node.enter().append('svg:a')
+            .attr('class', 'node')
+
+        // Append all paths as children of <a>
+        nodeEnter.append('path')
+            .attr('d', function(d) { return 'M' + d.join('L') + 'Z'; })
+            .attr('id', function(d, i) { return i; })
+            .on('mouseover', function(d){
+                text.style('display', 'block')
+                .html('<img src=terra/143/' + d.point.Band143 + '>');
+            })
       });
     </script>
 

@@ -382,6 +382,6 @@ datum = {
 
 points = []
 for d in datum['data']:
-    points.append([d['Longitude'], d['Longitude']])
+    points.append([d['Longitude'], d['Latitude']])
 print points
 

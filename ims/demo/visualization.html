@@ -1,13 +1,77 @@
-<html>
+<!DOCTYPE html>
 <head>
-    <meta name="viewport" content="width=device-width; height=device-height;">
-    <link rel="stylesheet" href="resource://gre/res/ImageDocument.css">
-    <link rel="stylesheet" href="resource://gre/res/TopLevelImageDocument.css">
-    <link rel="stylesheet" href="chrome://global/skin/media/TopLevelImageDocument.css">
-    <title>ims2014295_alaska.gif (GIF Image, 512&nbsp;×&nbsp;512 pixels)</title>
+  <meta charset="utf-8">
+  <title>Voronoi Diagram</title>
 </head>
+<style>
+    /* Change stroke to #000 to see outlines */
+    path {
+      stroke: #000;
+    }
+
+    path:first-child {
+      fill: transparent;
+    }
+
+    circle {
+      fill: #000;
+      pointer-events: none;
+    }
+
+    svg {
+      width: 735px;
+      height: 372px;
+      margin-left: 292px;
+      margin-top: 176px;
+      position: absolute;
+      z-index: 2;
+    }
+
+    .voronoi-stops {
+      fill: transparent;
+      stroke-width: 0.001;
+      stroke: #676767;
+    }
+
+   .text-tooltip {
+      position: absolute;
+      top: 0;
+      right: 0;
+      margin: 1em 1em 0 0;
+      padding: 1em;
+      font-size: 1.0em;
+      background-color: #F2F2F2;
+      border: 1px solid #222222;
+    }
+</style>
+
 
 <body>
-    <img src="img/ims2014295_alaska.gif" class="decoded">
+  <!--
+    <img src="image.png" style="width:878px; height:500px; margin-left: 0px; margin-top: 125px; position: absolute; z-index: 1;">
+  -->
+  <script src="../bower_components/d3/d3.min.js"></script>
+    <script>
+      d3.json('rapid-fire.json', function(error, json) {
+        console.log(json)
+      });
+    </script>
+
 </body>
-</html>
+
+
+<!--
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width; height=device-height;">
+        <link rel="stylesheet" href="resource://gre/res/ImageDocument.css">
+        <link rel="stylesheet" href="resource://gre/res/TopLevelImageDocument.css">
+        <link rel="stylesheet" href="chrome://global/skin/media/TopLevelImageDocument.css">
+        <title>ims2014295_alaska.gif (GIF Image, 512&nbsp;×&nbsp;512 pixels)</title>
+    </head>
+
+    <body>
+        <img src="img/ims2014295_alaska.gif" class="decoded">
+    </body>
+    </html>
+-->

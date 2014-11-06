@@ -21,8 +21,8 @@
     svg {
       width: 512px;
       height: 512px;
-      margin-left: 292px;
-      margin-top: 176px;
+      margin-left: 100px;
+      margin-top: 100px;
       position: absolute;
       z-index: 2;
     }
@@ -43,13 +43,23 @@
       background-color: #F2F2F2;
       border: 1px solid #222222;
     }
+
+   .text-tooltip2 {
+      position: absolute;
+      top: 700px;
+      right: 0;
+      margin: 1em 1em 0 0;
+      padding: 1em;
+      font-size: 1.0em;
+      background-color: #F2F2F2;
+      border: 1px solid #222222;
+    }
 </style>
 
 
 <body>
-  <!--
-    <img src="image.png" style="width:878px; height:500px; margin-left: 0px; margin-top: 125px; position: absolute; z-index: 1;">
-  -->
+  
+  <img src="alaska.png" style="width:512px; height:512px; margin-left: 100px; margin-top: 100px; position: absolute; z-index: 1;">
   <script src="../../bower_components/d3/d3.min.js"></script>
     <script>
       d3.json('rapid-fire.json', function(error, json) {
@@ -68,6 +78,7 @@
 
         // Create tooltip
         var text = d3.select('body').append('div').attr('class', 'text-tooltip');
+        var text2 = d3.select('body').append('div').attr('class', 'text-tooltip2');
 
         // Voronoi generator
         var voronoi = d3.geom.voronoi()
@@ -90,6 +101,8 @@
             .on('mouseover', function(d){
                 text.style('display', 'block')
                 .html('<img src=terra/143/' + d.point.Band143 + '>');
+                text2.style('display', 'block')
+                .html('<img src=' + d.terra/721/' + d.point.Band721 + '>');
             })
       });
     </script>

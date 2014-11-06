@@ -100,28 +100,11 @@
             .attr('id', function(d, i) { return i; })
             .on('mouseover', function(d){
                 text.style('display', 'block')
-                .html('<img src=terra/143/' + d.point.Band143 + '>');
+                .html('<img src=' + d.point.Satellite + '/143/' + d.point.Band143 + '>');
                 text2.style('display', 'block')
-                .html('<img src=' + d.terra/721/' + d.point.Band721 + '>');
+                .html('<img src=' + d.point.Satellite + '/721/' + d.point.Band721 + '>');
             })
       });
     </script>
 
 </body>
-
-
-<!--
-    <html>
-    <head>
-        <meta name="viewport" content="width=device-width; height=device-height;">
-        <link rel="stylesheet" href="resource://gre/res/ImageDocument.css">
-        <link rel="stylesheet" href="resource://gre/res/TopLevelImageDocument.css">
-        <link rel="stylesheet" href="chrome://global/skin/media/TopLevelImageDocument.css">
-        <title>ims2014295_alaska.gif (GIF Image, 512&nbsp;×&nbsp;512 pixels)</title>
-    </head>
-
-    <body>
-        <img src="img/ims2014295_alaska.gif" class="decoded">
-    </body>
-    </html>
--->

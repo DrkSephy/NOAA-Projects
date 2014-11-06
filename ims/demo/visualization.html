@@ -50,10 +50,21 @@
   <!--
     <img src="image.png" style="width:878px; height:500px; margin-left: 0px; margin-top: 125px; position: absolute; z-index: 1;">
   -->
-  <script src="../bower_components/d3/d3.min.js"></script>
+  <script src="../../bower_components/d3/d3.min.js"></script>
     <script>
       d3.json('rapid-fire.json', function(error, json) {
-        console.log(json)
+        //console.log(json)
+        var width  = 512,
+            height = 512;
+
+        // Create SVG
+        var svg = d3.select('body')
+                    .append('svg')
+                    .attr('width', width)
+                    .attr('height', height)
+
+        // Create a feature group to append data to 
+
       });
     </script>
 

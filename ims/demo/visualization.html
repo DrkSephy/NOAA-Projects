@@ -54,6 +54,28 @@
       background-color: #F2F2F2;
       border: 1px solid #222222;
     }
+
+   .text-tooltip3 {
+      position: absolute;
+      top: 390px;
+      right: 0px;
+      margin: 1em 1em 0 0;
+      padding: 1em;
+      font-size: 1.0em;
+      background-color: #F2F2F2;
+      border: 1px solid #222222;
+    }
+
+   .text-tooltip4 {
+      position: absolute;
+      top: 390px;
+      right: 450px;
+      margin: 1em 1em 0 0;
+      padding: 1em;
+      font-size: 1.0em;
+      background-color: #F2F2F2;
+      border: 1px solid #222222;
+    }
 </style>
 
 
@@ -79,6 +101,8 @@
         // Create tooltip
         var text = d3.select('body').append('div').attr('class', 'text-tooltip');
         var text2 = d3.select('body').append('div').attr('class', 'text-tooltip2');
+        var text3 = d3.select('body').append('div').attr('class', 'text-tooltip3');
+        var text4 = d3.select('body').append('div').attr('class', 'text-tooltip4');
 
         // Voronoi generator
         var voronoi = d3.geom.voronoi()
@@ -101,9 +125,13 @@
             .on('mouseover', function(d){
                 console.log(d.point.Band721)
                 text.style('display', 'block')
-                .html('<img src=' + d.point.Satellite + '/143/' + d.point.Band143 + '>');
+                .html('<img src=' + d.point.Satellite + '/fc/' + d.point.Bandfc + '>');
+                text3.style('display', 'block')
+                .html('<img src=' + d.point.Satellite + '/367/' + d.point.Band367 + '>');
                 text2.style('display', 'block')
                 .html('<img src=' + d.point.Satellite + '/721/' + d.point.Band721 + '>');
+                text4.style('display', 'block')
+                .html('<img src=' + d.point.Satellite + '/rgb/' + d.point.Bandrgb + '>');
             })
       });
     </script>

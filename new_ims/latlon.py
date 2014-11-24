@@ -1,3 +1,5 @@
+# Datasets come from MODIS Rapid fire site, May 8th 2014
+
 data = [{
     "Latitude": 81.310722,
     "Satellite": "Terra",

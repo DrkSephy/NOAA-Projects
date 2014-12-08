@@ -1,6 +1,8 @@
 # findfiles.py
 # ------------
+#
 # Re-implementation of findfiles.ksh
+# Re-implementation of findfiles.pro
 
 #------------------------
 #     findfiles.ksh
@@ -24,4 +26,9 @@ def getSatellite(satellite):
         input_dir = 'frac'
     return input_dir
 
-print(getSatellite('METOPA_FRAC'))
+#------------------------
+#     findfiles.pro
+#------------------------
+
+def findFiles(input_dir, satellite, mmdd):
+    pass

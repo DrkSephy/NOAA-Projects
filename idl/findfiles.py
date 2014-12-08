@@ -4,6 +4,8 @@
 # Re-implementation of findfiles.ksh
 # Re-implementation of findfiles.pro
 
+import numpy as np 
+
 #------------------------
 #     findfiles.ksh
 #------------------------
@@ -43,4 +45,12 @@ def findFiles(input_dir, satellite, mmdd):
     #       - Name of satellite/data type
     #   * mmdd: String
     #       - Month/Day of file
-    pass
+    
+    # Number of special regions
+    numRegions = 5 
+    openDay = np.zeros(numRegions)
+    openNight = np.zeros(numRegions)
+    iunDay = np.arange(numRegions)
+    iunDay = iunDay + 10 
+    iunNight = iunDay[numRegions - 1] + iunDay + 1 
+    

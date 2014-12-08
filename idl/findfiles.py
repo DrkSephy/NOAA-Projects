@@ -10,7 +10,12 @@
 
 
 def getSatellite(satellite):
-    # Sets input_dir based on satellite
+    # Parameters:
+    #   * satellite: String
+    #       - Satellite name
+    # Returns:
+    #   * input_dir: String
+    #       - input directory of files
     input_dir = ''
     if satellite == 'NOAA16_GHRR':
         input_dir = 'gpnl'
@@ -31,4 +36,11 @@ def getSatellite(satellite):
 #------------------------
 
 def findFiles(input_dir, satellite, mmdd):
+    # Parameters:
+    #   * input_dir: String
+    #       - input directory of files
+    #   * satellite: String
+    #       - Name of satellite/data type
+    #   * mmdd: String
+    #       - Month/Day of file
     pass

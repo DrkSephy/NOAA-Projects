@@ -53,4 +53,10 @@ def findFiles(input_dir, satellite, mmdd):
     iunDay = np.arange(numRegions)
     iunDay = iunDay + 10 
     iunNight = iunDay[numRegions - 1] + iunDay + 1 
+
+    # List containing all special regions
+    regionName = ['MR', 'ER', 'SR', 'WN', 'BS']
+    # Path of files to look into
+    path = input_dir + '_' +  satellite + '_' +  mmdd + '.hdf'
+
     

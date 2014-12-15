@@ -5,6 +5,8 @@
 # Re-implementation of findfiles.pro
 
 import numpy as np 
+from os import listdir
+from os.path import isfile, join
 
 #------------------------
 #     findfiles.ksh
@@ -60,5 +62,12 @@ def findFiles(input_dir, satellite, mmdd):
     path = input_dir + '_' +  satellite + '_' +  mmdd + '.hdf'
     # Need to get a regex to sort files inside the right directory
     # TODO: FIND REGEX 
+    filterFiles(path)
 
+def filterFiles(path):
+    # Returns all files within a given path matching the format
+    files = [ f for f in listdir(path) if isfile(join(path, f)) ]
+    # For all the files in the given directory, filter out the right ones
+    for f in files:
+        pass
     

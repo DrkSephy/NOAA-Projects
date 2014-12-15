@@ -58,5 +58,7 @@ def findFiles(input_dir, satellite, mmdd):
     regionName = ['MR', 'ER', 'SR', 'WN', 'BS']
     # Path of files to look into
     path = input_dir + '_' +  satellite + '_' +  mmdd + '.hdf'
+    # Need to get a regex to sort files inside the right directory
+    # TODO: FIND REGEX 
 
     

@@ -139,10 +139,20 @@ for f in fileList:
     for reg in regionName:
         numDayPixels = 0
         numNightPixels = 0
-        
+        # print specialRegions[reg]
 
+        # Create an array of records in the file which are  
+        # within the special region
 
+        #region_arr = np.where(np.logical_and(np.logical_and(lon >= specialRegions[reg]['lonmin'], lon <= specialRegions[reg]['lonmax'])
+        #                        np.logical_and(lat >= specialRegions[reg]['latmin'], lat <= specialRegions[reg]['latmax'])))
+        # print region_arr
 
+        #region_arr = np.logical_and(np.logical_and(lon >= specialRegions[reg]['lonmin'], lon <= specialRegions[reg]['lonmax']),
+        #                np.logical_and(lat >= specialRegions[reg]['latmin'], lat <= specialRegions[reg]['latmax']))
+        # print region_arr.ravel().sum()
+        region_arr = np.logical_and(np.logical_and( (lon >= 27), (lon <= 42)) , np.logical_and((lat >= 0), (lat <= 48)))
+        print region_arr.ravel().sum()
 
 
 

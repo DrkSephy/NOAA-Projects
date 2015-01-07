@@ -92,6 +92,14 @@ iunNight = iunDay[numRegions - 1] + iunDay + 1
 
 # List containing all special regions
 regionName = ['MR', 'ER', 'SR', 'WN', 'BS']
+
+# List of day granules
+dayGranules = []
+
+# List of night granules
+nightGranules = []
+
+
 # Path of files to look into
 # path = input_dir + '_' +  satellite + '_' +  mmdd + '.hdf'
 # Need to get a regex to sort files inside the right directory
@@ -111,7 +119,7 @@ specialRegions = {
 
 # Loop over all granules inside fileList
 for f in fileList: 
-    ds = netCDF4.Dataset(f)
+    ds = netCDF4.Dataset(path + f)
     # Select l2p_flags variable
     flags = np.array(ds.variables['l2p_flags'])
     # Read day/night bit (bit 10: 0=night, 1=day)
@@ -127,7 +135,12 @@ for f in fileList:
     # Grab the latitude
     lat = np.array(ds.variables['lat'])
 
-    
+    # Iterate over each special region
+    for reg in regionName:
+        numDayPixels = 0
+        numNightPixels = 0
+        
+
 
 
 

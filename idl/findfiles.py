@@ -66,6 +66,8 @@ def findFiles(path):
     # Need to get a regex to sort files inside the right directory
     # TODO: FIND REGEX 
     # filterFiles(path)
+    files = [ f for f in listdir(path) if isfile(join(path, f)) ]
+    print files
 
 
 
@@ -78,3 +80,23 @@ def filterFiles(path):
     for f in files:
         pass
     
+
+
+
+numRegions = 5 
+openDay = np.zeros(numRegions)
+openNight = np.zeros(numRegions)
+iunDay = np.arange(numRegions)
+iunDay = iunDay + 10 
+iunNight = iunDay[numRegions - 1] + iunDay + 1 
+
+# List containing all special regions
+regionName = ['MR', 'ER', 'SR', 'WN', 'BS']
+# Path of files to look into
+# path = input_dir + '_' +  satellite + '_' +  mmdd + '.hdf'
+# Need to get a regex to sort files inside the right directory
+# TODO: FIND REGEX 
+# filterFiles(path)
+path = "/Users/DrkSephy/Dropbox/granules/"
+files = [ f for f in listdir(path) if isfile(join(path, f)) ]
+print files

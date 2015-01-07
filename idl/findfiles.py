@@ -98,5 +98,39 @@ regionName = ['MR', 'ER', 'SR', 'WN', 'BS']
 # TODO: FIND REGEX 
 # filterFiles(path)
 path = "/Users/DrkSephy/Dropbox/granules/"
-files = [ f for f in listdir(path) if isfile(join(path, f)) ]
-print files
+fileList = [ f for f in listdir(path) if isfile(join(path, f)) ]
+# print fileList
+
+specialRegions = {
+    'MR': {'lonmin': 98, 'lonmax': -82, 'latmin': 18, 'latmax': 30},
+    'ER': {'lonmin': -80, 'lonmax': -61, 'latmin': 30, 'latmax': 47},
+    'SR': {'lonmin': -89, 'lonmax': -72, 'latmin': 22, 'latmax': 38},
+    'WN': {'lonmin': -136, 'lonmax': -121, 'latmin': 39, 'latmax': 51},
+    'BS': {'lonmin': 27, 'lonmax': 42, 'latmin': 40, 'latmax': 48}
+}
+
+# Loop over all granules inside fileList
+for f in fileList: 
+    ds = netCDF4.Dataset(f)
+    # Select l2p_flags variable
+    flags = np.array(ds.variables['l2p_flags'])
+    # Read day/night bit (bit 10: 0=night, 1=day)
+    bit10 = np.array(np.ones(flags.shape)*(2**9), dtype='uint16')
+    day_mask = np.bitwise_and(flags, bit10) > 0
+    night_mask = np.bitwise_not(day_mask)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

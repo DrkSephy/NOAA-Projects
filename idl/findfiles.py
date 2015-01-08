@@ -136,6 +136,8 @@ for f in fileList:
     lat = np.array(ds.variables['lat'])
 
     # Iterate over each special region
+    # Get the maximum number of pixels bounded in the region
+    maxRegion = 0
     for reg in regionName:
 
         # Create an array of records in the file which are  
@@ -143,7 +145,11 @@ for f in fileList:
 
         region_arr = np.logical_and(np.logical_and(lon >= specialRegions[reg]['lonmin'], lon <= specialRegions[reg]['lonmax']),
                         np.logical_and(lat >= specialRegions[reg]['latmin'], lat <= specialRegions[reg]['latmax']))
-        print region_arr.ravel().sum()
+        # For each region, find the maximum pixels bounded
+        if region_arr.ravel().sum() > maxRegion:
+            maxRegion = region_arr.ravel().sum()
+
+
 
 
 

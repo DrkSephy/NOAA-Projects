@@ -72,10 +72,11 @@ for f in fileList:
         # Create an array of records in the file which are  
         # within the special region
 
+        # NOTE: Need to figure out how to do this properly with np.where.
+        #       We need to use this array to get the number of day pixels
         region_arr = np.logical_and(np.logical_and(lon >= specialRegions[reg]['lonmin'], lon <= specialRegions[reg]['lonmax']),
                         np.logical_and(lat >= specialRegions[reg]['latmin'], lat <= specialRegions[reg]['latmax']))
         # For each region, find the maximum pixels bounded
-        print region_arr
         if region_arr.ravel().sum() > maxRegion:
             maxRegion = region_arr.ravel().sum()
             maxRegionName = reg
@@ -85,7 +86,7 @@ for f in fileList:
     # We have iterated over all the special regions, and we
     # have the maximum pixels within a specific region.
     # Now we check the number of day/night pixels
-    print maxRegion
+    print "Number of overlapping pixels: " + str(maxRegion) + " in region: " + maxRegionName
     dayPixels = len(dayMask[region_arr].nonzero())
     nightPixels = len(nightMask[region_arr].nonzero())
 

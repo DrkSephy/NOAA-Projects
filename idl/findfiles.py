@@ -20,10 +20,10 @@ iunNight = iunDay[numRegions - 1] + iunDay + 1
 regionName = ['MR', 'ER', 'SR', 'WN', 'BS']
 
 # List of day granules
-dayGranules = []
+dayGranules = {}
 
 # List of night granules
-nightGranules = []
+nightGranules = {}
 
 
 # Path of files to look into
@@ -51,9 +51,9 @@ for f in fileList:
     # Read day/night bit (bit 10: 0=night, 1=day)
     bit10 = np.array(np.ones(flags.shape)*(2**9), dtype='uint16')
     # Create array of all day pixels 
-    day_mask = np.bitwise_and(flags, bit10) > 0
+    dayMask = np.bitwise_and(flags, bit10) > 0
     # Create array of all night pixels
-    night_mask = np.bitwise_not(day_mask)
+    nightMask = np.bitwise_not(dayMask)
 
     # Grab the longitude
     lon = np.array(ds.variables['lon'])
@@ -64,6 +64,9 @@ for f in fileList:
     # Iterate over each special region
     # Get the maximum number of pixels bounded in the region
     maxRegion = 0
+    # Which region had the most bounded pixels?
+    maxRegionName = ''
+
     for reg in regionName:
 
         # Create an array of records in the file which are  
@@ -72,11 +75,20 @@ for f in fileList:
         region_arr = np.logical_and(np.logical_and(lon >= specialRegions[reg]['lonmin'], lon <= specialRegions[reg]['lonmax']),
                         np.logical_and(lat >= specialRegions[reg]['latmin'], lat <= specialRegions[reg]['latmax']))
         # For each region, find the maximum pixels bounded
+        print region_arr
         if region_arr.ravel().sum() > maxRegion:
             maxRegion = region_arr.ravel().sum()
+            maxRegionName = reg
+
+       
 
     # We have iterated over all the special regions, and we
     # have the maximum pixels within a specific region.
+    # Now we check the number of day/night pixels
+    print maxRegion
+    dayPixels = len(dayMask[region_arr].nonzero())
+    nightPixels = len(nightMask[region_arr].nonzero())
+
 
 
 

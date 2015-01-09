@@ -4,10 +4,12 @@
 # Re-implementation of findfiles.ksh
 # Re-implementation of findfiles.pro
 
+from subprocess 
 import numpy as np 
 import netCDF4
 from os import listdir
 from os.path import isfile, join
+import yaml
 
 numRegions = 5 
 openDay = np.zeros(numRegions)
@@ -43,6 +45,13 @@ specialRegions = {
     'BS': {'lonmin': 27, 'lonmax': 42, 'latmin': 40, 'latmax': 48}
 }
 
+# Create global data structure which has a list for each 
+data = { name: [] for name in regionName }
+daynightData = { }
+daynightData['day'] = { name: [] for name in regionName }
+daynightData['night'] = { name: [] for name in regionName }
+# print data
+
 # Loop over all granules inside fileList
 for f in fileList: 
     ds = netCDF4.Dataset(path + f)
@@ -51,12 +60,14 @@ for f in fileList:
     # Read day/night bit (bit 10: 0=night, 1=day)
     bit10 = np.array(np.ones(flags.shape)*(2**9), dtype='uint16')
     # Create array of all day pixels 
-    dayMask = np.bitwise_and(flags, bit10) > 0
+    dayMask = np.squeeze(np.bitwise_and(flags, bit10) > 0)
+    print dayMask.shape
     # Create array of all night pixels
     nightMask = np.bitwise_not(dayMask)
+    print nightMask.shape
 
     # Grab the longitude
-    lon = np.array(ds.variables['lon'])
+    lon = np.array(ds.variables['lon']) 
 
     # Grab the latitude
     lat = np.array(ds.variables['lat'])
@@ -74,21 +85,31 @@ for f in fileList:
 
         # NOTE: Need to figure out how to do this properly with np.where.
         #       We need to use this array to get the number of day pixels
-        region_arr = np.logical_and(np.logical_and(lon >= specialRegions[reg]['lonmin'], lon <= specialRegions[reg]['lonmax']),
-                        np.logical_and(lat >= specialRegions[reg]['latmin'], lat <= specialRegions[reg]['latmax']))
-        # For each region, find the maximum pixels bounded
-        if region_arr.ravel().sum() > maxRegion:
-            maxRegion = region_arr.ravel().sum()
-            maxRegionName = reg
+        region_arr = (np.logical_and(np.logical_and(lon >= specialRegions[reg]['lonmin'], lon <= specialRegions[reg]['lonmax']),
+                        np.logical_and(lat >= specialRegions[reg]['latmin'], lat <= specialRegions[reg]['latmax']))).nonzero()
 
-       
+        dayCount = len(dayMask[region_arr].nonzero()[0])
+        nightCount = len(nightMask[region_arr].nonzero()[0])
+        if dayCount > 0: 
+            daynightData['day'][reg].append((f, dayCount))
+        if nightCount > 0:
+            daynightData['night'][reg].append((f, nightCount))
 
-    # We have iterated over all the special regions, and we
-    # have the maximum pixels within a specific region.
-    # Now we check the number of day/night pixels
-    print "Number of overlapping pixels: " + str(maxRegion) + " in region: " + maxRegionName
-    dayPixels = len(dayMask[region_arr].nonzero())
-    nightPixels = len(nightMask[region_arr].nonzero())
+print yaml.dump(daynightData)
+
+# Calling command line functions
+
+# Option 1
+# from subprocess import Popen, PIPE
+# cmd = "ls foobar"
+# pid = Popen(cmd, shell=True)
+# pid.wait()
+
+# Option 2
+# from subprocess import Popen, PIPE
+# cmd = "ls foobar"
+# pid = Popen(cmd, stderr=PIPE, stdout=PIPE, shell=True)
+# stdout, stderr = pid.communicate()
 
 
 

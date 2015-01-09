@@ -4,12 +4,13 @@
 # Re-implementation of findfiles.ksh
 # Re-implementation of findfiles.pro
 
-from subprocess 
-import numpy as np 
+import yaml
 import netCDF4
+import numpy as np 
+from subprocess 
 from os import listdir
 from os.path import isfile, join
-import yaml
+
 
 numRegions = 5 
 openDay = np.zeros(numRegions)
@@ -111,6 +112,13 @@ print yaml.dump(daynightData)
 # pid = Popen(cmd, stderr=PIPE, stdout=PIPE, shell=True)
 # stdout, stderr = pid.communicate()
 
+
+# NEXT STEPS
+# Read yaml file
+# We have a bunch of granules 
+#   Outer loop is region
+#       day, night (process the granule with the highest counts)
+# 
 
 
 

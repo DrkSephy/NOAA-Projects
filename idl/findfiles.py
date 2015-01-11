@@ -6,10 +6,10 @@
 
 import yaml
 import netCDF4
-import numpy as np 
-from subprocess 
+import numpy as np  
 from os import listdir
 from os.path import isfile, join
+from subprocess import Popen, PIPE
 
 
 numRegions = 5 
@@ -39,11 +39,11 @@ fileList = [ f for f in listdir(path) if isfile(join(path, f)) ]
 # print fileList
 
 specialRegions = {
-    'MR': {'lonmin': 98, 'lonmax': -82, 'latmin': 18, 'latmax': 30},
-    'ER': {'lonmin': -80, 'lonmax': -61, 'latmin': 30, 'latmax': 47},
-    'SR': {'lonmin': -89, 'lonmax': -72, 'latmin': 22, 'latmax': 38},
-    'WN': {'lonmin': -136, 'lonmax': -121, 'latmin': 39, 'latmax': 51},
-    'BS': {'lonmin': 27, 'lonmax': 42, 'latmin': 40, 'latmax': 48}
+    'MR': {'lonmin': 98, 'lonmax': -82, 'latmin': 18, 'latmax': 30, 'master': 'MASTER_MR_1KM.hdf'  },
+    'ER': {'lonmin': -80, 'lonmax': -61, 'latmin': 30, 'latmax': 47, 'master': 'MASTER_ER_1KM.hdf' },
+    'SR': {'lonmin': -89, 'lonmax': -72, 'latmin': 22, 'latmax': 38, 'master': 'MASTER_SR_1KM.hdf' },
+    'WN': {'lonmin': -136, 'lonmax': -121, 'latmin': 39, 'latmax': 51, 'master': 'MASTER_WN_1KM.hdf'},
+    'BS': {'lonmin': 27, 'lonmax': 42, 'latmin': 40, 'latmax': 48, 'master': 'MASTER_BS_1KM.hdf'}
 }
 
 # Create global data structure which has a list for each 
@@ -62,10 +62,8 @@ for f in fileList:
     bit10 = np.array(np.ones(flags.shape)*(2**9), dtype='uint16')
     # Create array of all day pixels 
     dayMask = np.squeeze(np.bitwise_and(flags, bit10) > 0)
-    print dayMask.shape
     # Create array of all night pixels
     nightMask = np.bitwise_not(dayMask)
-    print nightMask.shape
 
     # Grab the longitude
     lon = np.array(ds.variables['lon']) 
@@ -92,12 +90,26 @@ for f in fileList:
         dayCount = len(dayMask[region_arr].nonzero()[0])
         nightCount = len(nightMask[region_arr].nonzero()[0])
         if dayCount > 0: 
-            daynightData['day'][reg].append((f, dayCount))
+            daynightData['day'][reg].append((f, specialRegions[reg]['master'], dayCount, 'day'))
         if nightCount > 0:
-            daynightData['night'][reg].append((f, nightCount))
+            daynightData['night'][reg].append((f, specialRegions[reg]['master'], nightCount, 'night'))
 
-print yaml.dump(daynightData)
+granuleList = yaml.dump(daynightData)
+granuleData = yaml.load(granuleList)
+# print granuleData
 
+# Iterate over day/night granule entries
+for d in granuleData:
+    # Iterate over each region for day/night
+    for region in granuleData[d]:
+        if granuleData[d][region] != []:
+            print granuleData[d][region][0][0]
+            print granuleData[d][region][0][1]
+            print granuleData[d][region][0][2]
+            print granuleData[d][region][0][3]
+
+
+# cwregister MASTER_BS_1KM.hdf 20141122065952-STAR-L2P_GHRSST-SST1m-GHRR_METOPA-v02.0-fv01.0.nc newestblacksea.hdf
 # Calling command line functions
 
 # Option 1

@@ -96,12 +96,8 @@ for f in fileList:
             daynightData['night'][reg].append((f, specialRegions[reg]['master'], nightCount, 'night'))
 
 
-# print daynightData['day']
 granuleList = yaml.dump(daynightData)
 granuleData = yaml.load(granuleList)
-# print granuleData
-# print granuleList
-
 
 
 # Iterate over day/night granule entries
@@ -109,33 +105,9 @@ for d in granuleData:
     for region in granuleData[d]:
         if granuleData[d][region] != []: 
             for val in granuleData[d][region]:
-                cmd = 'cwregister' + ' ' + val[1] + ' ' + val[0] + ' ' + 'REG' + val[0][:-3] + '.hdf'
-                print cmd
-
-            #print granuleData[d][region]
-            #cmd = 'cwregister' + ' ' + granuleData[d][region][0][1] + ' ' + granuleData[d][region][0][0] + ' ' + 'REG' + granuleData[d][region][0][0] + '.hdf'
-            #print cmd
-
-    """
-    # Iterate over each region for day/night
-    for region in granuleData[d]:
-        if granuleData[d][region] != []:
-            #cmd = 'cwregister' + ' ' + granuleData[d][region][0][1] + ' ' + granuleData[d][region][0][0] + ' ' + 'REG' + granuleData[d][region][0][0] + '.hdf'
-            #print cmd
-            #pid = Popen(cmd, shell=True)
-            #pid.wait()
-            print granuleData[d][region][0][0]
-            print granuleData[d][region][0][1]
-            print granuleData[d][region][0][2]
-            print granuleData[d][region][0][3]
-    """
-
-#print granuleData['day']
-
-
-# cwregister MASTER_BS_1KM.hdf 20141122065952-STAR-L2P_GHRSST-SST1m-GHRR_METOPA-v02.0-fv01.0.nc newestblacksea.hdf
-# Calling command line functions
-
+                cmd = 'cwregister' + ' ' + val[1] + ' ' + path + val[0] + ' ' + 'REG' + val[0][:-3] + '.hdf'
+                pid = Popen(cmd, shell=True)
+                pid.wait()
 
 # NEXT STEPS
 # Read yaml file

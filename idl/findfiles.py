@@ -34,16 +34,17 @@ nightGranules = {}
 # Need to get a regex to sort files inside the right directory
 # TODO: FIND REGEX 
 # filterFiles(path)
-path = "/Users/DrkSephy/Dropbox/granules/"
+path = "/Users/DrkSephy/Desktop/January/"
 fileList = [ f for f in listdir(path) if isfile(join(path, f)) ]
+masterPath = "/home/DrkSephy/special_regions/testing/master_files/"
 # print fileList
 
 specialRegions = {
-    'MR': {'lonmin': 98, 'lonmax': -82, 'latmin': 18, 'latmax': 30, 'master': 'MASTER_MR_1KM.hdf'  },
-    'ER': {'lonmin': -80, 'lonmax': -61, 'latmin': 30, 'latmax': 47, 'master': 'MASTER_ER_1KM.hdf' },
-    'SR': {'lonmin': -89, 'lonmax': -72, 'latmin': 22, 'latmax': 38, 'master': 'MASTER_SR_1KM.hdf' },
-    'WN': {'lonmin': -136, 'lonmax': -121, 'latmin': 39, 'latmax': 51, 'master': 'MASTER_WN_1KM.hdf'},
-    'BS': {'lonmin': 27, 'lonmax': 42, 'latmin': 40, 'latmax': 48, 'master': 'MASTER_BS_1KM.hdf'}
+    'MR': {'lonmin': 98, 'lonmax': -82, 'latmin': 18, 'latmax': 30, 'master': masterPath + 'MASTER_MR_1KM.hdf'  },
+    'ER': {'lonmin': -80, 'lonmax': -61, 'latmin': 30, 'latmax': 47, 'master': masterPath + 'MASTER_ER_1KM.hdf' },
+    'SR': {'lonmin': -89, 'lonmax': -72, 'latmin': 22, 'latmax': 38, 'master': masterPath + 'MASTER_SR_1KM.hdf' },
+    'WN': {'lonmin': -136, 'lonmax': -121, 'latmin': 39, 'latmax': 51, 'master': masterPath + 'MASTER_WN_1KM.hdf'},
+    'BS': {'lonmin': 27, 'lonmax': 42, 'latmin': 40, 'latmax': 48, 'master': masterPath + 'MASTER_BS_1KM.hdf'}
 }
 
 # Create global data structure which has a list for each 
@@ -94,38 +95,46 @@ for f in fileList:
         if nightCount > 0:
             daynightData['night'][reg].append((f, specialRegions[reg]['master'], nightCount, 'night'))
 
+
+# print daynightData['day']
 granuleList = yaml.dump(daynightData)
 granuleData = yaml.load(granuleList)
 # print granuleData
+# print granuleList
+
+
 
 # Iterate over day/night granule entries
 for d in granuleData:
+    for region in granuleData[d]:
+        if granuleData[d][region] != []: 
+            for val in granuleData[d][region]:
+                cmd = 'cwregister' + ' ' + val[1] + ' ' + val[0] + ' ' + 'REG' + val[0][:-3] + '.hdf'
+                print cmd
+
+            #print granuleData[d][region]
+            #cmd = 'cwregister' + ' ' + granuleData[d][region][0][1] + ' ' + granuleData[d][region][0][0] + ' ' + 'REG' + granuleData[d][region][0][0] + '.hdf'
+            #print cmd
+
+    """
     # Iterate over each region for day/night
     for region in granuleData[d]:
         if granuleData[d][region] != []:
-            cmd = 'cwregister' + ' ' + granuleData[d][region][0][1] + ' ' + granuleData[d][region][0][0] + ' ' + 'REG' + granuleData[d][region][0][0] + '.hdf'
-            pid = Popen(cmd, shell=True)
-            pid.wait()
-            #print granuleData[d][region][0][0]
-            #print granuleData[d][region][0][1]
-            #print granuleData[d][region][0][2]
-            #print granuleData[d][region][0][3]
+            #cmd = 'cwregister' + ' ' + granuleData[d][region][0][1] + ' ' + granuleData[d][region][0][0] + ' ' + 'REG' + granuleData[d][region][0][0] + '.hdf'
+            #print cmd
+            #pid = Popen(cmd, shell=True)
+            #pid.wait()
+            print granuleData[d][region][0][0]
+            print granuleData[d][region][0][1]
+            print granuleData[d][region][0][2]
+            print granuleData[d][region][0][3]
+    """
+
+#print granuleData['day']
 
 
 # cwregister MASTER_BS_1KM.hdf 20141122065952-STAR-L2P_GHRSST-SST1m-GHRR_METOPA-v02.0-fv01.0.nc newestblacksea.hdf
 # Calling command line functions
-
-# Option 1
-# from subprocess import Popen, PIPE
-# cmd = "ls foobar"
-# pid = Popen(cmd, shell=True)
-# pid.wait()
-
-# Option 2
-# from subprocess import Popen, PIPE
-# cmd = "ls foobar"
-# pid = Popen(cmd, stderr=PIPE, stdout=PIPE, shell=True)
-# stdout, stderr = pid.communicate()
 
 
 # NEXT STEPS

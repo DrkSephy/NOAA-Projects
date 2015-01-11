@@ -99,14 +99,15 @@ granuleData = yaml.load(granuleList)
 # print granuleData
 
 # Iterate over day/night granule entries
-for d in granuleData:
+#for d in granuleData:
     # Iterate over each region for day/night
-    for region in granuleData[d]:
-        if granuleData[d][region] != []:
-            print granuleData[d][region][0][0]
-            print granuleData[d][region][0][1]
-            print granuleData[d][region][0][2]
-            print granuleData[d][region][0][3]
+#    for region in granuleData[d]:
+#        if granuleData[d][region] != []:
+#            cmd = 
+            #print granuleData[d][region][0][0]
+            #print granuleData[d][region][0][1]
+            #print granuleData[d][region][0][2]
+            #print granuleData[d][region][0][3]
 
 
 # cwregister MASTER_BS_1KM.hdf 20141122065952-STAR-L2P_GHRSST-SST1m-GHRR_METOPA-v02.0-fv01.0.nc newestblacksea.hdf

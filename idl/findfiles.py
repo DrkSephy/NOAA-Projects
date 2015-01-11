@@ -99,11 +99,13 @@ granuleData = yaml.load(granuleList)
 # print granuleData
 
 # Iterate over day/night granule entries
-#for d in granuleData:
+for d in granuleData:
     # Iterate over each region for day/night
-#    for region in granuleData[d]:
-#        if granuleData[d][region] != []:
-#            cmd = 
+    for region in granuleData[d]:
+        if granuleData[d][region] != []:
+            cmd = 'cwregister' + ' ' + granuleData[d][region][0][1] + ' ' + granuleData[d][region][0][0] + ' ' + 'REG' + granuleData[d][region][0][0] + '.hdf'
+            pid = Popen(cmd, shell=True)
+            pid.wait()
             #print granuleData[d][region][0][0]
             #print granuleData[d][region][0][1]
             #print granuleData[d][region][0][2]

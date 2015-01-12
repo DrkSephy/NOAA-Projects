@@ -117,9 +117,12 @@ for d in granuleData:
                     granuleName = val[0]
                     daynight = val[3]
             max = 0
-            cmd = 'cwregister' + ' ' + masterfile + ' ' + path + granuleName + ' ' + 'REG' + daynight + val[0][:-3]  + '.hdf'
-            pid = Popen(cmd, shell=True)
-            pid.wait()
+            # Register the file
+            cmd = 'cwregister' + ' ' + masterfile + ' ' + path + granuleName + ' ' + 'reg' + daynight + region + val[0][:-3]  + '.hdf'
+            print cmd
+            #pid = Popen(cmd, shell=True)
+            
+            #pid.wait()
 
 
 

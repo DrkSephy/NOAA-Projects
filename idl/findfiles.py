@@ -100,24 +100,26 @@ granuleList = yaml.dump(daynightData)
 granuleData = yaml.load(granuleList)
 print granuleList
 
-
+# Figure out which region has the maximum number of pixels for that region. 
+# That is the granule we want to process. 
+max = 0
 # Iterate over day/night granule entries
 for d in granuleData:
     for region in granuleData[d]:
         if granuleData[d][region] != []: 
+            # print granuleData[d][region]
+            # Loop over each array of entries
             for val in granuleData[d][region]:
-                cmd = 'cwregister' + ' ' + val[1] + ' ' + path + val[0] + ' ' + 'REG' + val[3] + val[0][:-3]  + '.hdf'
-                print cmd
-                #pid = Popen(cmd, shell=True)
-                #pid.wait()
-
-# NEXT STEPS
-# Read yaml file
-# We have a bunch of granules 
-#   Outer loop is region
-#       day, night (process the granule with the highest counts)
-# 
-
+                # Get the max value
+                if val[2] > max:
+                    max = val[2]
+                    masterfile = val[1]
+                    granuleName = val[0]
+                    daynight = val[3]
+            max = 0
+            cmd = 'cwregister' + ' ' + masterfile + ' ' + path + granuleName + ' ' + 'REG' + daynight + val[0][:-3]  + '.hdf'
+            pid = Popen(cmd, shell=True)
+            pid.wait()
 
 
 

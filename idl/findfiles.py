@@ -98,6 +98,7 @@ for f in fileList:
 
 granuleList = yaml.dump(daynightData)
 granuleData = yaml.load(granuleList)
+print granuleList
 
 
 # Iterate over day/night granule entries
@@ -105,9 +106,10 @@ for d in granuleData:
     for region in granuleData[d]:
         if granuleData[d][region] != []: 
             for val in granuleData[d][region]:
-                cmd = 'cwregister' + ' ' + val[1] + ' ' + path + val[0] + ' ' + 'REG' + val[0][:-3] + '.hdf'
-                pid = Popen(cmd, shell=True)
-                pid.wait()
+                cmd = 'cwregister' + ' ' + val[1] + ' ' + path + val[0] + ' ' + 'REG' + val[3] + val[0][:-3]  + '.hdf'
+                print cmd
+                #pid = Popen(cmd, shell=True)
+                #pid.wait()
 
 # NEXT STEPS
 # Read yaml file

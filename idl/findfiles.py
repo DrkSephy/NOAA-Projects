@@ -103,6 +103,7 @@ print granuleList
 # Figure out which region has the maximum number of pixels for that region. 
 # That is the granule we want to process. 
 max = 0
+cmds = ["mkdir regfiles", "cd regfiles" ]
 # Iterate over day/night granule entries
 for d in granuleData:
     for region in granuleData[d]:
@@ -119,10 +120,12 @@ for d in granuleData:
             max = 0
             # Register the file
             cmd = 'cwregister' + ' ' + masterfile + ' ' + path + granuleName + ' ' + 'reg' + daynight + region + val[0][:-3]  + '.hdf'
-            print cmd
-            #pid = Popen(cmd, shell=True)
-            
-            #pid.wait()
+            cmds.append(cmd)
+
+for cmd in cmds: 
+    pid = Popen(cmd, shell=True)
+    pid.wait()
+
 
 
 

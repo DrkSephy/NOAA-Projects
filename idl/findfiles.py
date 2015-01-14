@@ -29,13 +29,10 @@ dayGranules = {}
 nightGranules = {}
 
 
-# Path of files to look into
-# path = input_dir + '_' +  satellite + '_' +  mmdd + '.hdf'
-# Need to get a regex to sort files inside the right directory
-# TODO: FIND REGEX 
-# filterFiles(path)
+# Add the path to your granules here
 path = "/Users/DrkSephy/Desktop/January/"
 fileList = [ f for f in listdir(path) if isfile(join(path, f)) ]
+# Add your path to the master region files here
 masterPath = "/home/DrkSephy/special_regions/testing/master_files/"
 # print fileList
 
@@ -98,12 +95,12 @@ for f in fileList:
 
 granuleList = yaml.dump(daynightData)
 granuleData = yaml.load(granuleList)
-print granuleList
+# print granuleList
 
 # Figure out which region has the maximum number of pixels for that region. 
 # That is the granule we want to process. 
 max = 0
-cmds = ["mkdir regfiles", "cd regfiles" ]
+cmds = []
 # Iterate over day/night granule entries
 for d in granuleData:
     for region in granuleData[d]:

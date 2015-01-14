@@ -6,6 +6,12 @@ This repository contains source code of various projects I work on as a Graduate
 Project Directory
 -----------------
 
+To dump out the contents of a netCDF4 file, run the following command:
+
+    ncdump -h <filename>
+
+If you are interested in seeing how to pull out datasets from an `.hdf` file, please see the [following script](https://github.com/DrkSephy/NOAA-Projects/blob/master/ims/hdfgranules.py)
+
 * `special_regions/grid.html`: NOAA Squam page with special regions demo. Clicking on any of the bounding boxes redicts to `special_regions/regions.html`, which is the NOAA Special Regions page.
 
 * `squam_visualization/grid.html`: NOAA Squam page with voronoi diagram demo. Hovering over each region displays the granule showing the anomaly of sea surface temperature, and clicking any region redirects to a full image of the granule corresponding to the selected region. 

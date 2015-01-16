@@ -23,19 +23,19 @@ bit15_mask = np.bitwise_and(flags, bit15)>0
 # Get bit 16 mask
 bit16_mask = np.bitwise_and(flags, bit16)>0
 
-cmds = []
+cmds = [
 # Command 1: sea_surface_temperature
 sst = 'cwmath --verbose --template sea_surface_temperature --expr' + ' ' + 'sea_surface_temperature = sea_surface_temperature'
-    + ' ' + 'regdayBS20141122085952-STAR-L2P_GHRSST-SST1m-GHRR_METOPA-v02.0-fv01.0.hdf' + ' ' + 'math.hdf'
++ ' ' + 'regdayBS20141122085952-STAR-L2P_GHRSST-SST1m-GHRR_METOPA-v02.0-fv01.0.hdf' + ' ' + 'math.hdf'
 
 # Command 2: dt_analysis
 dt_analysis = 'cwmath --verbose --template dt_analysis --expr' + ' ' + 'sea_surface_temperature = sea_surface_temperature'
-                + ' ' + 'regdayBS20141122085952-STAR-L2P_GHRSST-SST1m-GHRR_METOPA-v02.0-fv01.0.hdf' + ' ' + 'math.hdf'
+            + ' ' + 'regdayBS20141122085952-STAR-L2P_GHRSST-SST1m-GHRR_METOPA-v02.0-fv01.0.hdf' + ' ' + 'math.hdf'
 
 # Command 3: Create missing flag
 missing_flag = 'cwmath --verbose --template sea_surface_temperature --expr' + ' ' 
-                +  'missing_flag = select ( and (l2p_flags, 49152) == 49152, 1., 0. )'
-                +  ' ' + 'regdayBS20141122085952-STAR-L2P_GHRSST-SST1m-GHRR_METOPA-v02.0-fv01.0.hdf' + ' ' + 'math.hdf'
+            +  'missing_flag = select ( and (l2p_flags, 49152) == 49152, 1., 0. )'
+            +  ' ' + 'regdayBS20141122085952-STAR-L2P_GHRSST-SST1m-GHRR_METOPA-v02.0-fv01.0.hdf' + ' ' + 'math.hdf'
 
 # Command 4: Create cloud flag
 cloud_flag = 'cwmath --verbose --template sea_surface_temperature --expr' + ' ' +  
@@ -43,7 +43,11 @@ cloud_flag = 'cwmath --verbose --template sea_surface_temperature --expr' + ' ' 
 
 # Command 5: Create glint flag
 glint_flag = 'cwmath --verbose --template sea_surface_temperature --expr' + ' ' + 'glint_flag = select ( (and (l2p_flags, 8192) == 8192), 1., 0.)'
-                + ' ' + 'regdayBS20141122085952-STAR-L2P_GHRSST-SST1m-GHRR_METOPA-v02.0-fv01.0.hdf' + ' ' + 'math.hdf'
+            + ' ' + 'regdayBS20141122085952-STAR-L2P_GHRSST-SST1m-GHRR_METOPA-v02.0-fv01.0.hdf' + ' ' + 'math.hdf'
+]
+
+for command in cmds:
+    print command
 
 
 

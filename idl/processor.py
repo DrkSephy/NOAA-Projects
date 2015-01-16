@@ -47,7 +47,8 @@ glint_flag = 'cwmath --verbose --template sea_surface_temperature --expr' + ' ' 
 ]
 
 for command in cmds:
-    print command
+    pid = Popen(cmd, shell=True)
+    pid.wait()
 
 
 

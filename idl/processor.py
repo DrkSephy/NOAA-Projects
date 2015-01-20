@@ -1,5 +1,7 @@
-# This file contains commands for further processing
-# of granules using CDAT (cwmath).
+# Uses CWMath to write out data as layers
+# Uses CWComposite to merge all data into one hdf file
+# Uses CWGraphics
+# Renders image using CWRender
 
 import numpy as np
 from pyhdf.SD import SD, SDC
@@ -40,6 +42,24 @@ cloud_flag = 'cwmath --verbose --template sea_surface_temperature --expr' + ' ' 
 # Command 5: Create glint flag
 glint_flag = 'cwmath --verbose --template sea_surface_temperature --expr' + ' ' + '''"glint_flag = select ( (and (l2p_flags, 8192) == 8192), 1., 0.)"''' + ' ' + file + ' ' + 'math.hdf'
 
+# Command 6: Create composite hdf file for data layers
+layers = 'cwcomposite -v --method median --match' + ' ' + '''"sea_surface_temperature|dt_analysis"''' +  ' ' + 'math.hdf' + ' ' + 'composite1.hdf'
+
+# Command 7: Create composite hdf file for flags
+# NOTE: No glint flag for night granules
+flag_layers = 'cwcomposite -v --method median --match' + ' ' + '''"missing_flag|cloud_flag|glint_flag"''' + ' ' +  'math.hdf' +  ' ' +  'composite2.hdf'
+
+# Command 8: Create composite hdf file consisting of all the composite files
+# Once all composite files are created, they are then grouped into a single composite file
+total_composite = 'cwcomposite composite1.hdf composite2.hdf totalcomposite.hdf'
+
+# Command 9: Add cwgraphics
+cw_graphics = 'cwgraphics -v' + ' ' + 'totalcomposite.hdf'
+
+# Command 10: Render out an image
+cw_render = 'cwrender --enhance sea_surface_temperature --palette Blue-Red  --grid blue totalcomposite.hdf' + ' ' + 'composite' + file + '.png'
+
+
 
 cmds = []
 cmds.append(sst)
@@ -47,10 +67,16 @@ cmds.append(dt_analysis)
 cmds.append(missing_flag)
 cmds.append(cloud_flag)
 cmds.append(glint_flag)
+cmds.append(layers)
+cmds.append(flag_layers)
+cmds.append(total_composite)
+cmds.append(cw_graphics)
+cmds.append(cw_render)
 
+# Execute all commands
 for command in cmds:
     #print command
-    pid = Popen(cmd, shell=True)
+    pid = Popen(command, shell=True)
     pid.wait()
 
 

@@ -23,7 +23,10 @@ daynightData['night'] = { name: [] for name in regionName }
 
 
 def intersection(path, masterPath):
-
+    # path - string
+    #    The path to granules to be processed
+    # masterPath - string
+    #    The path to the master files for registration
 
     # Special regions bounding box
     specialRegions = {
@@ -81,8 +84,11 @@ def intersection(path, masterPath):
 # Process the granules
 intersection("/Users/DrkSephy/Desktop/January/", "/home/DrkSephy/special_regions/testing/master_files/")
 
-
+# Generates commands to build master files
 def commandGeneration(path):
+    # path: string
+    #   - The input path of the granule list.
+    #     Used for appending to registered file name.
     granuleList = yaml.dump(daynightData)
     granuleData = yaml.load(granuleList)
 
@@ -116,14 +122,11 @@ intersection("/Users/DrkSephy/Desktop/January/", "/home/DrkSephy/special_regions
 # Package data in YAML
 commands = commandGeneration("/Users/DrkSephy/Desktop/January/")
 
-#for cmd in data:
-#    print cmd
-
-"""
-for cmd in data: 
-    pid = Popen(command, shell=True)
+# Execute all CWregister commands
+for cmd in commands: 
+    pid = Popen(cmd, shell=True)
     pid.wait()
-"""
+
 
 
 
